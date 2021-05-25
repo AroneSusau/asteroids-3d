@@ -28,11 +28,9 @@ void Skybox::draw()
   glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
   glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
 
-  glPushMatrix();
+  glBindTexture(GL_TEXTURE_2D, textures[0]);
   glBegin(GL_QUADS);
   glNormal3f(0, 0, 1);
-  
-  glBindTexture(GL_TEXTURE_2D, textures[0]);
   glTexCoord2f(0, 0);
   glVertex3f(world->camera->body->position->x - 1, world->camera->body->position->y - 1, world->camera->body->position->z - 1);
 
@@ -44,22 +42,8 @@ void Skybox::draw()
 
   glTexCoord2f(0, 1);
   glVertex3f(world->camera->body->position->x - 1, world->camera->body->position->y + 1, world->camera->body->position->z - 1);
-
-  glBindTexture(GL_TEXTURE_2D, textures[1]);
-  glTexCoord2f(0, 0);
-  glVertex3f(world->camera->body->position->x - 1, world->camera->body->position->y - 1, world->camera->body->position->z + 1);
-
-  glTexCoord2f(1, 0);
-  glVertex3f(world->camera->body->position->x + 1, world->camera->body->position->y - 1, world->camera->body->position->z + 1);
-
-  glTexCoord2f(1, 1);
-  glVertex3f(world->camera->body->position->x + 1, world->camera->body->position->y + 1, world->camera->body->position->z + 1);
-
-  glTexCoord2f(0, 1);
-  glVertex3f(world->camera->body->position->x - 1, world->camera->body->position->y + 1, world->camera->body->position->z + 1);
-
   glEnd();
-  glPopMatrix();
+
   glEnable(GL_DEPTH_TEST);
   glDisable(GL_TEXTURE_2D);
 }

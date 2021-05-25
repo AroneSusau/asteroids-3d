@@ -30,14 +30,15 @@
 
 #define KEY_ESC 27
 
-World* world    = new World();
+World* world      = new World();
 
 Axis*   axis      = world->axis;
+Time*   game_time = world->time;
+Wall*   wall      = world->wall;
+
 Camera* camera    = world->camera;
 Ship*   ship      = world->ship;
 Skybox* skybox    = world->skybox;
-Time*   game_time = world->time;
-Wall*   wall      = world->wall;
 
 void render()
 {

@@ -24,8 +24,8 @@ class Skybox
 {
   public:
 
-    GLuint textures [6] = {};
-    std::string filenames [6] = {};
+    GLuint textures [6] = {0, 0, 0, 0, 0, 0};
+    std::string filenames [6] = {"", "", "", "", "", ""};
 
     Skybox();
     ~Skybox();
