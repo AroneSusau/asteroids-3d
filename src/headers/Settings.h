@@ -2,7 +2,7 @@
 
 // Wall
 #define WALL_LIM 5.0f
-#define WALL_DIST 55.0f
+#define WALL_DIST 65.0f
 #define WALL_RATIO 0.3f
 
 // Debug Axis

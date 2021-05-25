@@ -21,6 +21,16 @@ Ship::~Ship()
 
 void Ship::draw()
 {
+
+  float mat_diffuse[] = { 0.8, 0.8, 0.0, 1.0 };
+  float mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+  float mat_shininess[] = { 100.0 };
+
+  // setup materials
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+  glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+  glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+
   glPushMatrix();
   glTranslatef(body->position->x, body->position->y, body->position->z);
   glRotatef(body->orientation->y, 0, 1, 0);

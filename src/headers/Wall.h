@@ -31,7 +31,7 @@ class Wall
     float warning_range = 0;
 
     float red   [3] = { 1.0, 0.0, 0.0 };
-    float white [3] = { 6.0, 6.0, 6.0 };
+    float white [3] = { 2.0, 2.0, 2.0 };
 
     // Order follows: front, back, left, right, top, bot
     bool warnings [6] = { false, false, false, false, false, false };
