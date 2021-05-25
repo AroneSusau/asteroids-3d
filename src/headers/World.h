@@ -1,16 +1,17 @@
 #pragma once
 
-#include "Settings.h"
-
+#include "Axis.h"
 #include "Camera.h"
 #include "EulerRotation.h"
-#include "Axis.h"
-#include "Time.h"
 #include "Ship.h"
+#include "Settings.h"
+#include "Skybox.h"
+#include "Time.h"
 #include "Wall.h"
 
 class Camera;
 class Ship;
+class Skybox;
 
 class World
 {
@@ -19,6 +20,7 @@ class World
     Axis* axis;
     Camera* camera;
     Ship* ship;
+    Skybox* skybox;
     Time* time;
     Wall* wall;
 
