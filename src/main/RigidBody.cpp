@@ -23,30 +23,35 @@ RigidBody::~RigidBody() {
 
 void RigidBody::update_position(Vector3* other)
 {
-  delete position;
-  position = other;
+  position->x = other->x;
+  position->y = other->y;
+  position->z = other->z;
 }
 
 void RigidBody::update_forward(Vector3* other)
 {
-  delete forward;
-  forward = std::move(other);
+  forward->x = other->x;
+  forward->y = other->y;
+  forward->z = other->z;
 }
 
 void RigidBody::update_up(Vector3* other)
 {
-  delete up;
-  up = std::move(other);
+  up->x = other->x;
+  up->y = other->y;
+  up->z = other->z;
 }
 
 void RigidBody::update_right(Vector3* other)
 {
-  delete right;
-  right = std::move(other);
+  right->x = other->x;
+  right->y = other->y;
+  right->z = other->z;
 }
 
 void RigidBody::update_look(Vector3* other)
 {
-  delete look;
-  look = std::move(other);
+  look->x = other->x;
+  look->y = other->y;
+  look->z = other->z;
 }

@@ -12,11 +12,11 @@ class RigidBody
 {
   public:
 
-    Vector3* position = new Vector3(0, 0, 100);
-    Vector3* forward  = new Vector3(0, 0, -100);
-    Vector3* up       = new Vector3(0, 1, 0);
-    Vector3* right    = new Vector3(-1, 0, 0);
-    Vector3* look     = new Vector3(0, 0, -100);
+    Vector3* position = new Vector3(0, 0, 0);
+    Vector3* forward  = new Vector3(0, 0, 0);
+    Vector3* up       = new Vector3(0, 0, 0);
+    Vector3* right    = new Vector3(0, 0, 0);
+    Vector3* look     = new Vector3(0, 0, 0);
 
     Vector3* orientation = new Vector3(0, 0, 0);
 

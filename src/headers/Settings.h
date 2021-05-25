@@ -1,8 +1,8 @@
 #pragma once
 
 // Wall
-#define WALL_LIM 40.0f
-#define WALL_DIST 2.0f
+#define WALL_LIM 5.0f
+#define WALL_DIST 55.0f
 #define WALL_RATIO 0.3f
 
 // Debug Axis

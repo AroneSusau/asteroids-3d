@@ -33,18 +33,20 @@
 
 World* world = new World();
 
-Camera* camera = world->camera;
-Time* game_time     = world->time;
-Wall* wall     = world->wall;
-Axis* axis     = world->axis;
+Camera* camera  = world->camera;
+Ship* ship      = world->ship;
+Time* game_time = world->time;
+Wall* wall      = world->wall;
+Axis* axis      = world->axis;
 
 void render()
 {
   game_time->tick();
-
+  
+  ship->update_position();
   camera->place_camera();
-  camera->update_position();
 
+  ship->draw();
   wall->draw();
   axis->draw();
 
@@ -55,8 +57,8 @@ void render()
 void on_idle()
 {
   game_time->tick();
-
-  wall->wall_distance_warning(camera->body->position);
+  
+  wall->wall_distance_warning(ship->body->position);
   wall->update_wall_color();
   
   glutPostRedisplay();
@@ -89,7 +91,7 @@ void on_reshape(int w, int h)
 
 void on_key_press(unsigned char key, int x, int y)
 {
-  camera->on_key_press(key, x, y);
+  ship->on_key_press(key, x, y);
 
   if (key == KEY_ESC)
   {
@@ -99,7 +101,7 @@ void on_key_press(unsigned char key, int x, int y)
 
 void on_key_release(unsigned char key, int x, int y)
 {
-  camera->on_key_release(key, x, y);
+  ship->on_key_release(key, x, y);
 }
 
 void init_app(int *argcp, char **argv)
@@ -112,9 +114,11 @@ void init_app(int *argcp, char **argv)
 
   glutKeyboardFunc(on_key_press);
   glutKeyboardUpFunc(on_key_release);
-  
+
   glutDisplayFunc(on_display);
   glutIdleFunc(on_idle);
+
+  camera->place_camera();
 }
 
 int main(int argc, char **argv)
