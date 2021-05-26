@@ -32,6 +32,7 @@ void EulerRotation::strafe(RigidBody* body, float velocity)
 
 void EulerRotation::yaw(RigidBody* body, float angle)
 {
+  body->orientation->z = EulerRotation::reset(body->orientation->z - angle, 360.0f);
   float rads = V3_Math::deg_to_rad(angle);
 
   body->update_forward(V3_Math::normalize(
@@ -45,6 +46,7 @@ void EulerRotation::yaw(RigidBody* body, float angle)
 
 void EulerRotation::pitch(RigidBody* body, float angle)
 {  
+  body->orientation->y = EulerRotation::reset(body->orientation->y + angle, 360.0f);
   float rads = V3_Math::deg_to_rad(angle);
 
   body->update_forward(V3_Math::normalize(
@@ -59,6 +61,7 @@ void EulerRotation::pitch(RigidBody* body, float angle)
 
 void EulerRotation::roll(RigidBody* body, float angle)
 {
+  body->orientation->x = EulerRotation::reset(body->orientation->x - angle, 360.0f);
   float rads = V3_Math::deg_to_rad(angle);
 
   body->update_right(V3_Math::normalize(
@@ -73,8 +76,6 @@ void EulerRotation::roll(RigidBody* body, float angle)
 
 void EulerRotation::rotate(RigidBody* body, float angle)
 {
-  std::cout << "ORI: " << body->orientation->to_string() << std::endl;
-  std::cout << "FOR: " << body->forward->to_string() << std::endl;
   body->update_orientation(V3_Math::subtract(body->orientation, V3_Math::multiply(body->forward, angle)));
 
   body->orientation->x = EulerRotation::reset(body->orientation->x, 360.0f);
@@ -86,11 +87,11 @@ float EulerRotation::reset(float angle, float max)
 {
   if (angle >= max)
   {
-    angle = max - angle;
+    angle = angle - max;
   }
   else if (angle < 0.0f)
   {
-    angle = angle + max;
+    angle = max + angle;
   }
 
   return angle;

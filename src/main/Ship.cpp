@@ -10,6 +10,13 @@ Ship::Ship()
   body->update_right(new Vector3(1, 0,  0));
   body->update_look(new Vector3( 0, 0, -100));
 
+  velocity = new Vector3(0, 0, 0);
+  acceleration = new Vector3(ADVANCE_ACCEL, STRAFE_ACCEL, 0);
+
+  model_filename = SHIP_MODEL_PATH;
+  material_path  = SHIP_MATERIAL_PATH;
+  texture_path   = SHIP_TEXTURE_PATH; 
+  
   EulerRotation::yaw(body, 1);
   EulerRotation::yaw(body, -1);
 }
@@ -17,10 +24,14 @@ Ship::Ship()
 Ship::~Ship() 
 {
   delete body;
+  delete velocity;
+  delete acceleration;
 }
 
 void Ship::draw()
 {
+  glPushMatrix();
+  glEnable(GL_TEXTURE_2D);
 
   float mat_diffuse[] = { 0.8, 0.8, 0.0, 1.0 };
   float mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
@@ -31,14 +42,35 @@ void Ship::draw()
   glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
   glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
 
-  glPushMatrix();
-  glTranslatef(body->position->x, body->position->y, body->position->z);
-  glRotatef(body->orientation->x, 1, 0, 0);
-  glRotatef(body->orientation->y, 0, 1, 0);
-  glRotatef(body->orientation->z, 0, 0, 1);
-  glColor3f(1.0f, 0.5f, 0.0f);
-  glutSolidCube(1);
+  glBindTexture(GL_TEXTURE_2D, ship_id);
+
+  float matrix [] = {
+    body->right->x,    body->right->y,    body->right->z,    0.0f,
+    -body->forward->x, -body->forward->y, -body->forward->z, 0.0f,              
+    -body->up->x,      -body->up->y,      -body->up->z,      0.0f,
+    body->position->x, body->position->y, body->position->z, 1.0f
+  };
+
+  glMultMatrixf(matrix);
+
+  glBegin(GL_TRIANGLES);
+  
+  for (size_t i = 0; i < model.size; ++i)
+  {
+      glNormal3f(model.nx.at(i), model.ny.at(i), model.nz.at(i));
+      glTexCoord2f(model.tx.at(i), model.ty.at(i));
+      glVertex3f(model.vx.at(i), model.vy.at(i), model.vz.at(i));
+  }
+  glEnd();
+
+  glDisable(GL_TEXTURE_2D);
   glPopMatrix();
+}
+
+void Ship::load_ship_graphics()
+{
+  ship_id = Util::load_texture(texture_path.c_str());
+  Util::load_model(model_filename.c_str(), material_path.c_str(), model);
 }
 
 void Ship::update_position()

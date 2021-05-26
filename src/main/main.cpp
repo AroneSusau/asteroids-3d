@@ -1,5 +1,3 @@
-#include "../headers/tiny_obj_loader.h"
-
 #if _WIN32
 # include <windows.h>
 #endif
@@ -19,6 +17,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <vector>
 
 #include "../headers/Axis.h"
 #include "../headers/EulerRotation.h"
@@ -39,6 +38,11 @@ Wall*   wall      = world->wall;
 Camera* camera    = world->camera;
 Ship*   ship      = world->ship;
 Skybox* skybox    = world->skybox;
+
+
+
+model_vertex ship_model;
+GLuint ship_id;
 
 void render()
 {
@@ -61,8 +65,7 @@ void render()
 
   skybox->draw();
 
-  ship->draw();
-  
+  ship->draw();  
   wall->draw();
   axis->draw();
 
@@ -147,6 +150,7 @@ void init_app(int *argcp, char **argv)
   float specular0[] = {1.0, 1.0, 1.0, 1.0};
 
   glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+  glShadeModel(GL_SMOOTH); 
   glEnable(GL_LIGHTING);
   
   glLightfv(GL_LIGHT0, GL_AMBIENT, ambient0);
@@ -156,6 +160,7 @@ void init_app(int *argcp, char **argv)
 
   camera->place_camera();
   skybox->load_skybox_textures();
+  ship->load_ship_graphics();
 }
 
 int main(int argc, char **argv)
