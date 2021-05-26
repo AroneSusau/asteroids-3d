@@ -5,8 +5,8 @@
 #define MAX_STRAFE   30
 
 #define MAX_ROLL  100
-#define MAX_PITCH 100
-#define MAX_YAW   40
+#define MAX_PITCH 10
+#define MAX_YAW   10
 
 #define ADVANCE_ACCEL 5
 #define STRAFE_ACCEL  1
@@ -28,7 +28,7 @@
 
 // Wall
 #define WALL_LINES     5.0f
-#define WALL_DIST      100.0f
+#define WALL_DIST      150.0f
 #define WALL_WARN_DIST 0.3f
 
 // Debug Axis
@@ -36,6 +36,6 @@
 #define AXIS_DISTANCE 1000.0f
 
 // MISC
-#define VIEWPORT_DIM 800
+#define VIEWPORT_DIM 880
 #define GAME_TITLE   "Asteroids Assignment 2"
 #define KEY_ESC      27

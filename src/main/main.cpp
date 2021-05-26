@@ -109,6 +109,11 @@ void on_key_release(unsigned char key, int x, int y)
   ship->on_key_release(key, x, y);
 }
 
+void on_mouse_move(int x, int y)
+{
+  mouse->on_mouse_move(x, y);
+}
+
 void init_app(int *argcp, char **argv)
 {
   glutInit(argcp, argv);
@@ -119,6 +124,8 @@ void init_app(int *argcp, char **argv)
 
   glutKeyboardFunc(on_key_press);
   glutKeyboardUpFunc(on_key_release);
+
+  glutPassiveMotionFunc(on_mouse_move);
 
   glutDisplayFunc(on_display);
   glutIdleFunc(on_idle);

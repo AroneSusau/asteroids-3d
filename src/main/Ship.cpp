@@ -83,14 +83,18 @@ void Ship::update_velocity()
   velocity->y += can_accelerate(body->strafe, INCREASE, velocity->y, MAX_STRAFE) ? acceleration->y : 0;
   velocity->y -= can_accelerate(body->strafe, DECREASE, velocity->y, MAX_STRAFE) ? acceleration->y : 0;
 
-  rotation->x += can_accelerate(body->roll, INCREASE, rotation->x, MAX_ROLL) ? acceleration->x : 0;
-  rotation->x -= can_accelerate(body->roll, DECREASE, rotation->x, MAX_ROLL) ? acceleration->x : 0;
+  if (body->roll == INCREASE && rotation->x > -MAX_ROLL)
+  {
+    rotation->x -= acceleration->x;
+  }
 
-  rotation->y += can_accelerate(body->pitch, INCREASE, rotation->y, MAX_PITCH) ? acceleration->x : 0;
-  rotation->y -= can_accelerate(body->pitch, DECREASE, rotation->y, MAX_PITCH) ? acceleration->x : 0;
+  if (body->roll == DECREASE && rotation->x < MAX_ROLL)
+  {
+    rotation->x += acceleration->x;
+  }
 
-  rotation->z -= can_accelerate(body->yaw, DECREASE, rotation->z, MAX_YAW) ? acceleration->x : 0;
-  rotation->z += can_accelerate(body->yaw, INCREASE, rotation->z, MAX_YAW) ? acceleration->x : 0;
+  rotation->y += world->mouse->ratio->y * MAX_PITCH;
+  rotation->z -= world->mouse->ratio->x * MAX_YAW;
 }
 
 void Ship::update_position()
@@ -164,22 +168,6 @@ void Ship::on_key_press(unsigned char key, int x, int y)
     case 's':
       body->advance = DECREASE;
       break;
-    case 'i':
-    case 'I':
-      body->pitch = INCREASE;
-      break;
-    case 'k':
-    case 'K':
-      body->pitch = DECREASE;
-      break;
-    case 'j':
-    case 'J':
-      body->yaw = DECREASE;
-      break;
-    case 'l':
-    case 'L':
-      body->yaw = INCREASE;
-      break;
     case 'q':
     case 'Q':
       body->roll = DECREASE;
@@ -212,22 +200,6 @@ void Ship::on_key_release(unsigned char key, int x, int y)
     case 'S':
     case 's':
       body->advance = NEUTRAL;
-      break;
-    case 'i':
-    case 'I':
-      body->pitch = NEUTRAL;
-      break;
-    case 'k':
-    case 'K':
-      body->pitch = NEUTRAL;
-      break;
-    case 'j':
-    case 'J':
-      body->yaw = NEUTRAL;
-      break;
-    case 'l':
-    case 'L':
-      body->yaw = NEUTRAL;
       break;
     case 'q':
     case 'Q':
