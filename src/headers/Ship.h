@@ -4,6 +4,7 @@
 #include "RigidBody.h"
 #include "Util.h"
 #include "Settings.h"
+#include "Materials.h"
 
 class World;
 
@@ -20,6 +21,8 @@ class Ship
 
     model_vertex model;
 
+    float animation = 0;
+
     std::string model_filename;
     std::string material_path;
     std::string texture_path;
@@ -30,6 +33,7 @@ class Ship
 
     void update_position();
     void update_velocity();
+    void update_animation();
 
     void decelerate();
     bool can_accelerate(move_state_t state, move_state_t expected, float velocity, float clamp);
@@ -37,6 +41,8 @@ class Ship
     void tick();
 
     void draw();
+    void drawWings();
+
     void load_ship_graphics();
 
     void on_key_press(unsigned char key, int x, int y);

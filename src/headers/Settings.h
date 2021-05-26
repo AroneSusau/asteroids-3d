@@ -1,7 +1,7 @@
 #pragma once
 
 // Ship
-#define MAX_ADVANCE  400
+#define MAX_ADVANCE  600
 #define MAX_STRAFE   30
 
 #define MAX_ROLL  100

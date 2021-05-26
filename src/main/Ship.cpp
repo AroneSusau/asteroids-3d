@@ -35,15 +35,7 @@ void Ship::draw()
   glPushMatrix();
   glEnable(GL_TEXTURE_2D);
 
-  float mat_diffuse[] = { 0.8, 0.8, 0.0, 1.0 };
-  float mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-  float mat_shininess[] = { 100.0 };
-
-  // setup materials
-  glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-  glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-  glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
-
+  Materials::ship();
   glBindTexture(GL_TEXTURE_2D, ship_id);
 
   float matrix [] = {
@@ -54,18 +46,68 @@ void Ship::draw()
   };
 
   glMultMatrixf(matrix);
+  glRotatef(35 * world->mouse->ratio->y, 1, 0, 0);
+  glRotatef(-35 * world->mouse->ratio->x, 0, 1, 0);
 
   glBegin(GL_TRIANGLES);
   
   for (size_t i = 0; i < model.size; ++i)
   {
-      glNormal3f(model.nx.at(i), model.ny.at(i), model.nz.at(i));
       glTexCoord2f(model.tx.at(i), model.ty.at(i));
+      glNormal3f(model.nx.at(i), model.ny.at(i), model.nz.at(i));
       glVertex3f(model.vx.at(i), model.vy.at(i), model.vz.at(i));
   }
-  glEnd();
 
+  glEnd();
   glDisable(GL_TEXTURE_2D);
+
+  drawWings();
+  glPopMatrix();
+}
+
+void Ship::drawWings()
+{
+  
+  Materials::brass();
+  glPushMatrix();
+  glRotatef(-12, 1, 0, 0);
+    glRotatef(-25, 0, 1, 0);
+    glPushMatrix();
+      glTranslatef(2.9 * animation, -0.2, -0.2);
+      glScalef(4.0 * animation, 0.7 * animation, 0.05);
+      glutSolidCube(1.0);
+    glPopMatrix();
+  glPopMatrix();
+
+  glPushMatrix();
+    glRotatef(-12, 1, 0, 0);
+    glRotatef(25, 0, 1, 0);
+    glPushMatrix();
+      glTranslatef(-2.9 * animation, -0.2, -0.2);
+      glScalef(-4.0 * animation, -0.7 * animation, -0.05);
+      glutSolidCube(1.0);
+    glPopMatrix();
+  glPopMatrix();
+
+  Materials::jade();
+  glPushMatrix();
+  glRotatef(-4, 1, 0, 0);
+    glRotatef(13, 0, 1, 0);
+    glPushMatrix();
+      glTranslatef(2.0 * animation, 0.0, 0.0);
+      glScalef(4.0 * animation, 0.4 * animation, 0.05);
+      glutSolidCube(1.0);
+    glPopMatrix();
+  glPopMatrix();
+
+  glPushMatrix();
+  glRotatef(-4, 1, 0, 0);
+    glRotatef(-13, 0, 1, 0);
+    glPushMatrix();
+      glTranslatef(-2.0 * animation, 0.0, 0.0);
+      glScalef(-4.0 * animation, -0.4 * animation, -0.05);
+      glutSolidCube(1.0);
+    glPopMatrix();
   glPopMatrix();
 }
 
@@ -109,6 +151,11 @@ void Ship::update_position()
   body->update_look(V3_Math::add(body->position, body->forward));
 }
 
+void Ship::update_animation()
+{
+  animation = velocity->x / MAX_ADVANCE;
+}
+
 bool Ship::can_accelerate(move_state_t state, move_state_t expected, float velocity, float clamp)
 {
   return (
@@ -145,6 +192,7 @@ void Ship::tick()
 {
   update_velocity();
   update_position();
+  update_animation();
   decelerate();
 }
 

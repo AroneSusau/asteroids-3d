@@ -26,14 +26,4 @@ void Mouse::update_move_vector()
 {
   ratio->x = (position->x - VIEWPORT_DIM/2) / (VIEWPORT_DIM/2);
   ratio->y = -(position->y - VIEWPORT_DIM/2) / (VIEWPORT_DIM/2);
-
-  if (ratio->x > -0.2 && ratio->x < 0.2)
-  {
-    ratio->x = 0;
-  }
-
-  if (ratio->y > -0.2 && ratio->y < 0.2)
-  {
-    ratio->y = 0;
-  }
 }
