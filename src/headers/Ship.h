@@ -16,6 +16,7 @@ class Ship
     
     Vector3* velocity;
     Vector3* acceleration;
+    Vector3* rotation;
 
     model_vertex model;
 
@@ -28,7 +29,13 @@ class Ship
     ~Ship();
 
     void update_position();
-    
+    void update_velocity();
+
+    void decelerate();
+    bool can_accelerate(move_state_t state, move_state_t expected, float velocity, float clamp);
+
+    void tick();
+
     void draw();
     void load_ship_graphics();
 

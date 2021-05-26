@@ -21,6 +21,7 @@
 
 #include "../headers/Axis.h"
 #include "../headers/EulerRotation.h"
+#include "../headers/Mouse.h"
 #include "../headers/Settings.h"
 #include "../headers/Time.h"
 #include "../headers/Util.h"
@@ -31,6 +32,7 @@ World*    world     = new World();
 
 Axis*     axis      = world->axis;
 Lighting* lighting  = world->lighting;
+Mouse*    mouse     = world->mouse;
 Time*     game_time = world->time;
 Wall*     wall      = world->wall;
 
@@ -41,8 +43,8 @@ Skybox*   skybox    = world->skybox;
 void render()
 {
   game_time->tick();
-  
-  ship->update_position();
+  ship->tick();
+
   camera->place_camera();
 
   lighting->world_lighting();

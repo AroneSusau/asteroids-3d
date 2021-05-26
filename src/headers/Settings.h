@@ -1,12 +1,22 @@
 #pragma once
 
 // Ship
-#define MAX_ADVANCE  200
-#define MAX_STRAFE   100
-#define MAX_ROTATION 100
+#define MAX_ADVANCE  400
+#define MAX_STRAFE   30
+
+#define MAX_ROLL  100
+#define MAX_PITCH 100
+#define MAX_YAW   40
 
 #define ADVANCE_ACCEL 5
 #define STRAFE_ACCEL  1
+
+#define ADVANCE_DECELERATION 0.99
+#define STRAFE_DECELERATION  0.9
+
+#define ROLL_DECELERATION  0.9
+#define PITCH_DECELERATION 0.9
+#define YAW_DECELERATION   0.9
 
 #define SHIP_MATERIAL_PATH "assets/ship/"
 #define SHIP_MODEL_PATH "assets/ship/ship.obj"

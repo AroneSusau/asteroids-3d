@@ -4,6 +4,7 @@ World::World()
 {
   axis     = new Axis(AXIS_DISTANCE, AXIS_ACTIVE);
   lighting = new Lighting();
+  mouse    = new Mouse();
   time     = new Time();
   wall     = new Wall(WALL_LINES, WALL_DIST, WALL_WARN_DIST);
   
@@ -20,6 +21,7 @@ World::~World() {
   delete axis;
   delete camera;
   delete lighting;
+  delete mouse;
   delete ship;
   delete skybox;
   delete time;

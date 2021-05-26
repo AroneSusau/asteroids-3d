@@ -11,6 +11,7 @@ Ship::Ship()
   body->update_look(new Vector3( 0, 0, -100));
 
   velocity = new Vector3(0, 0, 0);
+  rotation = new Vector3(0, 0, 0);
   acceleration = new Vector3(ADVANCE_ACCEL, STRAFE_ACCEL, 0);
 
   model_filename = SHIP_MODEL_PATH;
@@ -26,6 +27,7 @@ Ship::~Ship()
   delete body;
   delete velocity;
   delete acceleration;
+  delete rotation;
 }
 
 void Ship::draw()
@@ -73,59 +75,73 @@ void Ship::load_ship_graphics()
   Util::load_model(model_filename.c_str(), material_path.c_str(), model);
 }
 
+void Ship::update_velocity() 
+{
+  velocity->x += can_accelerate(body->advance, INCREASE, velocity->x, MAX_ADVANCE) ? acceleration->x : 0;
+  velocity->x -= can_accelerate(body->advance, DECREASE, velocity->x, 0) ? acceleration->x : 0;
+
+  velocity->y += can_accelerate(body->strafe, INCREASE, velocity->y, MAX_STRAFE) ? acceleration->y : 0;
+  velocity->y -= can_accelerate(body->strafe, DECREASE, velocity->y, MAX_STRAFE) ? acceleration->y : 0;
+
+  rotation->x += can_accelerate(body->roll, INCREASE, rotation->x, MAX_ROLL) ? acceleration->x : 0;
+  rotation->x -= can_accelerate(body->roll, DECREASE, rotation->x, MAX_ROLL) ? acceleration->x : 0;
+
+  rotation->y += can_accelerate(body->pitch, INCREASE, rotation->y, MAX_PITCH) ? acceleration->x : 0;
+  rotation->y -= can_accelerate(body->pitch, DECREASE, rotation->y, MAX_PITCH) ? acceleration->x : 0;
+
+  rotation->z -= can_accelerate(body->yaw, DECREASE, rotation->z, MAX_YAW) ? acceleration->x : 0;
+  rotation->z += can_accelerate(body->yaw, INCREASE, rotation->z, MAX_YAW) ? acceleration->x : 0;
+}
+
 void Ship::update_position()
 {
-  if (body->advance == INCREASE)
-  {
-    EulerRotation::advance(body, MAX_ADVANCE * world->time->delta);
-  }
-  
-  if (body->advance == DECREASE)
-  {
-    EulerRotation::advance(body, -MAX_ADVANCE * world->time->delta);
-  }
-  
-  if (body->strafe == INCREASE)
-  {
-    EulerRotation::strafe(body, MAX_STRAFE * world->time->delta);
-  }
-  
-  if (body->strafe == DECREASE)
-  {
-    EulerRotation::strafe(body, -MAX_STRAFE * world->time->delta);
-  }
+  EulerRotation::advance(body, velocity->x * world->time->delta);
+  EulerRotation::strafe(body, velocity->y * world->time->delta);
 
-  if (body->pitch == INCREASE)
-  {
-    EulerRotation::pitch(body, MAX_ROTATION * world->time->delta);
-  }
-
-  if (body->pitch == DECREASE)
-  {
-    EulerRotation::pitch(body, -MAX_ROTATION * world->time->delta);
-  }
-
-  if (body->yaw == INCREASE)
-  {
-    EulerRotation::yaw(body, -MAX_ROTATION * world->time->delta);
-  }
-
-  if (body->yaw == DECREASE)
-  {
-    EulerRotation::yaw(body, MAX_ROTATION * world->time->delta);
-  }
-
-  if (body->roll == INCREASE)
-  {
-    EulerRotation::roll(body, -MAX_ROTATION * world->time->delta);
-  }
-
-  if (body->roll == DECREASE)
-  {
-    EulerRotation::roll(body, MAX_ROTATION * world->time->delta);
-  }
+  EulerRotation::roll(body, rotation->x * world->time->delta);
+  EulerRotation::pitch(body, rotation->y * world->time->delta);
+  EulerRotation::yaw(body, rotation->z * world->time->delta);
 
   body->update_look(V3_Math::add(body->position, body->forward));
+}
+
+bool Ship::can_accelerate(move_state_t state, move_state_t expected, float velocity, float clamp)
+{
+  return (
+    (expected == INCREASE && state == expected && velocity < clamp) || 
+    (expected == DECREASE && state == expected && velocity > -clamp)
+  );
+}
+
+void Ship::decelerate()
+{
+
+  if (body->strafe == NEUTRAL)
+  {
+    velocity->y *= STRAFE_DECELERATION;
+  }
+
+  if (body->roll == NEUTRAL)
+  {
+    rotation->x *= ROLL_DECELERATION;
+  }
+
+  if (body->pitch == NEUTRAL)
+  {
+    rotation->y *= PITCH_DECELERATION;
+  }
+
+  if (body->yaw == NEUTRAL)
+  {
+    rotation->z *= YAW_DECELERATION;
+  }
+}
+
+void Ship::tick()
+{
+  update_velocity();
+  update_position();
+  decelerate();
 }
 
 void Ship::on_key_press(unsigned char key, int x, int y)
