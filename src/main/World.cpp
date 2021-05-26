@@ -4,7 +4,7 @@ World::World()
 {
   axis   = new Axis(AXIS_DISTANCE, AXIS_ACTIVE);
   time   = new Time();
-  wall   = new Wall(WALL_LIM, WALL_DIST, WALL_RATIO);
+  wall   = new Wall(WALL_LINES, WALL_DIST, WALL_WARN_DIST);
   
   camera = new Camera();
   ship   = new Ship();

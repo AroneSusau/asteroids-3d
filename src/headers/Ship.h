@@ -2,6 +2,7 @@
 
 #include "World.h"
 #include "RigidBody.h"
+#include "Settings.h"
 
 class World;
 

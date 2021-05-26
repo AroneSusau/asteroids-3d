@@ -55,3 +55,10 @@ void RigidBody::update_look(Vector3* other)
   look->y = other->y;
   look->z = other->z;
 }
+
+void RigidBody::update_orientation(Vector3* other)
+{
+  orientation->x = other->x;
+  orientation->y = other->y;
+  orientation->z = other->z;
+}

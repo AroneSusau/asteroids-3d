@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 class Vector3
 {
 
@@ -19,6 +21,11 @@ class Vector3
       x(o.x),
       y(o.y),
       z(o.z) {}
+
+    std::string to_string()
+    {
+      return std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z);
+    }
 
     ~Vector3() {}
 };

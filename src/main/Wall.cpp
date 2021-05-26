@@ -45,6 +45,7 @@ void Wall::update_wall_color()
 
 void Wall::draw() 
 {
+  glDisable(GL_LIGHTING);
   glBegin(GL_LINES);
   for (int i = -line_count; i <= line_count; ++i)
   {
@@ -97,4 +98,5 @@ void Wall::draw()
     glVertex3f(line_space * line_count, -line_space * line_count, i * line_space);
   }
   glEnd();
+  glEnable(GL_LIGHTING);
 }

@@ -57,9 +57,12 @@ void render()
   glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
   glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
+  glEnable(GL_LIGHT0);
+
   skybox->draw();
 
   ship->draw();
+  
   wall->draw();
   axis->draw();
 
@@ -99,7 +102,7 @@ void on_reshape(int w, int h)
   glViewport(0, 0, w, h);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  gluPerspective(45.0, 1.0, 1.0, 1000.0);
+  gluPerspective(60.0, 1.0, 1.0, 2000.0);
 }
 
 void on_key_press(unsigned char key, int x, int y)
@@ -150,9 +153,6 @@ void init_app(int *argcp, char **argv)
   glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse0);
   glLightfv(GL_LIGHT0, GL_SPECULAR, specular0);
   glEnable(GL_LIGHT0);
-
-  glEnable(GL_DEPTH_TEST);
-  glShadeModel(GL_FLAT);
 
   camera->place_camera();
   skybox->load_skybox_textures();

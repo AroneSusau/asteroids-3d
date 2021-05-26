@@ -33,9 +33,9 @@ void Ship::draw()
 
   glPushMatrix();
   glTranslatef(body->position->x, body->position->y, body->position->z);
+  glRotatef(body->orientation->x, 1, 0, 0);
   glRotatef(body->orientation->y, 0, 1, 0);
   glRotatef(body->orientation->z, 0, 0, 1);
-  glRotatef(body->orientation->x, 1, 0, 0);
   glColor3f(1.0f, 0.5f, 0.0f);
   glutSolidCube(1);
   glPopMatrix();
@@ -43,57 +43,54 @@ void Ship::draw()
 
 void Ship::update_position()
 {
-  float move_speed = 45;
-  float rotation_speed = 45;
-
   if (body->advance == INCREASE)
   {
-    EulerRotation::advance(body, move_speed * world->time->delta);
+    EulerRotation::advance(body, MAX_ADVANCE * world->time->delta);
   }
   
   if (body->advance == DECREASE)
   {
-    EulerRotation::advance(body, -move_speed * world->time->delta);
+    EulerRotation::advance(body, -MAX_ADVANCE * world->time->delta);
   }
   
   if (body->strafe == INCREASE)
   {
-    EulerRotation::strafe(body, move_speed * world->time->delta);
+    EulerRotation::strafe(body, MAX_STRAFE * world->time->delta);
   }
   
   if (body->strafe == DECREASE)
   {
-    EulerRotation::strafe(body, -move_speed * world->time->delta);
+    EulerRotation::strafe(body, -MAX_STRAFE * world->time->delta);
   }
 
   if (body->pitch == INCREASE)
   {
-    EulerRotation::pitch(body, rotation_speed * world->time->delta);
+    EulerRotation::pitch(body, MAX_ROTATION * world->time->delta);
   }
 
   if (body->pitch == DECREASE)
   {
-    EulerRotation::pitch(body, -rotation_speed * world->time->delta);
+    EulerRotation::pitch(body, -MAX_ROTATION * world->time->delta);
   }
 
   if (body->yaw == INCREASE)
   {
-    EulerRotation::yaw(body, -rotation_speed * world->time->delta);
+    EulerRotation::yaw(body, -MAX_ROTATION * world->time->delta);
   }
 
   if (body->yaw == DECREASE)
   {
-    EulerRotation::yaw(body, rotation_speed * world->time->delta);
+    EulerRotation::yaw(body, MAX_ROTATION * world->time->delta);
   }
 
   if (body->roll == INCREASE)
   {
-    EulerRotation::roll(body, -rotation_speed * world->time->delta);
+    EulerRotation::roll(body, -MAX_ROTATION * world->time->delta);
   }
 
   if (body->roll == DECREASE)
   {
-    EulerRotation::roll(body, rotation_speed * world->time->delta);
+    EulerRotation::roll(body, MAX_ROTATION * world->time->delta);
   }
 
   body->update_look(V3_Math::add(body->position, body->forward));

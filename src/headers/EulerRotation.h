@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 #include "Vector3.h"
 #include "V3_Math.h"
 #include "RigidBody.h"
@@ -20,5 +22,6 @@ class EulerRotation
     static void pitch(RigidBody* body, float angle);
     static void roll(RigidBody* body, float angle);
 
+    static void rotate(RigidBody* body, float angle);
     static float reset(float angle, float max);
 };

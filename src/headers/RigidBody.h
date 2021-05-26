@@ -36,4 +36,5 @@ class RigidBody
     void update_up(Vector3* other);
     void update_right(Vector3* other);
     void update_look(Vector3* other);
+    void update_orientation(Vector3* other);
 };

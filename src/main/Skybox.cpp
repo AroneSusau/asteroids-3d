@@ -2,12 +2,12 @@
 
 Skybox::Skybox()
 {
-  filenames[0] = "skybox/front.png";
-  filenames[1] = "skybox/back.png";
-  filenames[2] = "skybox/left.png";
-  filenames[3] = "skybox/right.png";
-  filenames[4] = "skybox/top.png";
-  filenames[5] = "skybox/bot.png";
+  filenames[0] = "assets/skybox/front.png";
+  filenames[1] = "assets/skybox/back.png";
+  filenames[2] = "assets/skybox/left.png";
+  filenames[3] = "assets/skybox/right.png";
+  filenames[4] = "assets/skybox/top.png";
+  filenames[5] = "assets/skybox/bot.png";
 }
 
 Skybox::~Skybox()
@@ -15,34 +15,131 @@ Skybox::~Skybox()
 
 void Skybox::draw()
 {
-  float mat_ambient[] = { 0.6, 0.6, 0.6, 1.0 };
+  float scale = 2.0f;
+  float mat_ambient[] = { 1.0, 1.0, 1.0, 1.0 };
   float mat_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
   float mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
   float mat_shininess[] = { 100.0 };
-
-  glEnable(GL_TEXTURE_2D);
-  glDisable(GL_DEPTH_TEST);
 
   glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
   glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
   glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
   glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
 
+  glEnable(GL_TEXTURE_2D);
+  glDisable(GL_DEPTH_TEST);
+  
+  glPushMatrix();
+  
+  glTranslatef(world->camera->body->position->x, world->camera->body->position->y, world->camera->body->position->z);
+
   glBindTexture(GL_TEXTURE_2D, textures[0]);
+
+  glBegin(GL_QUADS);
+  glNormal3f(0, 0, 1);
+  
+  glTexCoord2f(0, 0);
+  glVertex3f(-scale, -scale, scale);
+
+  glTexCoord2f(1, 0);
+  glVertex3f(scale, -scale, scale);
+
+  glTexCoord2f(1, 1);
+  glVertex3f(scale, scale, scale);
+
+  glTexCoord2f(0, 1);
+  glVertex3f(-scale, scale, scale);
+  glEnd();
+
+  glBindTexture(GL_TEXTURE_2D, textures[1]);
+
+  glBegin(GL_QUADS);
+  glNormal3f(0, 0, 1);
+  glTexCoord2f(1, 0);
+  glVertex3f(-scale, -scale, -scale);
+
+  glTexCoord2f(0, 0);
+  glVertex3f(scale, -scale, -scale);
+
+  glTexCoord2f(0, 1);
+  glVertex3f(scale, scale, -scale);
+
+  glTexCoord2f(1, 1);
+  glVertex3f(-scale, scale, -scale);
+  glEnd();
+
+  glBindTexture(GL_TEXTURE_2D, textures[2]);
+
+  glBegin(GL_QUADS);
+  glNormal3f(0, 0, 1);
+  
+  glTexCoord2f(0, 0);
+  glVertex3f(-scale, -scale, -scale);
+
+  glTexCoord2f(0, 1);
+  glVertex3f(-scale, scale, -scale);
+
+  glTexCoord2f(1, 1);
+  glVertex3f(-scale, scale, scale);
+
+  glTexCoord2f(1, 0);
+  glVertex3f(-scale, -scale, scale);
+  glEnd();
+
+  glBindTexture(GL_TEXTURE_2D, textures[3]);
+
+  glBegin(GL_QUADS);
+  glNormal3f(0, 0, 1);
+  
+  glTexCoord2f(1, 0);
+  glVertex3f(scale, -scale, -scale);
+
+  glTexCoord2f(1, 1);
+  glVertex3f(scale, scale, -scale);
+
+  glTexCoord2f(0, 1);
+  glVertex3f(scale, scale, scale);
+  
+  glTexCoord2f(0, 0);
+  glVertex3f(scale, -scale, scale);
+  glEnd();
+
+  glBindTexture(GL_TEXTURE_2D, textures[4]);
+
   glBegin(GL_QUADS);
   glNormal3f(0, 0, 1);
   glTexCoord2f(0, 0);
-  glVertex3f(world->camera->body->position->x - 1, world->camera->body->position->y - 1, world->camera->body->position->z - 1);
+  glVertex3f(-scale, -scale, -scale);
 
   glTexCoord2f(1, 0);
-  glVertex3f(world->camera->body->position->x + 1, world->camera->body->position->y - 1, world->camera->body->position->z - 1);
+  glVertex3f(scale, -scale, -scale);
 
   glTexCoord2f(1, 1);
-  glVertex3f(world->camera->body->position->x + 1, world->camera->body->position->y + 1, world->camera->body->position->z - 1);
+  glVertex3f(scale, -scale, scale);
 
   glTexCoord2f(0, 1);
-  glVertex3f(world->camera->body->position->x - 1, world->camera->body->position->y + 1, world->camera->body->position->z - 1);
+  glVertex3f(-scale, -scale, scale);
   glEnd();
+
+  glBindTexture(GL_TEXTURE_2D, textures[5]);
+
+  glBegin(GL_QUADS);
+  glNormal3f(0, 0, 1);
+  
+  glTexCoord2f(0, 1);
+  glVertex3f(-scale, scale, -scale);
+
+  glTexCoord2f(1, 1);
+  glVertex3f(scale, scale, -scale);
+  
+  glTexCoord2f(1, 0);
+  glVertex3f(scale, scale, scale);
+
+  glTexCoord2f(0, 0);
+  glVertex3f(-scale, scale, scale);
+  glEnd();
+
+  glPopMatrix();
 
   glEnable(GL_DEPTH_TEST);
   glDisable(GL_TEXTURE_2D);
