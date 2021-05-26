@@ -27,22 +27,16 @@
 #include "../headers/Wall.h"
 #include "../headers/World.h"
 
-#define KEY_ESC 27
+World*    world     = new World();
 
-World* world      = new World();
+Axis*     axis      = world->axis;
+Lighting* lighting  = world->lighting;
+Time*     game_time = world->time;
+Wall*     wall      = world->wall;
 
-Axis*   axis      = world->axis;
-Time*   game_time = world->time;
-Wall*   wall      = world->wall;
-
-Camera* camera    = world->camera;
-Ship*   ship      = world->ship;
-Skybox* skybox    = world->skybox;
-
-
-
-model_vertex ship_model;
-GLuint ship_id;
+Camera*   camera    = world->camera;
+Ship*     ship      = world->ship;
+Skybox*   skybox    = world->skybox;
 
 void render()
 {
@@ -51,17 +45,7 @@ void render()
   ship->update_position();
   camera->place_camera();
 
-  GLfloat light_ambient[] = { 0.5, 0.5, 0.5, 0.5 };
-  GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
-  GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-  GLfloat light_position[] = { 1.0, 1.0, 1.0, 0.0 };
-
-  glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
-  glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-  glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
-  glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-
-  glEnable(GL_LIGHT0);
+  lighting->world_lighting();
 
   skybox->draw();
 
@@ -127,8 +111,8 @@ void init_app(int *argcp, char **argv)
 {
   glutInit(argcp, argv);
   glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
-  glutInitWindowSize(800, 800);
-  glutCreateWindow("Asteroids Assignment 2");
+  glutInitWindowSize(VIEWPORT_DIM, VIEWPORT_DIM);
+  glutCreateWindow(GAME_TITLE);
   glutReshapeFunc(on_reshape);
 
   glutKeyboardFunc(on_key_press);
@@ -137,27 +121,7 @@ void init_app(int *argcp, char **argv)
   glutDisplayFunc(on_display);
   glutIdleFunc(on_idle);
 
-  glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
-  glEnable(GL_LIGHTING);
-
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-  glEnable(GL_NORMALIZE);
-
-  float ambient0[] = {1.0, 1.0, 1.0, 1.0};
-  float diffuse0[] = {1.0, 1.0, 1.0, 1.0};
-  float specular0[] = {1.0, 1.0, 1.0, 1.0};
-
-  glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
-  glShadeModel(GL_SMOOTH); 
-  glEnable(GL_LIGHTING);
-  
-  glLightfv(GL_LIGHT0, GL_AMBIENT, ambient0);
-  glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse0);
-  glLightfv(GL_LIGHT0, GL_SPECULAR, specular0);
-  glEnable(GL_LIGHT0);
-
+  lighting->init();
   camera->place_camera();
   skybox->load_skybox_textures();
   ship->load_ship_graphics();

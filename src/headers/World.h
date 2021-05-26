@@ -3,6 +3,7 @@
 #include "Axis.h"
 #include "Camera.h"
 #include "EulerRotation.h"
+#include "Lighting.h"
 #include "Ship.h"
 #include "Settings.h"
 #include "Skybox.h"
@@ -19,6 +20,7 @@ class World
 
     Axis* axis;
     Camera* camera;
+    Lighting* lighting;
     Ship* ship;
     Skybox* skybox;
     Time* time;

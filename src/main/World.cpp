@@ -2,9 +2,10 @@
 
 World::World() 
 {
-  axis   = new Axis(AXIS_DISTANCE, AXIS_ACTIVE);
-  time   = new Time();
-  wall   = new Wall(WALL_LINES, WALL_DIST, WALL_WARN_DIST);
+  axis     = new Axis(AXIS_DISTANCE, AXIS_ACTIVE);
+  lighting = new Lighting();
+  time     = new Time();
+  wall     = new Wall(WALL_LINES, WALL_DIST, WALL_WARN_DIST);
   
   camera = new Camera();
   ship   = new Ship();
@@ -18,6 +19,7 @@ World::World()
 World::~World() {
   delete axis;
   delete camera;
+  delete lighting;
   delete ship;
   delete skybox;
   delete time;

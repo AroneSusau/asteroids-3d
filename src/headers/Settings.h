@@ -24,3 +24,8 @@
 // Debug Axis
 #define AXIS_ACTIVE   true
 #define AXIS_DISTANCE 1000.0f
+
+// MISC
+#define VIEWPORT_DIM 800
+#define GAME_TITLE   "Asteroids Assignment 2"
+#define KEY_ESC      27
