@@ -12,6 +12,7 @@ void Axis::draw()
 {
   if (active)
   {
+    glDisable(GL_FOG);
     glDisable(GL_LIGHTING);
     glBegin(GL_LINES);
       glColor3f(1.0f, 0.0f, 0.0f);
@@ -27,5 +28,6 @@ void Axis::draw()
       glVertex3f(0, 0, distance);
     glEnd();
     glEnable(GL_LIGHTING);
+    glEnable(GL_FOG);
   }
 }

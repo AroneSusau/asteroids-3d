@@ -46,16 +46,16 @@ void Ship::draw()
   };
 
   glMultMatrixf(matrix);
-  glRotatef(35 * world->mouse->ratio->y, 1, 0, 0);
-  glRotatef(-35 * world->mouse->ratio->x, 0, 1, 0);
+  glRotatef(55 * world->mouse->ratio->y * animation, 1, 0, 0);
+  glRotatef(-70 * world->mouse->ratio->x * animation, 0, 1, 0);
 
   glBegin(GL_TRIANGLES);
   
   for (size_t i = 0; i < model.size; ++i)
   {
-      glTexCoord2f(model.tx.at(i), model.ty.at(i));
-      glNormal3f(model.nx.at(i), model.ny.at(i), model.nz.at(i));
-      glVertex3f(model.vx.at(i), model.vy.at(i), model.vz.at(i));
+    glTexCoord2f(model.tx.at(i), model.ty.at(i));
+    glNormal3f(model.nx.at(i), model.ny.at(i), model.nz.at(i));
+    glVertex3f(model.vx.at(i), model.vy.at(i), model.vz.at(i));
   }
 
   glEnd();
@@ -67,7 +67,6 @@ void Ship::draw()
 
 void Ship::drawWings()
 {
-  
   Materials::brass();
   glPushMatrix();
   glRotatef(-12, 1, 0, 0);
@@ -120,7 +119,7 @@ void Ship::load_ship_graphics()
 void Ship::update_velocity() 
 {
   velocity->x += can_accelerate(body->advance, INCREASE, velocity->x, MAX_ADVANCE) ? acceleration->x : 0;
-  velocity->x -= can_accelerate(body->advance, DECREASE, velocity->x, 0) ? acceleration->x : 0;
+  velocity->x -= can_accelerate(body->advance, DECREASE, velocity->x, 0) ? acceleration->x * 0.5 : 0;
 
   velocity->y += can_accelerate(body->strafe, INCREASE, velocity->y, MAX_STRAFE) ? acceleration->y : 0;
   velocity->y -= can_accelerate(body->strafe, DECREASE, velocity->y, MAX_STRAFE) ? acceleration->y : 0;
@@ -166,6 +165,11 @@ bool Ship::can_accelerate(move_state_t state, move_state_t expected, float veloc
 
 void Ship::decelerate()
 {
+
+  if (body->advance == NEUTRAL)
+  {
+    velocity->x *= ADVANCE_DECELERATION;
+  }
 
   if (body->strafe == NEUTRAL)
   {

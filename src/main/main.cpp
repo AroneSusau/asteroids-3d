@@ -91,7 +91,7 @@ void on_reshape(int w, int h)
   glViewport(0, 0, w, h);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  gluPerspective(60.0, 1.0, 1.0, 2000.0);
+  gluPerspective(CAMREA_FOV, 1.0, 1.0, CAMREA_FAR);
 }
 
 void on_key_press(unsigned char key, int x, int y)
