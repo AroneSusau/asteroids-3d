@@ -37,8 +37,10 @@ class Bullet
     bool out_of_bounds;
     bool collide;
 
+    int texture;
+
     Bullet();
-    Bullet(World* world, Vector3* position, Vector3* velocity);
+    Bullet(World* world, Vector3* position, Vector3* velocity, int texture);
     ~Bullet();
 
     void draw();

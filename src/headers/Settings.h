@@ -33,6 +33,7 @@
 
 // Asteroid
 #define ASTEROID_DIVISIONS 15
+#define ASTEROID_ACTIVE true
 #define ASTEROID_TEXT_1 "assets/asteroids/asteroid1.jpg"
 #define ASTEROID_TEXT_2 "assets/asteroids/asteroid2.jpg"
 #define ASTEROID_TEXT_3 "assets/asteroids/asteroid3.jpg"

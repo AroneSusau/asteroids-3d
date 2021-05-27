@@ -65,9 +65,9 @@ void Cannon::fire()
     Vector3* pos = V3_Math::add(body->position, V3_Math::multiply(ship->body->forward, 5));
     Vector3* vel = V3_Math::add(V3_Math::multiply(ship->body->forward, ship->velocity->x), V3_Math::multiply(ship->body->forward, bullet_velocity));
 
-    Bullet* b = new Bullet(world, pos, vel);
+    Bullet* b = new Bullet(world, pos, vel, bullet_texture_id);
 
-    bullets->push_back(b);
+    bullets->insert(bullets->begin(), b);
     next_fire = rate_of_fire;
 
     delete pos;

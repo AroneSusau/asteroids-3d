@@ -11,7 +11,7 @@ Bullet::Bullet()
   collide       = false;
 }
 
-Bullet::Bullet(World* world, Vector3* position, Vector3* velocity)
+Bullet::Bullet(World* world, Vector3* position, Vector3* velocity, int texture)
 {
   this->body     = new RigidBody();
   this->velocity = velocity;

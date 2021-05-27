@@ -9,7 +9,7 @@ AsteroidGenerator::AsteroidGenerator(World* world)
   spawn_rate = 5;
   next_spawn = 0;
   spawn_amount = 1;
-  spawn_active = true;
+  spawn_active = ASTEROID_ACTIVE;
 }
 
 AsteroidGenerator::~AsteroidGenerator()
