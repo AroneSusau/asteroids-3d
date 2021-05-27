@@ -78,7 +78,7 @@ void Wall::draw()
     glVertex3f(-line_space * line_count, i * line_space, -line_space * line_count);
     glVertex3f(-line_space * line_count, i * line_space, line_space * line_count);
 
-    glVertex3f(-line_space * line_count, -line_space * line_count, i * line_space);
+  glVertex3f(-line_space * line_count, -line_space * line_count, i * line_space);
     glVertex3f(-line_space * line_count, line_space * line_count, i * line_space);
 
     // top

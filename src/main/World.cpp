@@ -2,11 +2,12 @@
 
 World::World() 
 {
-  axis     = new Axis(AXIS_DISTANCE, AXIS_ACTIVE);
-  lighting = new Lighting();
-  mouse    = new Mouse();
-  time     = new Time();
-  wall     = new Wall(WALL_LINES, WALL_DIST, WALL_WARN_DIST);
+  asteroid_generator = new AsteroidGenerator(this);
+  axis               = new Axis(AXIS_DISTANCE, AXIS_ACTIVE);
+  lighting           = new Lighting();
+  mouse              = new Mouse(this);
+  time               = new Time();
+  wall               = new Wall(WALL_LINES, WALL_DIST, WALL_WARN_DIST);
   
   camera = new Camera();
   ship   = new Ship(this);
@@ -14,9 +15,13 @@ World::World()
   
   camera->world = this;
   skybox->world = this;
+
+  viewport_width = VIEWPORT_DIM;
+  viewport_height = VIEWPORT_DIM;
 }
 
 World::~World() {
+  delete asteroid_generator;
   delete axis;
   delete camera;
   delete lighting;

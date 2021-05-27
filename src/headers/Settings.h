@@ -31,11 +31,14 @@
 #define SHIP_TEXTURE_PATH   "assets/ship/ship.png"
 #define BULLET_TEXTURE_PATH "assets/bullets/fireball.png"
 
+// Asteroid
+#define ASTEROID_DIVISIONS 50
+
 // Camera
 #define CAMERA_BACK_DIST  10
+#define CAMREA_UP_DIST    6
 #define CAMERA_BACK_DELAY 10
-#define CAMREA_UP_DIST    4
-#define CAMREA_FOV        80
+#define CAMREA_FOV        90
 #define CAMREA_FAR        25000
 
 // Wall
@@ -45,7 +48,7 @@
 #define WALL_WARN_DIST  0.3f
 
 // Debug Axis
-#define AXIS_ACTIVE   true
+#define AXIS_ACTIVE   false
 #define AXIS_DISTANCE 5000.0f
 
 // MISC

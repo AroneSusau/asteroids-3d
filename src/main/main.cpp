@@ -28,17 +28,18 @@
 #include "../headers/Wall.h"
 #include "../headers/World.h"
 
-World*    world     = new World();
+World*    world                       = new World();
 
-Axis*     axis      = world->axis;
-Lighting* lighting  = world->lighting;
-Mouse*    mouse     = world->mouse;
-Time*     game_time = world->time;
-Wall*     wall      = world->wall;
-
-Camera*   camera    = world->camera;
-Ship*     ship      = world->ship;
-Skybox*   skybox    = world->skybox;
+AsteroidGenerator* asteroid_generator = world->asteroid_generator;
+Axis*     axis                        = world->axis;
+Lighting* lighting                    = world->lighting;
+Mouse*    mouse                       = world->mouse;
+Time*     game_time                   = world->time;
+Wall*     wall                        = world->wall;
+                  
+Camera*   camera                      = world->camera;
+Ship*     ship                        = world->ship;
+Skybox*   skybox                      = world->skybox;
 
 void render()
 {
@@ -91,9 +92,13 @@ void on_display()
 void on_reshape(int w, int h)
 {
   glViewport(0, 0, w, h);
+
+  world->viewport_width = w;
+  world->viewport_height = h;
+
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  gluPerspective(CAMREA_FOV, 1.0, 1.0, CAMREA_FAR);
+  gluPerspective(CAMREA_FOV, w / h, 1, CAMREA_FAR);
 }
 
 void on_key_press(unsigned char key, int x, int y)
@@ -120,7 +125,7 @@ void init_app(int *argcp, char **argv)
 {
   glutInit(argcp, argv);
   glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
-  glutInitWindowSize(VIEWPORT_DIM, VIEWPORT_DIM);
+  glutInitWindowSize(world->viewport_width, world->viewport_width);
   glutCreateWindow(GAME_TITLE);
   glutReshapeFunc(on_reshape);
 
@@ -131,6 +136,8 @@ void init_app(int *argcp, char **argv)
 
   glutDisplayFunc(on_display);
   glutIdleFunc(on_idle);
+
+  glutFullScreen();
 
   lighting->init();
   camera->place_camera();

@@ -12,6 +12,7 @@ void Lighting::init()
   glEnable(GL_LIGHTING);
 
   glEnable (GL_LINE_SMOOTH);
+  
   glEnable (GL_BLEND);
   glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -46,7 +47,7 @@ void Lighting::world_lighting()
   GLfloat light_ambient[] = { 0.5, 0.5, 0.5, 0.5 };
   GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
   GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-  GLfloat light_position[] = { 1.0, 1.0, 1.0, 0.0 };
+  GLfloat light_position[] = { -1.0, -1.0, -1.0, 0.0 };
 
   glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
   glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);

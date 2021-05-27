@@ -75,10 +75,12 @@ void Util::load_model(const char* filename, const char* materialpath, model_vert
   }
 }
 
-GLuint Util::load_texture(const char* filename) {
+GLuint Util::load_texture(const char* filename, bool flip) {
   int width, height, components;
   unsigned char *data; 
   GLuint id;
+
+  stbi_set_flip_vertically_on_load(flip);
 
   data = stbi_load(filename, &width, &height, &components, STBI_rgb);
   glPushAttrib(GL_TEXTURE_BIT);

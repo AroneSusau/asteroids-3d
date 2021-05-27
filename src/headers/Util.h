@@ -39,5 +39,5 @@ class Util
   public:
     
     static void load_model(const char* filename, const char* materialpath, model_vertex& model);
-    static GLuint load_texture(const char* filename);
+    static GLuint load_texture(const char* filename, bool flip);
 };

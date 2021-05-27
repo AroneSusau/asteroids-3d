@@ -94,5 +94,5 @@ void Cannon::update_fire_rate()
 
 void Cannon::load_cannon_graphics()
 {
-  bullet_texture_id = Util::load_texture(bullet_texture.c_str());
+  bullet_texture_id = Util::load_texture(bullet_texture.c_str(), true);
 }

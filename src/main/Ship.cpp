@@ -133,7 +133,7 @@ void Ship::draw_wings()
 
 void Ship::load_ship_graphics()
 {
-  ship_id = Util::load_texture(texture_path.c_str());
+  ship_id = Util::load_texture(texture_path.c_str(), true);
   
   cannon->load_cannon_graphics();
   

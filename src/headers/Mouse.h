@@ -17,6 +17,10 @@
 
 #include "Vector3.h"
 #include "Settings.h"
+#include "Mouse.h"
+#include "World.h"
+
+class World;
 
 class Mouse
 {
@@ -24,8 +28,10 @@ class Mouse
     
     Vector3* position;
     Vector3* ratio;
+
+    World* world;
     
-    Mouse();
+    Mouse(World* world);
     ~Mouse();
 
     void on_mouse_move(int x, int y);

@@ -21,6 +21,9 @@ void Skybox::draw()
   float mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
   float mat_shininess[] = { 100.0 };
 
+  glEnable (GL_BLEND);
+  glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
   glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
   glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
   glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
@@ -149,6 +152,6 @@ void Skybox::load_skybox_textures()
 {
   for (int i = 0; i < 6; ++i)
   {
-    textures[i] = Util::load_texture(filenames[i].c_str());
+    textures[i] = Util::load_texture(filenames[i].c_str(), false);
   }
 }
