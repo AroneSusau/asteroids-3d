@@ -10,8 +10,9 @@ Ship::Ship()
   body->update_right(new Vector3(1, 0,  0));
   body->update_look(new Vector3( 0, 0, -100));
 
-  velocity = new Vector3(0, 0, 0);
-  rotation = new Vector3(0, 0, 0);
+  velocity     = new Vector3(0, 0, 0);
+  rotation     = new Vector3(0, 0, 0);
+  look         = new Vector3(0, 0, 0);
   acceleration = new Vector3(ADVANCE_ACCEL, STRAFE_ACCEL, 0);
 
   model_filename = SHIP_MODEL_PATH;
@@ -28,6 +29,7 @@ Ship::~Ship()
   delete velocity;
   delete acceleration;
   delete rotation;
+  delete look;
 }
 
 void Ship::draw()
@@ -38,17 +40,19 @@ void Ship::draw()
   Materials::ship();
   glBindTexture(GL_TEXTURE_2D, ship_id);
 
-  float matrix [] = {
-    body->right->x,    body->right->y,    body->right->z,    0.0f,
-    -body->forward->x, -body->forward->y, -body->forward->z, 0.0f,              
-    -body->up->x,      -body->up->y,      -body->up->z,      0.0f,
-    body->position->x, body->position->y, body->position->z, 1.0f
-  };
+  ship_forward_rotation();
+  mouse_ship_rotation();
+  
+  draw_ship();
+  
+  glDisable(GL_TEXTURE_2D);
 
-  glMultMatrixf(matrix);
-  glRotatef(55 * world->mouse->ratio->y * animation, 1, 0, 0);
-  glRotatef(-70 * world->mouse->ratio->x * animation, 0, 1, 0);
+  draw_wings();
+  glPopMatrix();
+}
 
+void Ship::draw_ship()
+{
   glBegin(GL_TRIANGLES);
   
   for (size_t i = 0; i < model.size; ++i)
@@ -59,13 +63,27 @@ void Ship::draw()
   }
 
   glEnd();
-  glDisable(GL_TEXTURE_2D);
-
-  drawWings();
-  glPopMatrix();
 }
 
-void Ship::drawWings()
+void Ship::mouse_ship_rotation()
+{
+  glRotatef(look->y, 1, 0, 0);
+  glRotatef(-look->x, 0, 1, 0);
+}
+
+void Ship::ship_forward_rotation()
+{
+  float matrix [] = {
+    body->right->x,    body->right->y,    body->right->z,    0.0f,
+    -body->forward->x, -body->forward->y, -body->forward->z, 0.0f,              
+    -body->up->x,      -body->up->y,      -body->up->z,      0.0f,
+    body->position->x, body->position->y, body->position->z, 1.0f
+  };
+
+  glMultMatrixf(matrix);
+}
+
+void Ship::draw_wings()
 {
   Materials::brass();
   glPushMatrix();
@@ -155,6 +173,12 @@ void Ship::update_animation()
   animation = velocity->x / MAX_ADVANCE;
 }
 
+void Ship::update_look()
+{
+  look->x = SHIP_LOOK_X * world->mouse->ratio->x;
+  look->y = SHIP_LOOK_Y * world->mouse->ratio->y;
+}
+
 bool Ship::can_accelerate(move_state_t state, move_state_t expected, float velocity, float clamp)
 {
   return (
@@ -197,6 +221,7 @@ void Ship::tick()
   update_velocity();
   update_position();
   update_animation();
+  update_look();
   decelerate();
 }
 

@@ -19,6 +19,8 @@ class Ship
     Vector3* acceleration;
     Vector3* rotation;
 
+    Vector3* look;
+
     model_vertex model;
 
     float animation = 0;
@@ -33,7 +35,11 @@ class Ship
 
     void update_position();
     void update_velocity();
+    void update_look();
     void update_animation();
+
+    void ship_forward_rotation();
+    void mouse_ship_rotation();
 
     void decelerate();
     bool can_accelerate(move_state_t state, move_state_t expected, float velocity, float clamp);
@@ -41,7 +47,8 @@ class Ship
     void tick();
 
     void draw();
-    void drawWings();
+    void draw_ship();
+    void draw_wings();
 
     void load_ship_graphics();
 

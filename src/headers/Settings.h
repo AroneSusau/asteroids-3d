@@ -18,6 +18,10 @@
 #define PITCH_DECELERATION 0.9
 #define YAW_DECELERATION   0.9
 
+#define SHIP_LOOK_X 70
+#define SHIP_LOOK_Y 40
+#define SHIP_LOOK_ACCEL 2
+
 #define SHIP_MATERIAL_PATH "assets/ship/"
 #define SHIP_MODEL_PATH "assets/ship/ship.obj"
 #define SHIP_TEXTURE_PATH "assets/ship/ship.png"
