@@ -40,6 +40,7 @@ void Ship::draw()
 {
   glPushMatrix();
   glEnable(GL_TEXTURE_2D);
+  glEnable(GL_LIGHTING);
 
   glBindTexture(GL_TEXTURE_2D, ship_id);
 
@@ -49,6 +50,7 @@ void Ship::draw()
   draw_ship();
   
   glDisable(GL_TEXTURE_2D);
+  Materials::ship();
 
   draw_wings();
   glPopMatrix();

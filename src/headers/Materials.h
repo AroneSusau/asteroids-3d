@@ -56,4 +56,17 @@ class Materials
       glMaterialf(GL_FRONT, GL_SHININESS, shine1);
     }
 
+    static void asteroid()
+    {
+      float mat_ambient [] = { 0.135f, 0.2225f, 0.1575f, 0.95f };
+      float mat_diffuse [] = {1.0f, 1.0f, 1.0f, 1.0f };
+      float mat_specular [] = {0.316228f, 0.316228f, 0.316228f, 0.95f };
+      float shine1 = 12.8f;
+
+      glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+      glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+      glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+      glMaterialf(GL_FRONT, GL_SHININESS, shine1);
+    }
+
 };

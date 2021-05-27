@@ -56,6 +56,8 @@ void render()
   wall->draw();
   axis->draw();
 
+  asteroid_generator->tick();
+
   ship->cannon->tick();
 
   game_time->update();
@@ -98,7 +100,15 @@ void on_reshape(int w, int h)
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  gluPerspective(CAMREA_FOV, w / h, 1, CAMREA_FAR);
+  
+  if (w > h)
+  {
+    gluPerspective(CAMREA_FOV, w / h, 1, CAMREA_FAR);
+  }
+  else 
+  {
+    gluPerspective(CAMREA_FOV, h / w, 1, CAMREA_FAR);
+  }
 }
 
 void on_key_press(unsigned char key, int x, int y)
@@ -141,8 +151,12 @@ void init_app(int *argcp, char **argv)
 
   lighting->init();
   camera->place_camera();
+  
   skybox->load_skybox_textures();
+  asteroid_generator->load_asteroid_textures();
   ship->load_ship_graphics();
+
+  asteroid_generator->asteroids->push_back(new Asteroid(asteroid_generator->textures->at(0)));
 }
 
 int main(int argc, char **argv)

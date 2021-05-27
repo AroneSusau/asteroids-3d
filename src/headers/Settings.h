@@ -33,6 +33,10 @@
 
 // Asteroid
 #define ASTEROID_DIVISIONS 50
+#define ASTEROID_TEXT_1 "assets/asteroids/asteroid1.jpg"
+#define ASTEROID_TEXT_2 "assets/asteroids/asteroid2.jpg"
+#define ASTEROID_TEXT_3 "assets/asteroids/asteroid3.jpg"
+#define ASTEROID_TEXT_4 "assets/asteroids/asteroid4.jpg"
 
 // Camera
 #define CAMERA_BACK_DIST  10

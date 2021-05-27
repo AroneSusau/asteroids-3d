@@ -32,11 +32,13 @@ class Asteroid
     RigidBody* body;
     Vector3* velocity;
 
+    GLuint texture;
+
     std::vector<std::vector<Vector3*>*>* vertices;
     std::vector<std::vector<Vector3*>*>* normals;
     std::vector<std::vector<Vector3*>*>* textcoords;
 
-    Asteroid();
+    Asteroid(GLuint texture);
     ~Asteroid();
 
     void init();

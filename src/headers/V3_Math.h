@@ -1,6 +1,7 @@
 #pragma once
 
 #include <math.h>
+#include <random>
 
 #include "Vector3.h"
 
@@ -9,6 +10,12 @@ class V3_Math
   public:
     V3_Math() {}
     ~V3_Math() {}
+
+    static int random(int min, int max)
+    {
+      std::rand();
+      return std::rand() % (max - min) + min;
+    }
 
     static Vector3* add(Vector3* a, Vector3* b)
     {
