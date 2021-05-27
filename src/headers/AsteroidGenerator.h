@@ -17,6 +17,12 @@ class AsteroidGenerator
 
     World* world;
 
+    float spawn_rate;
+    float next_spawn;
+    int spawn_amount;
+
+    bool spawn_active;
+
     std::vector<Asteroid*>* asteroids;
     std::vector<GLuint>* textures;
 
@@ -25,8 +31,17 @@ class AsteroidGenerator
 
     void tick();
 
-    void advance_asteroid();
-    void asteroid_wall_bounce();
+    void generate();
+
+    void advance_asteroid(Asteroid* asteroid);
+    void asteroid_rotate(Asteroid* asteroid);
+    void asteroid_wall_bounce(Asteroid* asteroid);
+    void asteroid_bullet_collision(Asteroid* asteroid);
+
+    void spawn();
+    void update_spawn();
+    
+    Vector3* asteroid_starting_position();
 
     void load_asteroid_textures();
 };

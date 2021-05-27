@@ -35,6 +35,7 @@ class Bullet
     float size;
 
     bool out_of_bounds;
+    bool collide;
 
     Bullet();
     Bullet(World* world, Vector3* position, Vector3* velocity);

@@ -1,9 +1,16 @@
 #include "../headers/Asteroid.h"
 
-Asteroid::Asteroid(GLuint texture)
+Asteroid::Asteroid(GLuint texture, Vector3* v)
 {
   body          = new RigidBody();
-  velocity      = new Vector3();
+  velocity      = v;
+  rotation      = new Vector3();
+
+  float rand    = ((float) V3_Math::random(1, 100)) / 100;
+
+  health        = 100;
+  size          = 500 + 2000 * rand;
+  points        = size * 2;
 
   this->texture = texture;
 
@@ -11,16 +18,18 @@ Asteroid::Asteroid(GLuint texture)
   normals       = new std::vector<std::vector<Vector3*>*>();
   textcoords    = new std::vector<std::vector<Vector3*>*>();
 
-  // TODO: remove later
-  body->position->z -= 100;
+  entered_arena = false;
+  destroyed     = false;
 
   init();
+  init_rotation();
 }
 
 Asteroid::~Asteroid()
 {
   delete body;
   delete velocity;
+  delete rotation;
 
   for (size_t i = 0; i < vertices->size(); ++i)
   {
@@ -43,9 +52,7 @@ Asteroid::~Asteroid()
 
 void Asteroid::init()
 {
-
-  float rand        = ((float) V3_Math::random(1, 100)) / 100;
-  float radius      = 10 + 10 * rand;
+  float radius      = size;
   float sectorCount = ASTEROID_DIVISIONS;
   float stackCount  = ASTEROID_DIVISIONS;
 
@@ -59,7 +66,7 @@ void Asteroid::init()
 
   for(int i = 0; i <= stackCount; ++i)
   {
-      float rand = ((float) V3_Math::random(70, 100)) / 100;
+      float rand = ((float) V3_Math::random(55, 100)) / 100;
       rand = V3_Math::random(1, 100) % 7 == 0 ? 1 : rand;
 
       stackAngle = M_PI / 2 - i * stackStep;
@@ -73,12 +80,12 @@ void Asteroid::init()
       for(int j = 0; j <= sectorCount; ++j)
       {
 
-        float rand2 = ((float) V3_Math::random(70, 100)) / 100;
+        float rand2 = ((float) V3_Math::random(55, 100)) / 100;
         rand2 = V3_Math::random(1, 100) % 7 == 0 ? 1 : rand2;
         
         sectorAngle = j * sectorStep;
 
-        x = xy * cosf(sectorAngle) * rand2;
+        x = xy * cosf(sectorAngle);
         y = xy * sinf(sectorAngle) * rand2;
         
         vertices->at(i)->push_back(new Vector3(x, y, z));
@@ -97,13 +104,35 @@ void Asteroid::init()
   }
 }
 
+void Asteroid::init_rotation()
+{
+  int xr = V3_Math::random(1, 2) == 1 ? -100 : 100;
+  int yr = V3_Math::random(1, 2) == 1 ? -100 : 100;
+  int zr = V3_Math::random(1, 2) == 1 ? -100 : 100;
+  
+  int value = V3_Math::random(1, 3);
+  
+  xr = value == 1 ? xr : 0;
+  yr = value == 2 ? yr : 0;
+  zr = value == 3 ? zr : 0;
+
+  rotation->x = xr;
+  rotation->y = yr;
+  rotation->z = zr;
+}
+
 void Asteroid::draw()
 {
   glEnable(GL_TEXTURE_2D);
   glEnable(GL_LIGHTING);
   glPushMatrix();
   glTranslatef(body->position->x, body->position->y, body->position->z - 100);
-  glScalef(50, 50, 50);
+  glRotatef(body->orientation->x, 1, 0, 0);
+  glRotatef(body->orientation->y, 0, 1, 0);
+  glRotatef(body->orientation->z, 0, 0, 1);
+
+  Materials::asteroid();
+
   glBindTexture(GL_TEXTURE_2D, texture);
 
   Vector3* v1, *v2, *t1, *t2, *n1, *n2; 
@@ -111,9 +140,7 @@ void Asteroid::draw()
   for (int i = 0; i <= ASTEROID_DIVISIONS - 1; i++) 
   {
     glBegin(GL_TRIANGLE_STRIP);
-
-    Materials::asteroid();
-      
+    
     for (int j = 0; j <= ASTEROID_DIVISIONS; j++)
     {
       v1 = vertices->at(i)->at(j);
@@ -137,4 +164,37 @@ void Asteroid::draw()
   }
   glPopMatrix();
   glDisable(GL_TEXTURE_2D);
+}
+
+void Asteroid::has_entered_arena()
+{
+  entered_arena = (
+    (body->position->x >= -WALL_TOTAL_DIST && body->position->x <= WALL_TOTAL_DIST) &&
+    (body->position->y >= -WALL_TOTAL_DIST && body->position->y <= WALL_TOTAL_DIST) &&
+    (body->position->z >= -WALL_TOTAL_DIST && body->position->z <= WALL_TOTAL_DIST)
+  );
+}
+
+bool Asteroid::has_collided(RigidBody* o_body) 
+{
+  float dist = V3_Math::magnitude(V3_Math::subtract(body->position, o_body->position));
+  bool result = false;
+  
+  if (dist < size)
+  {
+    hit(20);
+    result = true;
+  }
+
+  return result;
+}
+
+void Asteroid::hit(float amount) 
+{
+  health -= amount;
+
+  if (health <= 0)
+  {
+    destroyed = true;
+  }
 }

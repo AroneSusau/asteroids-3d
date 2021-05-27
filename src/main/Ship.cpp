@@ -90,47 +90,6 @@ void Ship::ship_forward_rotation()
 
 void Ship::draw_wings()
 {
-  Materials::brass();
-  glPushMatrix();
-  glRotatef(-12, 1, 0, 0);
-    glRotatef(-25, 0, 1, 0);
-    glPushMatrix();
-      glTranslatef(2.9 * animation, -0.2, -0.2);
-      glScalef(4.0 * animation, 0.7 * animation, 0.05);
-      glutSolidCube(1.0);
-    glPopMatrix();
-  glPopMatrix();
-
-  glPushMatrix();
-    glRotatef(-12, 1, 0, 0);
-    glRotatef(25, 0, 1, 0);
-    glPushMatrix();
-      glTranslatef(-2.9 * animation, -0.2, -0.2);
-      glScalef(-4.0 * animation, -0.7 * animation, -0.05);
-      glutSolidCube(1.0);
-    glPopMatrix();
-  glPopMatrix();
-
-  Materials::jade();
-  glPushMatrix();
-  glRotatef(-4, 1, 0, 0);
-    glRotatef(13, 0, 1, 0);
-    glPushMatrix();
-      glTranslatef(2.0 * animation, 0.0, 0.0);
-      glScalef(4.0 * animation, 0.4 * animation, 0.05);
-      glutSolidCube(1.0);
-    glPopMatrix();
-  glPopMatrix();
-
-  glPushMatrix();
-  glRotatef(-4, 1, 0, 0);
-    glRotatef(-13, 0, 1, 0);
-    glPushMatrix();
-      glTranslatef(-2.0 * animation, 0.0, 0.0);
-      glScalef(-4.0 * animation, -0.4 * animation, -0.05);
-      glutSolidCube(1.0);
-    glPopMatrix();
-  glPopMatrix();
 }
 
 void Ship::load_ship_graphics()

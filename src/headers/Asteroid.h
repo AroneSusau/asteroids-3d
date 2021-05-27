@@ -14,6 +14,7 @@
 #endif
 
 #include <vector>
+#include <iostream>
 
 #include "Materials.h"
 #include "RigidBody.h"
@@ -31,6 +32,7 @@ class Asteroid
 
     RigidBody* body;
     Vector3* velocity;
+    Vector3* rotation;
 
     GLuint texture;
 
@@ -38,10 +40,23 @@ class Asteroid
     std::vector<std::vector<Vector3*>*>* normals;
     std::vector<std::vector<Vector3*>*>* textcoords;
 
-    Asteroid(GLuint texture);
+    float health;
+    float size;
+    float bounds;
+    float points;
+
+    bool entered_arena;
+    bool destroyed;
+
+    Asteroid(GLuint texture, Vector3* v);
     ~Asteroid();
 
     void init();
+    void init_rotation();
+
+    void has_entered_arena();
+    bool has_collided(RigidBody* o_body);
+    void hit(float amount);
 
     void draw();
 };

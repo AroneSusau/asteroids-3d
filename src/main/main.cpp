@@ -156,7 +156,7 @@ void init_app(int *argcp, char **argv)
   asteroid_generator->load_asteroid_textures();
   ship->load_ship_graphics();
 
-  asteroid_generator->asteroids->push_back(new Asteroid(asteroid_generator->textures->at(0)));
+  asteroid_generator->generate();
 }
 
 int main(int argc, char **argv)

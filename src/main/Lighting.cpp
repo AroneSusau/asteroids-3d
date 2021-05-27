@@ -22,7 +22,7 @@ void Lighting::init()
 
   glFogi (GL_FOG_MODE, GL_LINEAR);
   glFogf (GL_FOG_START, 1200.0);
-  glFogf (GL_FOG_END, 7000.0);
+  glFogf (GL_FOG_END, 8000.0);
   glHint (GL_FOG_HINT, GL_NICEST);
 
   float ambient0[] = {1.0, 1.0, 1.0, 1.0};

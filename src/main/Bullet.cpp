@@ -8,6 +8,7 @@ Bullet::Bullet()
   size = BULLET_SIZE;
 
   out_of_bounds = false;
+  collide       = false;
 }
 
 Bullet::Bullet(World* world, Vector3* position, Vector3* velocity)
@@ -31,16 +32,12 @@ Bullet::~Bullet()
 
 void Bullet::draw() 
 {
-  glDisable(GL_LIGHTING);
-  glDisable(GL_FOG);
   glPushMatrix();
   glTranslatef(body->position->x, body->position->y, body->position->z);
   glColor3f(1, 1, 1);
   glScalef(1, 1, 1);
   glutSolidCube(BULLET_SIZE);
   glPopMatrix();
-  glEnable(GL_LIGHTING);
-  glEnable(GL_FOG);
 }
 
 void Bullet::tick() 
@@ -61,6 +58,6 @@ void Bullet::check_bounds()
   out_of_bounds = (
     body->position->x <= -WALL_TOTAL_DIST || body->position->x >= WALL_TOTAL_DIST ||
     body->position->y <= -WALL_TOTAL_DIST || body->position->y >= WALL_TOTAL_DIST ||
-    body->position->y <= -WALL_TOTAL_DIST || body->position->y >= WALL_TOTAL_DIST
+    body->position->z <= -WALL_TOTAL_DIST || body->position->z >= WALL_TOTAL_DIST
   );
 }

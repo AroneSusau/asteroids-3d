@@ -1,14 +1,14 @@
 #pragma once
 
 // Ship
-#define MAX_ADVANCE  2500
+#define MAX_ADVANCE  3000
 #define MAX_STRAFE   30
 
 #define MAX_ROLL  100
 #define MAX_PITCH 10
 #define MAX_YAW   10
 
-#define ADVANCE_ACCEL 25
+#define ADVANCE_ACCEL 45
 #define STRAFE_ACCEL  1
 
 #define ADVANCE_DECELERATION 0.998
@@ -32,7 +32,7 @@
 #define BULLET_TEXTURE_PATH "assets/bullets/fireball.png"
 
 // Asteroid
-#define ASTEROID_DIVISIONS 50
+#define ASTEROID_DIVISIONS 15
 #define ASTEROID_TEXT_1 "assets/asteroids/asteroid1.jpg"
 #define ASTEROID_TEXT_2 "assets/asteroids/asteroid2.jpg"
 #define ASTEROID_TEXT_3 "assets/asteroids/asteroid3.jpg"

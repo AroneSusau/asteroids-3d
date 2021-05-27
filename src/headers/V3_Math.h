@@ -14,7 +14,7 @@ class V3_Math
     static int random(int min, int max)
     {
       std::rand();
-      return std::rand() % (max - min) + min;
+      return (rand() % (max + 1 - min)) + min;
     }
 
     static Vector3* add(Vector3* a, Vector3* b)
