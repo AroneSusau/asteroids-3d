@@ -1,8 +1,9 @@
 #include "../headers/Ship.h"
 
-Ship::Ship() 
+Ship::Ship(World* world) 
 {
   body = new RigidBody();
+  this-> world = world;
 
   body->update_position(new Vector3( 0, 0, 0));
   body->update_forward(new Vector3( 0, 0, -1));
@@ -14,6 +15,8 @@ Ship::Ship()
   rotation     = new Vector3(0, 0, 0);
   look         = new Vector3(0, 0, 0);
   acceleration = new Vector3(ADVANCE_ACCEL, STRAFE_ACCEL, 0);
+
+  cannon = new Cannon(this, body->position, new Vector3(0, 0, 0), world);
 
   model_filename = SHIP_MODEL_PATH;
   material_path  = SHIP_MATERIAL_PATH;
@@ -30,6 +33,7 @@ Ship::~Ship()
   delete acceleration;
   delete rotation;
   delete look;
+  delete cannon;
 }
 
 void Ship::draw()
@@ -37,7 +41,6 @@ void Ship::draw()
   glPushMatrix();
   glEnable(GL_TEXTURE_2D);
 
-  Materials::ship();
   glBindTexture(GL_TEXTURE_2D, ship_id);
 
   ship_forward_rotation();
@@ -131,6 +134,9 @@ void Ship::draw_wings()
 void Ship::load_ship_graphics()
 {
   ship_id = Util::load_texture(texture_path.c_str());
+  
+  cannon->load_cannon_graphics();
+  
   Util::load_model(model_filename.c_str(), material_path.c_str(), model);
 }
 
@@ -223,6 +229,10 @@ void Ship::tick()
   update_animation();
   update_look();
   decelerate();
+
+  cannon->tick();
+
+  shoot();
 }
 
 void Ship::on_key_press(unsigned char key, int x, int y)
@@ -253,8 +263,19 @@ void Ship::on_key_press(unsigned char key, int x, int y)
     case 'E':
       body->roll = INCREASE;
       break;
+    case ' ':
+      firing = true;
+      break;
     default:
       break;
+  }
+}
+
+void Ship::shoot()
+{
+  if (firing && cannon->can_fire())
+  {
+    cannon->fire();
   }
 }
 
@@ -285,6 +306,9 @@ void Ship::on_key_release(unsigned char key, int x, int y)
     case 'e':
     case 'E':
       body->roll = NEUTRAL;
+      break;
+    case ' ':
+      firing = false;
       break;
   }
 }

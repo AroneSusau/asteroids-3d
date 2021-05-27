@@ -9,10 +9,9 @@ World::World()
   wall     = new Wall(WALL_LINES, WALL_DIST, WALL_WARN_DIST);
   
   camera = new Camera();
-  ship   = new Ship();
+  ship   = new Ship(this);
   skybox = new Skybox();
   
-  ship->world   = this;
   camera->world = this;
   skybox->world = this;
 }

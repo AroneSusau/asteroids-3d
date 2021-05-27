@@ -1,12 +1,28 @@
 #pragma once
 
-#include "World.h"
-#include "RigidBody.h"
-#include "Util.h"
-#include "Settings.h"
+#if _WIN32
+# include <windows.h>
+#endif
+#if __APPLE__
+# include <OpenGL/gl.h>
+# include <OpenGL/glu.h>
+# include <GLUT/glut.h>
+#else
+# include <GL/gl.h>
+# include <GL/glu.h>
+# include <GL/glut.h>
+#endif
+
+#include "Bullet.h"
+#include "Cannon.h"
 #include "Materials.h"
+#include "RigidBody.h"
+#include "Settings.h"
+#include "Util.h"
+#include "World.h"
 
 class World;
+class Cannon;
 
 class Ship
 {
@@ -23,14 +39,17 @@ class Ship
 
     model_vertex model;
 
+    Cannon* cannon;
+
     float animation = 0;
+    bool firing = false;
 
     std::string model_filename;
     std::string material_path;
     std::string texture_path;
     int ship_id;
 
-    Ship();
+    Ship(World* world);
     ~Ship();
 
     void update_position();
@@ -45,6 +64,8 @@ class Ship
     bool can_accelerate(move_state_t state, move_state_t expected, float velocity, float clamp);
 
     void tick();
+
+    void shoot();
 
     void draw();
     void draw_ship();

@@ -22,21 +22,27 @@
 #define SHIP_LOOK_Y 40
 #define SHIP_LOOK_ACCEL 2
 
-#define SHIP_MATERIAL_PATH "assets/ship/"
-#define SHIP_MODEL_PATH "assets/ship/ship.obj"
-#define SHIP_TEXTURE_PATH "assets/ship/ship.png"
+#define BULLET_VELOCITY 2000
+#define BULLET_SIZE 3
+#define RATE_OF_FIRE 0.1
+
+#define SHIP_MATERIAL_PATH  "assets/ship/"
+#define SHIP_MODEL_PATH     "assets/ship/ship.obj"
+#define SHIP_TEXTURE_PATH   "assets/ship/ship.png"
+#define BULLET_TEXTURE_PATH "assets/bullets/fireball.png"
 
 // Camera
 #define CAMERA_BACK_DIST  10
 #define CAMERA_BACK_DELAY 10
 #define CAMREA_UP_DIST    4
 #define CAMREA_FOV        80
-#define CAMREA_FAR        15000
+#define CAMREA_FAR        25000
 
 // Wall
-#define WALL_LINES     20.0f
-#define WALL_DIST      200.0f
-#define WALL_WARN_DIST 0.3f
+#define WALL_LINES      5.0f
+#define WALL_DIST       1500.0f
+#define WALL_TOTAL_DIST WALL_DIST * WALL_LINES
+#define WALL_WARN_DIST  0.3f
 
 // Debug Axis
 #define AXIS_ACTIVE   true

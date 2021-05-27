@@ -40,14 +40,6 @@ Camera*   camera    = world->camera;
 Ship*     ship      = world->ship;
 Skybox*   skybox    = world->skybox;
 
-typedef struct
-{
-  Vector3 position;
-  Vector3 velocity;
-} bullet_t;
-
-std::vector<bullet_t> bullets;
-
 void render()
 {
   game_time->tick();
@@ -63,19 +55,7 @@ void render()
   wall->draw();
   axis->draw();
 
-  for (bullet_t& b : bullets)
-  {
-    b.position.x += b.velocity.x * game_time->delta; 
-    b.position.y += b.velocity.y * game_time->delta; 
-    b.position.z += b.velocity.z * game_time->delta;
-
-    glPushMatrix();
-    glTranslatef(b.position.x, b.position.y, b.position.z);
-    glColor3f(1, 1, 1);
-    glScalef(2, 2, 2);
-    glutSolidCube(2.0);
-    glPopMatrix();
-  }
+  ship->cannon->tick();
 
   game_time->update();
   glutSwapBuffers();
@@ -116,19 +96,9 @@ void on_reshape(int w, int h)
   gluPerspective(CAMREA_FOV, 1.0, 1.0, CAMREA_FAR);
 }
 
-bullet_t b;
-
 void on_key_press(unsigned char key, int x, int y)
 {
   ship->on_key_press(key, x, y);
-
-  if (key == ' ')
-  {
-    b.position = *V3_Math::add(ship->body->position, V3_Math::multiply(ship->body->forward, 5));
-    b.velocity = *V3_Math::add(V3_Math::multiply(ship->body->forward, ship->velocity->x), V3_Math::multiply(ship->body->forward, 7000));
-
-    bullets.push_back(b);
-  }
 
   if (key == KEY_ESC)
   {
