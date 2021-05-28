@@ -17,7 +17,7 @@ void Skybox::draw()
 {
   if (ENABLE_SKYBOX)
   {
-    float scale = 4.0f;
+    float scale = 3.0f;
     float mat_ambient[] = { 1.0, 1.0, 1.0, 1.0 };
     float mat_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
     float mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };

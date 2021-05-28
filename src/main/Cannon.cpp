@@ -102,5 +102,5 @@ void Cannon::orient_bullets(Bullet* bullet)
 
 void Cannon::load_cannon_graphics()
 {
-  bullet_texture_id = Util::load_texture(bullet_texture.c_str(), true);
+  bullet_texture_id = Util::load_anim_texture(bullet_texture.c_str(), true);
 }

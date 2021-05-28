@@ -40,4 +40,5 @@ class Util
     
     static void load_model(const char* filename, const char* materialpath, model_vertex& model);
     static GLuint load_texture(const char* filename, bool flip);
+    static GLuint load_anim_texture(const char* filename, bool flip);
 };

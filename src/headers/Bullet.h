@@ -13,6 +13,8 @@
 # include <GL/glut.h>
 #endif
 
+#include <vector>
+
 #include "Ship.h"
 #include "RigidBody.h"
 #include "Settings.h"
@@ -32,12 +34,19 @@ class Bullet
 
     World* world;
 
+    std::vector<std::vector<Vector3*>*>* frames;
+
     float size;
 
     bool out_of_bounds;
     bool collide;
 
     int texture;
+    int current_frame;
+    int start_frame;
+
+    float frame_tick;
+    float next_frame;
 
     Bullet();
     Bullet(World* world, Vector3* position, Vector3* velocity, int texture);
@@ -48,5 +57,7 @@ class Bullet
     void tick();
 
     void update_position();
+    void update_frame();
+    void generate_animation_uv();
     void check_bounds();
 };
