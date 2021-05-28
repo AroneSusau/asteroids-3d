@@ -92,6 +92,7 @@ void AsteroidGenerator::asteroid_rotate(Asteroid* asteroid)
   asteroid->body->orientation->z += asteroid->rotation->z * world->time->delta;
 }
 
+
 void AsteroidGenerator::asteroid_wall_bounce(Asteroid* asteroid) 
 {
 
@@ -130,7 +131,7 @@ Vector3* AsteroidGenerator::asteroid_starting_position()
 
   position->x = select == 1 ? (WALL_TOTAL_DIST + 20000) * dx : position->x;
   position->y = select == 2 ? (WALL_TOTAL_DIST + 20000) * dy : position->y;
-  position->z = select == 3 ? (WALL_TOTAL_DIST + 10000) * dz : position->z;
+  position->z = select == 3 ? (WALL_TOTAL_DIST + 20000) * dz : position->z;
 
   return position;
 }

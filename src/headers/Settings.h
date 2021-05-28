@@ -45,7 +45,7 @@
 #define ASTEROID_TEXT_4 "assets/asteroids/asteroid4.jpg"
 
 // Asteroid Generation
-#define ASTEROID_ACTIVE             false
+#define ASTEROID_ACTIVE             true
 #define ASTEROID_SPAWN_RATE         5
 #define ASTEROID_SPAWN_NEXT         0
 #define ASTEROID_SPAWN_START_AMOUNT 1 
@@ -69,8 +69,8 @@
 #define AXIS_DISTANCE 5000.0f
 
 // ENVIRONMENT
-#define ENABLE_SKYBOX false
-#define ENABLE_FOG    false
+#define ENABLE_SKYBOX true
+#define ENABLE_FOG    true
 
 // MISC
 #define GAME_TITLE   "Asteroids Assignment 2"
