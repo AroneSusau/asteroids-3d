@@ -37,7 +37,12 @@ class AsteroidGenerator
     void advance_asteroid(Asteroid* asteroid);
     void asteroid_rotate(Asteroid* asteroid);
     void asteroid_wall_bounce(Asteroid* asteroid);
+    
     void asteroid_bullet_collision(Asteroid* asteroid);
+    void asteroid_asteroid_collision();
+    
+    bool has_collided(Asteroid* a, Asteroid* b);
+
     void orient_health_bar(Asteroid* asteroid);
 
     void spawn();

@@ -19,7 +19,8 @@ OBJECTS = $(addprefix out/, $(BASE_OBJECTS))
 
 .default: all
 
-run:
+all:
+	make clean
 	make Asteroid
 	./Asteroid
 

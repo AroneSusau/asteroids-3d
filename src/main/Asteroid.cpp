@@ -107,9 +107,11 @@ void Asteroid::init()
 
 void Asteroid::init_rotation()
 {
-  int xr = V3_Math::random(1, 2) == 1 ? -100 : 100;
-  int yr = V3_Math::random(1, 2) == 1 ? -100 : 100;
-  int zr = V3_Math::random(1, 2) == 1 ? -100 : 100;
+  int rot_speed = V3_Math::random(ASTEROID_MIN_ROTATION, ASTEROID_MAX_ROTATION);
+
+  int xr = V3_Math::random(1, 2) == 1 ? -rot_speed : rot_speed;
+  int yr = V3_Math::random(1, 2) == 1 ? -rot_speed : rot_speed;
+  int zr = V3_Math::random(1, 2) == 1 ? -rot_speed : rot_speed;
   
   int value = V3_Math::random(1, 3);
   
@@ -206,7 +208,7 @@ bool Asteroid::has_collided(RigidBody* o_body)
   
   if (dist < size)
   {
-    hit(20);
+    hit(BULLET_DAMAGE);
     result = true;
   }
 

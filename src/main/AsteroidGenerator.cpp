@@ -8,7 +8,7 @@ AsteroidGenerator::AsteroidGenerator(World* world)
 
   spawn_rate    = ASTEROID_SPAWN_RATE;
   next_spawn    = ASTEROID_SPAWN_NEXT;
-  spawn_amount  = ASTEROID_SPAWN_START_AMOUNT;
+  spawn_amount  = ASTEROID_SPAWN_AMOUNT;
   max_asteroids = ASTEROID_SPAWN_MAX;
   spawn_active  = ASTEROID_ACTIVE;
 }
@@ -56,6 +56,8 @@ void AsteroidGenerator::tick()
     }
   }  
 
+  asteroid_asteroid_collision();
+
   spawn();
   update_spawn();
 }
@@ -69,7 +71,7 @@ void AsteroidGenerator::generate()
   asteroid->body->update_position(position);
 
   Vector3* velocity = V3_Math::normalize(V3_Math::subtract(world->ship->body->position, asteroid->body->position));
-  velocity = V3_Math::multiply(velocity, 5000);
+  velocity = V3_Math::multiply(velocity, V3_Math::random(ASTEROID_MIN_VELOCITY, ASTEROID_MAX_VELOCITY));
 
   asteroid->velocity->x = velocity->x;
   asteroid->velocity->y = velocity->y;
@@ -129,9 +131,9 @@ Vector3* AsteroidGenerator::asteroid_starting_position()
   position->y = (V3_Math::random(1, half_dist)) * dy * 2;
   position->z = (V3_Math::random(1, half_dist)) * dz * 2;
 
-  position->x = select == 1 ? (WALL_TOTAL_DIST + 20000) * dx : position->x;
-  position->y = select == 2 ? (WALL_TOTAL_DIST + 20000) * dy : position->y;
-  position->z = select == 3 ? (WALL_TOTAL_DIST + 20000) * dz : position->z;
+  position->x = select == 1 ? (WALL_TOTAL_DIST + ASTEROID_SPAWN_DIST) * dx : position->x;
+  position->y = select == 2 ? (WALL_TOTAL_DIST + ASTEROID_SPAWN_DIST) * dy : position->y;
+  position->z = select == 3 ? (WALL_TOTAL_DIST + ASTEROID_SPAWN_DIST) * dz : position->z;
 
   return position;
 }
@@ -150,6 +152,46 @@ void AsteroidGenerator::asteroid_bullet_collision(Asteroid* asteroid)
       bullets->erase(bullets->begin() + i);
     }
   }
+}
+
+void AsteroidGenerator::asteroid_asteroid_collision()
+{
+  for (size_t i = 0; i < asteroids->size(); ++i) {
+    Asteroid* a = asteroids->at(i);
+    
+    if (a->entered_arena)
+    {
+      for (size_t j = i + 1; j < asteroids->size(); ++j) {
+        Asteroid* b = asteroids->at(j);
+
+        if (b->entered_arena && has_collided(a, b))
+        {
+          float a_x = a->velocity->x;
+          float a_y = a->velocity->y; 
+          float a_z = a->velocity->z;
+          float b_x = b->velocity->x;
+          float b_y = b->velocity->y;
+          float b_z = b->velocity->z;
+
+          a->velocity->x = b_x;
+          a->velocity->y = b_y;
+          a->velocity->z = b_z;
+
+          b->velocity->x = a_x;
+          b->velocity->y = a_y;
+          b->velocity->z = a_z;
+
+          a->body->update_position(V3_Math::add(a->body->position, V3_Math::multiply(a->velocity, world->time->delta)));
+          b->body->update_position(V3_Math::add(b->body->position, V3_Math::multiply(b->velocity, world->time->delta)));
+        }
+      }
+    }
+  }
+}
+
+bool AsteroidGenerator::has_collided(Asteroid* a, Asteroid* b)
+{
+  return V3_Math::magnitude(V3_Math::subtract(b->body->position, a->body->position)) < (a->size + b->size);
 }
 
 void AsteroidGenerator::orient_health_bar(Asteroid* asteroid)

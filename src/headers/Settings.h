@@ -28,8 +28,9 @@
 
 // Cannon & Bullets
 #define BULLET_VELOCITY 4500
-#define BULLET_SIZE 10
-#define RATE_OF_FIRE 0.10
+#define BULLET_SIZE     10
+#define RATE_OF_FIRE    0.10
+#define BULLET_DAMAGE   20
 
 #define BULLET_TEXTURE_PATH "assets/bullets/fireball.png"
 
@@ -45,11 +46,16 @@
 #define ASTEROID_TEXT_4 "assets/asteroids/asteroid4.jpg"
 
 // Asteroid Generation
-#define ASTEROID_ACTIVE             true
-#define ASTEROID_SPAWN_RATE         5
-#define ASTEROID_SPAWN_NEXT         0
-#define ASTEROID_SPAWN_START_AMOUNT 1 
-#define ASTEROID_SPAWN_MAX          10
+#define ASTEROID_ACTIVE       true
+#define ASTEROID_SPAWN_RATE   5
+#define ASTEROID_SPAWN_NEXT   0
+#define ASTEROID_SPAWN_AMOUNT 1 
+#define ASTEROID_SPAWN_MAX    10
+#define ASTEROID_SPAWN_DIST   20000
+#define ASTEROID_MIN_VELOCITY 3000
+#define ASTEROID_MAX_VELOCITY 5000
+#define ASTEROID_MIN_ROTATION 50
+#define ASTEROID_MAX_ROTATION 100
 
 // Camera
 #define CAMERA_BACK_DIST  10
@@ -74,5 +80,6 @@
 
 // MISC
 #define GAME_TITLE   "Asteroids Assignment 2"
+#define FULL_SCREEN  false
 #define VIEWPORT_DIM 800
 #define KEY_ESC      27

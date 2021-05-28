@@ -140,7 +140,10 @@ void init_app(int *argcp, char **argv)
   glutDisplayFunc(on_display);
   glutIdleFunc(on_idle);
 
-  glutFullScreen();
+  if (FULL_SCREEN)
+  {
+    glutFullScreen();
+  }
 
   lighting->init();
   camera->place_camera();
