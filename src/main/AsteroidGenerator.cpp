@@ -131,9 +131,9 @@ Vector3* AsteroidGenerator::asteroid_starting_position()
   position->y = (V3_Math::random(1, half_dist)) * dy * 2;
   position->z = (V3_Math::random(1, half_dist)) * dz * 2;
 
-  position->x = select == 1 ? (WALL_TOTAL_DIST + ASTEROID_SPAWN_DIST) * dx : position->x;
-  position->y = select == 2 ? (WALL_TOTAL_DIST + ASTEROID_SPAWN_DIST) * dy : position->y;
-  position->z = select == 3 ? (WALL_TOTAL_DIST + ASTEROID_SPAWN_DIST) * dz : position->z;
+  position->x = select == 1 ? (WALL_TOTAL_DIST * 4) * dx : position->x;
+  position->y = select == 2 ? (WALL_TOTAL_DIST * 4) * dy : position->y;
+  position->z = select == 3 ? (WALL_TOTAL_DIST * 4) * dz : position->z;
 
   return position;
 }

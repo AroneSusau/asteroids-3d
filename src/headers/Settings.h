@@ -44,6 +44,8 @@
 #define ASTEROID_MIN_RADIUS   500
 #define ASTEROID_MAX_RADIUS   2000
 
+#define ASTEROID_HEALTH_BAR_ON true
+
 #define ASTEROID_TEXT_1 "assets/asteroids/asteroid1.jpg"
 #define ASTEROID_TEXT_2 "assets/asteroids/asteroid2.jpg"
 #define ASTEROID_TEXT_3 "assets/asteroids/asteroid3.jpg"
@@ -54,7 +56,7 @@
 #define ASTEROID_SPAWN_RATE   5
 #define ASTEROID_SPAWN_NEXT   0
 #define ASTEROID_SPAWN_AMOUNT 1 
-#define ASTEROID_SPAWN_MAX    10
+#define ASTEROID_SPAWN_MAX    20
 #define ASTEROID_SPAWN_DIST   20000
 #define ASTEROID_MIN_VELOCITY 3000
 #define ASTEROID_MAX_VELOCITY 5000

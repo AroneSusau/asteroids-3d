@@ -133,25 +133,31 @@ void Asteroid::draw()
   
   glPushMatrix();
 
-    float mat_ambient[] = { 1.0, 1.0, 1.0, 1.0 };
-    float mat_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
-    float mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-    float mat_shininess[] = { 100.0 };
+  float mat_ambient[] = { 1.0, 1.0, 1.0, 1.0 };
+  float mat_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
+  float mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+  float mat_shininess[] = { 100.0 };
 
-    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+  glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+  glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+  glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
 
-    float matrix [] = {
-      body->right->x,    body->right->y,    body->right->z,    0.0f,              
-      body->up->x,       body->up->y,       body->up->z,      0.0f,
-      body->forward->x,  body->forward->y,  body->forward->z, 0.0f,
-      0, 0, 0, 1.0f
-    };
+  float matrix [] = {
+    body->right->x,    body->right->y,    body->right->z,    0.0f,              
+    body->up->x,       body->up->y,       body->up->z,      0.0f,
+    body->forward->x,  body->forward->y,  body->forward->z, 0.0f,
+    0, 0, 0, 1.0f
+  };
 
-    glMultMatrixf(matrix);
+  glMultMatrixf(matrix);
+  
+  if (ASTEROID_HEALTH_BAR_ON)
+  {
     draw_health_bar();
+  }
+
+  glPopMatrix();
   
   glRotatef(body->orientation->x, 1, 0, 0);
   glRotatef(body->orientation->y, 0, 1, 0);
@@ -246,7 +252,4 @@ void Asteroid::draw_health_bar()
     glVertex3d((size - 100) * h,  300 + size + 100, -10);
     glVertex3d(-size + 100, 300 + size + 100, -10);
   glEnd();
-
-  glPopMatrix();
-
 }
