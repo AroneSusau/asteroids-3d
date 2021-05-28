@@ -58,6 +58,7 @@ void Ship::draw()
 
 void Ship::draw_ship()
 {
+  Materials::ship();
   glBegin(GL_TRIANGLES);
   
   for (size_t i = 0; i < model.size; ++i)

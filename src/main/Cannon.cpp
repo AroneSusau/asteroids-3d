@@ -52,6 +52,7 @@ void Cannon::tick()
     }
     else
     {
+      orient_bullets(b);
       b->tick();
       b->draw();
     }
@@ -62,7 +63,7 @@ void Cannon::fire()
 {
   if (can_fire())
   {
-    Vector3* pos = V3_Math::add(body->position, V3_Math::multiply(ship->body->forward, 5));
+    Vector3* pos = V3_Math::add(body->position, V3_Math::multiply(ship->body->forward, 15));
     Vector3* vel = V3_Math::add(V3_Math::multiply(ship->body->forward, ship->velocity->x), V3_Math::multiply(ship->body->forward, bullet_velocity));
 
     Bullet* b = new Bullet(world, pos, vel, bullet_texture_id);
@@ -86,10 +87,17 @@ void Cannon::update_position()
 
 void Cannon::update_fire_rate() 
 {
-  if (next_fire > 0)
+if (next_fire > 0)
   {
     next_fire -= world->time->delta;
   }
+}
+
+void Cannon::orient_bullets(Bullet* bullet)
+{
+  bullet->body->update_forward(V3_Math::normalize(V3_Math::subtract(bullet->body->position, world->ship->body->position)));
+  bullet->body->update_up(world->ship->body->up);
+  bullet->body->update_right(V3_Math::cross(bullet->body->up, bullet->body->forward));
 }
 
 void Cannon::load_cannon_graphics()

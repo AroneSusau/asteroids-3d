@@ -41,6 +41,7 @@ class Asteroid
     std::vector<std::vector<Vector3*>*>* textcoords;
 
     float health;
+    float max_health;
     float size;
     float bounds;
     float points;
@@ -59,4 +60,5 @@ class Asteroid
     void hit(float amount);
 
     void draw();
+    void draw_health_bar();
 };

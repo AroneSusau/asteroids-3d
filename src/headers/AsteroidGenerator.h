@@ -20,6 +20,7 @@ class AsteroidGenerator
     float spawn_rate;
     float next_spawn;
     int spawn_amount;
+    int max_asteroids;
 
     bool spawn_active;
 
@@ -37,6 +38,7 @@ class AsteroidGenerator
     void asteroid_rotate(Asteroid* asteroid);
     void asteroid_wall_bounce(Asteroid* asteroid);
     void asteroid_bullet_collision(Asteroid* asteroid);
+    void orient_health_bar(Asteroid* asteroid);
 
     void spawn();
     void update_spawn();

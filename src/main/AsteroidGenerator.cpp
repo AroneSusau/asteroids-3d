@@ -6,10 +6,11 @@ AsteroidGenerator::AsteroidGenerator(World* world)
   asteroids   = new std::vector<Asteroid*>();
   textures    = new std::vector<GLuint>();
 
-  spawn_rate = 5;
-  next_spawn = 0;
-  spawn_amount = 1;
-  spawn_active = ASTEROID_ACTIVE;
+  spawn_rate    = ASTEROID_SPAWN_RATE;
+  next_spawn    = ASTEROID_SPAWN_NEXT;
+  spawn_amount  = ASTEROID_SPAWN_START_AMOUNT;
+  max_asteroids = ASTEROID_SPAWN_MAX;
+  spawn_active  = ASTEROID_ACTIVE;
 }
 
 AsteroidGenerator::~AsteroidGenerator()
@@ -32,6 +33,7 @@ void AsteroidGenerator::tick()
     Asteroid* asteroid = asteroids->at(i);
 
     asteroid_rotate(asteroid);
+    orient_health_bar(asteroid);
     advance_asteroid(asteroid);
 
     if (asteroid->entered_arena)
@@ -128,9 +130,7 @@ Vector3* AsteroidGenerator::asteroid_starting_position()
 
   position->x = select == 1 ? (WALL_TOTAL_DIST + 20000) * dx : position->x;
   position->y = select == 2 ? (WALL_TOTAL_DIST + 20000) * dy : position->y;
-  // position->z = select == 3 ? (WALL_TOTAL_DIST + 10000) * dz : position->z;
-
-  position->z -= 20000;
+  position->z = select == 3 ? (WALL_TOTAL_DIST + 10000) * dz : position->z;
 
   return position;
 }
@@ -149,6 +149,13 @@ void AsteroidGenerator::asteroid_bullet_collision(Asteroid* asteroid)
       bullets->erase(bullets->begin() + i);
     }
   }
+}
+
+void AsteroidGenerator::orient_health_bar(Asteroid* asteroid)
+{
+  asteroid->body->update_forward(V3_Math::normalize(V3_Math::subtract(asteroid->body->position, world->ship->body->position)));
+  asteroid->body->update_up(world->ship->body->up);
+  asteroid->body->update_right(V3_Math::cross(asteroid->body->up, asteroid->body->forward));
 }
 
 void AsteroidGenerator::load_asteroid_textures()
@@ -170,11 +177,14 @@ void AsteroidGenerator::spawn()
   {
     for (int i = 0; i < spawn_amount; ++i)
     {
-      generate();
+      if (asteroids->size() <= max_asteroids)
+      {
+        generate();
+      }
     }
 
     next_spawn = spawn_rate;
-    ++spawn_amount;
+    spawn_amount += spawn_amount <= max_asteroids ? 1 : 0;
   }
 }
 

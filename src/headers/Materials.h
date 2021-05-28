@@ -19,8 +19,8 @@ class Materials
 
     static void ship()
     {
-      float mat_ambient [] = { 0.1745f, 0.0f, 0.11175f, 0.55f };
-      float mat_diffuse[] = { 0.8, 0.8, 0.0, 1.0 };
+      float mat_ambient [] = { 0.8, 0.8, 0.8, 1.0 };
+      float mat_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
       float mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
       float mat_shininess[] = { 100.0 };
 
@@ -40,6 +40,19 @@ class Materials
       glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambien1);
       glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse1);
       glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular1);
+      glMaterialf(GL_FRONT, GL_SHININESS, shine);
+    }
+
+    static void emerald()
+    { 
+      float mat_ambient [] ={ 0.0215f, 0.1745f, 0.0215f, 0.55f };
+      float mat_diffuse [] ={0.07568f, 0.61424f, 0.07568f, 0.55f };
+      float mat_specular [] ={0.633f, 0.727811f, 0.633f, 0.55f };
+      float shine = 76.8f;
+
+      glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+      glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+      glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
       glMaterialf(GL_FRONT, GL_SHININESS, shine);
     }
 

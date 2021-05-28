@@ -44,5 +44,7 @@ class Cannon
     void update_position();
     void update_fire_rate();
 
+    void orient_bullets(Bullet* bullet);
+
     void load_cannon_graphics();
 };

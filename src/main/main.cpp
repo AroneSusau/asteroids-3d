@@ -101,14 +101,7 @@ void on_reshape(int w, int h)
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   
-  if (w > h)
-  {
-    gluPerspective(CAMREA_FOV, w / h, 1, CAMREA_FAR);
-  }
-  else 
-  {
-    gluPerspective(CAMREA_FOV, h / w, 1, CAMREA_FAR);
-  }
+  gluPerspective(CAMREA_FOV, (float) w / (float) h, 1, CAMREA_FAR);
 }
 
 void on_key_press(unsigned char key, int x, int y)

@@ -8,8 +8,9 @@ Asteroid::Asteroid(GLuint texture, Vector3* v)
 
   float rand    = ((float) V3_Math::random(1, 100)) / 100;
 
-  health        = 100;
   size          = 500 + 2000 * rand;
+  health        = 100 + size/10;
+  max_health    = health;
   points        = size * 2;
 
   this->texture = texture;
@@ -127,6 +128,29 @@ void Asteroid::draw()
   glEnable(GL_LIGHTING);
   glPushMatrix();
   glTranslatef(body->position->x, body->position->y, body->position->z - 100);
+  
+  glPushMatrix();
+
+    float mat_ambient[] = { 1.0, 1.0, 1.0, 1.0 };
+    float mat_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
+    float mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    float mat_shininess[] = { 100.0 };
+
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+
+    float matrix [] = {
+      body->right->x,    body->right->y,    body->right->z,    0.0f,              
+      body->up->x,       body->up->y,       body->up->z,      0.0f,
+      body->forward->x,  body->forward->y,  body->forward->z, 0.0f,
+      0, 0, 0, 1.0f
+    };
+
+    glMultMatrixf(matrix);
+    draw_health_bar();
+  
   glRotatef(body->orientation->x, 1, 0, 0);
   glRotatef(body->orientation->y, 0, 1, 0);
   glRotatef(body->orientation->z, 0, 0, 1);
@@ -197,4 +221,30 @@ void Asteroid::hit(float amount)
   {
     destroyed = true;
   }
+}
+
+void Asteroid::draw_health_bar()
+{
+  glBegin(GL_QUADS);
+      glVertex3d(-size, 200 + size, 0);
+      glVertex3d(size,  200 + size, 0);
+      glVertex3d(size,  200 + size + 300, 0);
+      glVertex3d(-size, 200 + size + 300, 0);
+    glEnd();
+
+    glEnable(GL_LIGHTING);
+
+    Materials::emerald();
+
+    float h = health / max_health;
+
+    glBegin(GL_QUADS);
+      glVertex3d(-size + 100, 300 + size, -10);
+      glVertex3d((size - 100) * h,  300 + size, -10);
+      glVertex3d((size - 100) * h,  300 + size + 100, -10);
+      glVertex3d(-size + 100, 300 + size + 100, -10);
+    glEnd();
+
+  glPopMatrix();
+
 }
