@@ -11,7 +11,7 @@ else
 endif
 
 CC = g++
-CFLAGS = -Wall -std=$(VER) -Wno-deprecated -g
+CFLAGS = -Wall -std=$(VER) -Wno-deprecated
 FRAMEWORK = -Wno-deprecated-declarations -framework GLUT -framework OpenGL -framework Carbon
 
 BASE_OBJECTS = Asteroid.o AsteroidGenerator.o Axis.o Bullet.o Cannon.o Camera.o EulerRotation.o Lighting.o main.o Mouse.o RigidBody.o Ship.o Skybox.o Time.o Util.o Wall.o World.o

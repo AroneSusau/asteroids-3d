@@ -13,6 +13,8 @@
 # include <GL/glut.h>
 #endif
 
+#include "Settings.h"
+
 class Lighting
 {
   public:
@@ -21,4 +23,5 @@ class Lighting
 
     void init();
     void world_lighting();
+    void fog();
 };

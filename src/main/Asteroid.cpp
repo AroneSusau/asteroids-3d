@@ -8,8 +8,8 @@ Asteroid::Asteroid(GLuint texture, Vector3* v)
 
   float rand    = ((float) V3_Math::random(1, 100)) / 100;
 
-  size          = 500 + 2000 * rand;
-  health        = 100 + size/10;
+  size          = ASTEROID_MIN_RADIUS + ASTEROID_MAX_RADIUS * rand;
+  health        = 100 + size / ASTEROID_HEALTH_SCALE;
   max_health    = health;
   points        = size * 2;
 
@@ -226,24 +226,24 @@ void Asteroid::hit(float amount)
 void Asteroid::draw_health_bar()
 {
   glBegin(GL_QUADS);
-      glVertex3d(-size, 200 + size, 0);
-      glVertex3d(size,  200 + size, 0);
-      glVertex3d(size,  200 + size + 300, 0);
-      glVertex3d(-size, 200 + size + 300, 0);
-    glEnd();
+    glVertex3d(-size, 200 + size, 0);
+    glVertex3d(size,  200 + size, 0);
+    glVertex3d(size,  200 + size + 300, 0);
+    glVertex3d(-size, 200 + size + 300, 0);
+  glEnd();
 
-    glEnable(GL_LIGHTING);
+  glEnable(GL_LIGHTING);
 
-    Materials::emerald();
+  Materials::emerald();
 
-    float h = health / max_health;
+  float h = health / max_health;
 
-    glBegin(GL_QUADS);
-      glVertex3d(-size + 100, 300 + size, -10);
-      glVertex3d((size - 100) * h,  300 + size, -10);
-      glVertex3d((size - 100) * h,  300 + size + 100, -10);
-      glVertex3d(-size + 100, 300 + size + 100, -10);
-    glEnd();
+  glBegin(GL_QUADS);
+    glVertex3d(-size + 100, 300 + size, -10);
+    glVertex3d((size - 100) * h,  300 + size, -10);
+    glVertex3d((size - 100) * h,  300 + size + 100, -10);
+    glVertex3d(-size + 100, 300 + size + 100, -10);
+  glEnd();
 
   glPopMatrix();
 

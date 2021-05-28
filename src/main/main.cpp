@@ -71,8 +71,8 @@ void on_idle()
   wall->wall_distance_warning(ship->body->position);
   wall->update_wall_color();
   
-  glutPostRedisplay();
   game_time->update();
+  glutPostRedisplay();
 }
 
 void on_display()
@@ -148,8 +148,6 @@ void init_app(int *argcp, char **argv)
   skybox->load_skybox_textures();
   asteroid_generator->load_asteroid_textures();
   ship->load_ship_graphics();
-
-  asteroid_generator->generate();
 }
 
 int main(int argc, char **argv)

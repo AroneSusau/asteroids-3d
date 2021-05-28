@@ -1,7 +1,7 @@
 #pragma once
 
 // Ship
-#define MAX_ADVANCE  3000
+#define MAX_ADVANCE  4500
 #define MAX_STRAFE   30
 
 #define MAX_ROLL  100
@@ -27,14 +27,17 @@
 #define SHIP_TEXTURE_PATH   "assets/ship/ship.png"
 
 // Cannon & Bullets
-#define BULLET_VELOCITY 2500
+#define BULLET_VELOCITY 4500
 #define BULLET_SIZE 10
 #define RATE_OF_FIRE 0.10
 
 #define BULLET_TEXTURE_PATH "assets/bullets/fireball.png"
 
 // Asteroid
-#define ASTEROID_DIVISIONS 15
+#define ASTEROID_DIVISIONS    15
+#define ASTEROID_HEALTH_SCALE 100
+#define ASTEROID_MIN_RADIUS   500
+#define ASTEROID_MAX_RADIUS   2000
 
 #define ASTEROID_TEXT_1 "assets/asteroids/asteroid1.jpg"
 #define ASTEROID_TEXT_2 "assets/asteroids/asteroid2.jpg"
@@ -42,17 +45,17 @@
 #define ASTEROID_TEXT_4 "assets/asteroids/asteroid4.jpg"
 
 // Asteroid Generation
-#define ASTEROID_ACTIVE true
-#define ASTEROID_SPAWN_RATE   5
-#define ASTEROID_SPAWN_NEXT   0
+#define ASTEROID_ACTIVE             false
+#define ASTEROID_SPAWN_RATE         5
+#define ASTEROID_SPAWN_NEXT         0
 #define ASTEROID_SPAWN_START_AMOUNT 1 
-#define ASTEROID_SPAWN_MAX    10
+#define ASTEROID_SPAWN_MAX          10
 
 // Camera
 #define CAMERA_BACK_DIST  10
 #define CAMREA_UP_DIST    6
 #define CAMERA_BACK_DELAY 10
-#define CAMREA_FOV        60
+#define CAMREA_FOV        90
 #define CAMREA_FAR        25000
 
 // Wall
@@ -65,7 +68,11 @@
 #define AXIS_ACTIVE   false
 #define AXIS_DISTANCE 5000.0f
 
+// ENVIRONMENT
+#define ENABLE_SKYBOX false
+#define ENABLE_FOG    false
+
 // MISC
-#define VIEWPORT_DIM 880
 #define GAME_TITLE   "Asteroids Assignment 2"
+#define VIEWPORT_DIM 800
 #define KEY_ESC      27
