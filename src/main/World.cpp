@@ -6,6 +6,7 @@ World::World()
   axis               = new Axis(AXIS_DISTANCE, AXIS_ACTIVE);
   lighting           = new Lighting();
   mouse              = new Mouse(this);
+  particle_generator = new ParticleGenerator(this);
   time               = new Time();
   wall               = new Wall(WALL_LINES, WALL_DIST, WALL_WARN_DIST);
   

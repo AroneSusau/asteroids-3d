@@ -22,6 +22,7 @@
 #include "Vector3.h"
 #include "V3_Math.h"
 #include "Materials.h"
+#include "SpriteSheet.h"
 #include "World.h"
 
 class World;

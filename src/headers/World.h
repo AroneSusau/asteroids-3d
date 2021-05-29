@@ -6,6 +6,7 @@
 #include "EulerRotation.h"
 #include "Lighting.h"
 #include "Mouse.h"
+#include "ParticleGenerator.h"
 #include "Ship.h"
 #include "Settings.h"
 #include "Skybox.h"
@@ -14,6 +15,7 @@
 
 class AsteroidGenerator;
 class Camera;
+class ParticleGenerator;
 class Ship;
 class Skybox;
 class Mouse;
@@ -28,6 +30,7 @@ class World
     Camera* camera;
     Lighting* lighting;
     Mouse* mouse;
+    ParticleGenerator* particle_generator;
     Ship* ship;
     Skybox* skybox;
     Time* time;

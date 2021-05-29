@@ -19,7 +19,7 @@ Bullet::Bullet(World* world, Vector3* position, Vector3* velocity, int texture)
   size = BULLET_SIZE;
   out_of_bounds = false;
 
-  animator = new Animator(world, BULLET_TEXTURE_ROWS, BULLET_TEXTURE_COLS, BULLET_START_FRAME, BULLET_END_FRAME);
+  animator = new Animator(world, new SpriteSheet(BULLET_TEXTURE_ROWS, BULLET_TEXTURE_COLS, BULLET_START_FRAME, BULLET_END_FRAME));
 
   body->update_position(position);
 }

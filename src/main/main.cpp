@@ -22,6 +22,7 @@
 #include "../headers/Axis.h"
 #include "../headers/EulerRotation.h"
 #include "../headers/Mouse.h"
+#include "../headers/ParticleGenerator.h"
 #include "../headers/Settings.h"
 #include "../headers/Time.h"
 #include "../headers/Util.h"
@@ -34,6 +35,7 @@ AsteroidGenerator* asteroid_generator = world->asteroid_generator;
 Axis*     axis                        = world->axis;
 Lighting* lighting                    = world->lighting;
 Mouse*    mouse                       = world->mouse;
+ParticleGenerator* particle_generator = world->particle_generator;
 Time*     game_time                   = world->time;
 Wall*     wall                        = world->wall;
                   
@@ -56,8 +58,9 @@ void render()
   ship->draw();  
   wall->draw();
   axis->draw();
-
+  
   asteroid_generator->tick();
+  particle_generator->tick();
 
   ship->cannon->tick();
 

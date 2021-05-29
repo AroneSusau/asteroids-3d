@@ -26,6 +26,7 @@ class Lighting
 
     void init();
     void world_lighting();
+    void debug_lighting();
     void ship_lighting(Ship* ship);
     void fog();
 };

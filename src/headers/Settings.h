@@ -32,7 +32,7 @@
 
 #define BULLET_SIZE     10
 #define RATE_OF_FIRE    0.10
-#define BULLET_DAMAGE   20
+#define BULLET_DAMAGE   50
 
 #define FRAMES_PER_SECOND   24.0f
 #define BULLET_TEXTURE_ROWS 6.0f
@@ -86,8 +86,9 @@
 #define AXIS_DISTANCE 5000.0f
 
 // ENVIRONMENT
-#define ENABLE_SKYBOX true
-#define ENABLE_FOG    true
+#define ENABLE_SKYBOX  true
+#define ENABLE_FOG     true
+#define LIGHTING_DEBUG false
 
 // MISC
 #define GAME_TITLE   "Asteroids Assignment 2"
