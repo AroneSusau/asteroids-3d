@@ -13,8 +13,8 @@
 # include <GL/glut.h>
 #endif
 
-#include "Wall.h"
 #include "Vector3.h"
+#include "Materials.h"
 
 #include <iostream>
 

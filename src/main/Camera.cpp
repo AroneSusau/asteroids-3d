@@ -18,15 +18,12 @@ void Camera::place_camera()
   body->update_right(world->ship->body->right);
 
   float backward_delay = CAMERA_BACK_DIST + CAMERA_BACK_DELAY * world->ship->animation;
-  float up_delay = -CAMREA_UP_DIST + CAMERA_BACK_DELAY * world->ship->animation;
+  float up_delay = CAMREA_UP_DIST + -CAMREA_UP_DIST * world->ship->animation;
 
-  body->update_position(
-    V3_Math::subtract(
-      V3_Math::subtract(
-        V3_Math::subtract(world->ship->body->position, 
-        V3_Math::multiply(world->ship->body->forward, V3_Math::multiply(world->ship->body->up, 5 * world->ship->animation))), 
-        V3_Math::multiply(world->ship->body->forward, backward_delay)), 
-      V3_Math::multiply(world->ship->body->up, up_delay)));
+  Vector3* back = V3_Math::subtract(world->ship->body->position, V3_Math::multiply(world->ship->body->forward, backward_delay));
+  Vector3* up   = V3_Math::add(back, V3_Math::multiply(world->ship->body->up, up_delay));
+
+  body->update_position(up);
 
   gluLookAt(
     body->position->x, body->position->y, body->position->z,

@@ -96,8 +96,6 @@ if (next_fire > 0)
 void Cannon::orient_bullets(Bullet* bullet)
 {
   bullet->body->update_forward(V3_Math::normalize(V3_Math::subtract(bullet->body->position, world->camera->body->position)));
-  bullet->body->update_up(world->camera->body->up);
-  bullet->body->update_right(V3_Math::cross(bullet->body->up, bullet->body->forward));
 }
 
 void Cannon::load_cannon_graphics()

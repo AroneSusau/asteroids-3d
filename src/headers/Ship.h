@@ -23,6 +23,7 @@
 
 class World;
 class Cannon;
+class Animator;
 
 class Ship
 {

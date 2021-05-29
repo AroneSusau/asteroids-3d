@@ -51,4 +51,6 @@ class AsteroidGenerator
     Vector3* asteroid_starting_position();
 
     void load_asteroid_textures();
+
+    void debug_asteroid();
 };

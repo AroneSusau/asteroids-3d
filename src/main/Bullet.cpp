@@ -2,11 +2,9 @@
 
 Bullet::Bullet()
 {
-  body     = new RigidBody();
-  velocity = new Vector3();
-  
-  size = BULLET_SIZE;
-
+  body          = new RigidBody();
+  velocity      = new Vector3();
+  size          = BULLET_SIZE;
   out_of_bounds = false;
   collide       = false;
 }
@@ -18,37 +16,18 @@ Bullet::Bullet(World* world, Vector3* position, Vector3* velocity, int texture)
   this->world    = world;
   this->texture  = texture;
 
-  frames = new std::vector<std::vector<Vector3*>*>();
-
   size = BULLET_SIZE;
-  start_frame = BULLET_START_FRAME;
-  current_frame = start_frame;
-
-  frame_tick = 1 / FRAMES_PER_SECOND;
-  next_frame = frame_tick;
-
   out_of_bounds = false;
 
+  animator = new Animator(world, BULLET_TEXTURE_ROWS, BULLET_TEXTURE_COLS, BULLET_START_FRAME, BULLET_END_FRAME);
+
   body->update_position(position);
-  generate_animation_uv();
 }
 
 Bullet::~Bullet()
 {
   delete body;
   delete velocity;
-
-  for (auto arr : *frames)
-  {
-    for (auto coord : *arr)
-    {
-      delete coord;
-    }
-
-    delete arr;
-  }
-
-  delete frames;
 }
 
 void Bullet::draw() 
@@ -77,7 +56,7 @@ void Bullet::draw()
 
   glBegin(GL_QUADS);
     
-    std::vector<Vector3*>* frame = frames->at(current_frame);
+    std::vector<Vector3*>* frame = animator->frames->at(animator->current_frame);
     
     glNormal3f(body->forward->x, body->forward->y, body->forward->z);
     glTexCoord2f(frame->at(0)->x, frame->at(0)->y);
@@ -105,7 +84,7 @@ void Bullet::draw()
 void Bullet::tick() 
 {
   update_position();
-  update_frame();
+  animator->update_frame();
   check_bounds();
 }
 
@@ -114,6 +93,8 @@ void Bullet::update_position()
   body->position->x += velocity->x * world->time->delta;
   body->position->y += velocity->y * world->time->delta;
   body->position->z += velocity->z * world->time->delta;
+
+  EulerRotation::roll(body, BULLET_ROTATION * world->time->delta);
 }
 
 void Bullet::check_bounds()
@@ -123,42 +104,4 @@ void Bullet::check_bounds()
     body->position->y <= -WALL_TOTAL_DIST || body->position->y >= WALL_TOTAL_DIST ||
     body->position->z <= -WALL_TOTAL_DIST || body->position->z >= WALL_TOTAL_DIST
   );
-}
-
-void Bullet::generate_animation_uv() 
-{
-  float row_step = 1.0f / BULLET_TEXTURE_ROWS;
-  float col_step = 1.0f / BULLET_TEXTURE_COLS;
-
-  for (float row = 0; row < BULLET_TEXTURE_ROWS; ++row)
-  {
-    float row_dist = BULLET_TEXTURE_ROWS - 1 - row;
-
-    for (float col = 0; col < BULLET_TEXTURE_COLS; ++col)
-    {
-      frames->push_back(new std::vector<Vector3*>());
-
-      frames->at(row * BULLET_TEXTURE_ROWS + col)->push_back(new Vector3(col_step * col, row_step * row_dist, 0));
-      frames->at(row * BULLET_TEXTURE_ROWS + col)->push_back(new Vector3(col_step * (col + 1.0f), row_step * row_dist, 0));
-      frames->at(row * BULLET_TEXTURE_ROWS + col)->push_back(new Vector3(col_step * (col + 1.0f), row_step * (row_dist + 1.0f), 0));
-      frames->at(row * BULLET_TEXTURE_ROWS + col)->push_back(new Vector3(col_step * col, row_step * (row_dist + 1.0f), 0));
-    }
-  }
-}
-
-void Bullet::update_frame()
-{
-  next_frame -= world->time->delta;
-
-  if (next_frame <= 0)
-  {
-    ++current_frame;
-
-    if (current_frame > BULLET_END_FRAME)
-    {
-      current_frame = start_frame;
-    }
-
-    next_frame = frame_tick;
-  }
 }

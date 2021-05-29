@@ -8,8 +8,6 @@ Lighting::~Lighting()
 
 void Lighting::init() 
 {
-  glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
-
   glEnable(GL_LIGHTING);
   glEnable (GL_BLEND);
   glEnable (GL_LINE_SMOOTH);
@@ -27,10 +25,10 @@ void Lighting::init()
 
 void Lighting::world_lighting() 
 {
-  GLfloat light_ambient[] = { 0.7, 0.7, 0.7, 0.7 };
-  GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
+  GLfloat light_ambient[] = { 0.1, 0.1, 0.1, 1.0 };
+  GLfloat light_diffuse[] = { 1.0, 0.6, 0.6, 0.5 };
   GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-  GLfloat light_position[] = { -1.0, -1.0, -1.0, 0.0 };
+  GLfloat light_position[] = { -500.0, -500.0, -500.0, 0.0 };
 
   glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
   glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
@@ -47,4 +45,29 @@ void Lighting::fog()
   glFogf (GL_FOG_START, 1200.0);
   glFogf (GL_FOG_END, 8000.0);
   glHint (GL_FOG_HINT, GL_NICEST);
+}
+
+void Lighting::ship_lighting(Ship* ship)
+{
+  Vector3* pos = V3_Math::add(ship->body->position, V3_Math::multiply(ship->body->forward, 4));
+  
+  GLfloat light1_ambient[] = { 1.0, 1.0, 1.0, 1.0 };
+  GLfloat light1_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
+  GLfloat light1_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+  GLfloat light1_position[] = { pos->x, pos->y, pos->z };;
+  GLfloat spot_direction[] = {ship->body->forward->x, ship->body->forward->y, ship->body->forward->z};;
+
+  glLightfv(GL_LIGHT1, GL_AMBIENT, light1_ambient);
+  glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
+  glLightfv(GL_LIGHT1, GL_SPECULAR, light1_specular);
+  glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
+  glLightf(GL_LIGHT1, GL_CONSTANT_ATTENUATION, 1.0);
+  glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 0);
+  glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, 0);
+
+  glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 20.0);
+  glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, spot_direction);
+  glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 2.0);
+
+  glEnable(GL_LIGHT1);
 }

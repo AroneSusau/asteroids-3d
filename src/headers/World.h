@@ -17,6 +17,7 @@ class Camera;
 class Ship;
 class Skybox;
 class Mouse;
+class Lighting;
 
 class World
 {

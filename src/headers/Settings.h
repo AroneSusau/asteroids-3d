@@ -2,7 +2,7 @@
 
 // Ship
 #define MAX_ADVANCE  3500
-#define MAX_STRAFE   30
+#define MAX_STRAFE   300
 
 #define MAX_ROLL  100
 #define MAX_PITCH 10
@@ -18,7 +18,7 @@
 #define PITCH_DECELERATION 0.9
 #define YAW_DECELERATION   0.9
 
-#define SHIP_LOOK_X 70
+#define SHIP_LOOK_X 20
 #define SHIP_LOOK_Y 20
 #define SHIP_LOOK_ACCEL 2
 
@@ -28,11 +28,13 @@
 
 // Cannon & Bullets
 #define BULLET_VELOCITY 2500
+#define BULLET_ROTATION 180
+
 #define BULLET_SIZE     10
 #define RATE_OF_FIRE    0.10
 #define BULLET_DAMAGE   20
 
-#define FRAMES_PER_SECOND   3
+#define FRAMES_PER_SECOND   24.0f
 #define BULLET_TEXTURE_ROWS 6.0f
 #define BULLET_TEXTURE_COLS 6.0f
 #define BULLET_START_FRAME  0.0f
@@ -46,6 +48,7 @@
 #define ASTEROID_MIN_RADIUS   500
 #define ASTEROID_MAX_RADIUS   2000
 
+#define ASTEROID_DEBUG         true
 #define ASTEROID_HEALTH_BAR_ON true
 
 #define ASTEROID_TEXT_1 "assets/asteroids/asteroid1.jpg"
@@ -54,7 +57,7 @@
 #define ASTEROID_TEXT_4 "assets/asteroids/asteroid4.jpg"
 
 // Asteroid Generation
-#define ASTEROID_ACTIVE       true
+#define ASTEROID_ACTIVE       false
 #define ASTEROID_SPAWN_RATE   5
 #define ASTEROID_SPAWN_NEXT   0
 #define ASTEROID_SPAWN_AMOUNT 1 
@@ -66,9 +69,9 @@
 #define ASTEROID_MAX_ROTATION 100
 
 // Camera
-#define CAMERA_BACK_DIST  10
-#define CAMREA_UP_DIST    6
-#define CAMERA_BACK_DELAY 10
+#define CAMERA_BACK_DIST  7
+#define CAMREA_UP_DIST    4
+#define CAMERA_BACK_DELAY 7
 #define CAMREA_FOV        90
 #define CAMREA_FAR        25000
 
@@ -88,6 +91,6 @@
 
 // MISC
 #define GAME_TITLE   "Asteroids Assignment 2"
-#define FULL_SCREEN  false
+#define FULL_SCREEN  true
 #define VIEWPORT_DIM 800
 #define KEY_ESC      27

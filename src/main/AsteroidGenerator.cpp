@@ -178,8 +178,8 @@ void AsteroidGenerator::asteroid_asteroid_collision()
           b->velocity->y = a_y;
           b->velocity->z = a_z;
 
-          a->body->update_position(V3_Math::add(a->body->position, V3_Math::multiply(a->velocity, world->time->delta)));
-          b->body->update_position(V3_Math::add(b->body->position, V3_Math::multiply(b->velocity, world->time->delta)));
+          a->body->update_position(V3_Math::add(a->body->position, V3_Math::multiply(V3_Math::multiply(a->velocity, world->time->delta), 2)));
+          b->body->update_position(V3_Math::add(b->body->position, V3_Math::multiply(V3_Math::multiply(b->velocity, world->time->delta), 2)));
         }
       }
     }
@@ -231,4 +231,14 @@ void AsteroidGenerator::spawn()
 void AsteroidGenerator::update_spawn() 
 {
   next_spawn -= world->time->delta;
+}
+
+void AsteroidGenerator::debug_asteroid()
+{
+  if (ASTEROID_DEBUG)
+  {
+    generate();
+    asteroids->at(0)->body->update_position(new Vector3(0, 0, -5000));
+    asteroids->at(0)->velocity = new Vector3(0, 0, 0);
+  }
 }

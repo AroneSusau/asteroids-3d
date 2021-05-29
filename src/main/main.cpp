@@ -49,6 +49,7 @@ void render()
   camera->place_camera();
 
   lighting->world_lighting();
+  lighting->ship_lighting(ship);
 
   skybox->draw();
 
@@ -146,11 +147,14 @@ void init_app(int *argcp, char **argv)
   }
 
   lighting->init();
+  
   camera->place_camera();
   
   skybox->load_skybox_textures();
   asteroid_generator->load_asteroid_textures();
   ship->load_ship_graphics();
+
+  asteroid_generator->debug_asteroid();  
 }
 
 int main(int argc, char **argv)

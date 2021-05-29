@@ -17,6 +17,7 @@
 
 #include "Ship.h"
 #include "RigidBody.h"
+#include "Animator.h"
 #include "Settings.h"
 #include "Vector3.h"
 #include "V3_Math.h"
@@ -24,6 +25,7 @@
 #include "World.h"
 
 class World;
+class Animator;
 
 class Bullet
 {
@@ -31,10 +33,9 @@ class Bullet
 
     RigidBody* body;
     Vector3* velocity;
+    Animator* animator;
 
     World* world;
-
-    std::vector<std::vector<Vector3*>*>* frames;
 
     float size;
 
@@ -42,11 +43,6 @@ class Bullet
     bool collide;
 
     int texture;
-    int current_frame;
-    int start_frame;
-
-    float frame_tick;
-    float next_frame;
 
     Bullet();
     Bullet(World* world, Vector3* position, Vector3* velocity, int texture);
@@ -57,7 +53,5 @@ class Bullet
     void tick();
 
     void update_position();
-    void update_frame();
-    void generate_animation_uv();
     void check_bounds();
 };

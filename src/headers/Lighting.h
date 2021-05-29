@@ -14,6 +14,9 @@
 #endif
 
 #include "Settings.h"
+#include "Ship.h"
+
+class Ship;
 
 class Lighting
 {
@@ -23,5 +26,6 @@ class Lighting
 
     void init();
     void world_lighting();
+    void ship_lighting(Ship* ship);
     void fog();
 };
