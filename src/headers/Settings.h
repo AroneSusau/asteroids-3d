@@ -44,7 +44,7 @@
 
 // Asteroid
 #define ASTEROID_DIVISIONS    15
-#define ASTEROID_HEALTH_SCALE 100
+#define ASTEROID_HEALTH_SCALE 10
 #define ASTEROID_MIN_RADIUS   500
 #define ASTEROID_MAX_RADIUS   2000
 
@@ -91,6 +91,6 @@
 
 // MISC
 #define GAME_TITLE   "Asteroids Assignment 2"
-#define FULL_SCREEN  true
+#define FULL_SCREEN  false
 #define VIEWPORT_DIM 800
 #define KEY_ESC      27
