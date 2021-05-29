@@ -1,7 +1,7 @@
 #pragma once
 
 // Ship
-#define MAX_ADVANCE  5500
+#define MAX_ADVANCE  3500
 #define MAX_STRAFE   30
 
 #define MAX_ROLL  100
@@ -27,7 +27,7 @@
 #define SHIP_TEXTURE_PATH   "assets/ship/ship.png"
 
 // Cannon & Bullets
-#define BULLET_VELOCITY 3500
+#define BULLET_VELOCITY 2500
 #define BULLET_SIZE     10
 #define RATE_OF_FIRE    0.10
 #define BULLET_DAMAGE   20
@@ -35,6 +35,8 @@
 #define FRAMES_PER_SECOND   3
 #define BULLET_TEXTURE_ROWS 6.0f
 #define BULLET_TEXTURE_COLS 6.0f
+#define BULLET_START_FRAME  0.0f
+#define BULLET_END_FRAME    23.0f
 
 #define BULLET_TEXTURE_PATH "assets/bullets/fireball_ani.png"
 
@@ -86,6 +88,6 @@
 
 // MISC
 #define GAME_TITLE   "Asteroids Assignment 2"
-#define FULL_SCREEN  true
+#define FULL_SCREEN  false
 #define VIEWPORT_DIM 800
 #define KEY_ESC      27

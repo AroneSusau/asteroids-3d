@@ -21,7 +21,7 @@ Bullet::Bullet(World* world, Vector3* position, Vector3* velocity, int texture)
   frames = new std::vector<std::vector<Vector3*>*>();
 
   size = BULLET_SIZE;
-  start_frame = 14;
+  start_frame = BULLET_START_FRAME;
   current_frame = start_frame;
 
   frame_tick = 1 / FRAMES_PER_SECOND;
@@ -132,14 +132,16 @@ void Bullet::generate_animation_uv()
 
   for (float row = 0; row < BULLET_TEXTURE_ROWS; ++row)
   {
+    float row_dist = BULLET_TEXTURE_ROWS - 1 - row;
+
     for (float col = 0; col < BULLET_TEXTURE_COLS; ++col)
     {
       frames->push_back(new std::vector<Vector3*>());
 
-      frames->at(row * BULLET_TEXTURE_ROWS + col)->push_back(new Vector3(col_step * col, row_step * row, 0));
-      frames->at(row * BULLET_TEXTURE_ROWS + col)->push_back(new Vector3(col_step * (col + 1.0f), row_step * row, 0));
-      frames->at(row * BULLET_TEXTURE_ROWS + col)->push_back(new Vector3(col_step * (col + 1.0f), row_step * (row + 1.0f), 0));
-      frames->at(row * BULLET_TEXTURE_ROWS + col)->push_back(new Vector3(col_step * col, row_step * (row + 1.0f), 0));
+      frames->at(row * BULLET_TEXTURE_ROWS + col)->push_back(new Vector3(col_step * col, row_step * row_dist, 0));
+      frames->at(row * BULLET_TEXTURE_ROWS + col)->push_back(new Vector3(col_step * (col + 1.0f), row_step * row_dist, 0));
+      frames->at(row * BULLET_TEXTURE_ROWS + col)->push_back(new Vector3(col_step * (col + 1.0f), row_step * (row_dist + 1.0f), 0));
+      frames->at(row * BULLET_TEXTURE_ROWS + col)->push_back(new Vector3(col_step * col, row_step * (row_dist + 1.0f), 0));
     }
   }
 }
@@ -152,7 +154,7 @@ void Bullet::update_frame()
   {
     ++current_frame;
 
-    if (current_frame == frames->size())
+    if (current_frame > BULLET_END_FRAME)
     {
       current_frame = start_frame;
     }

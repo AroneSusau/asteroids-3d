@@ -2,9 +2,9 @@
 
 AsteroidGenerator::AsteroidGenerator(World* world)
 {
-  this->world = world;
-  asteroids   = new std::vector<Asteroid*>();
-  textures    = new std::vector<GLuint>();
+  this->world   = world;
+  asteroids     = new std::vector<Asteroid*>();
+  textures      = new std::vector<GLuint>();
 
   spawn_rate    = ASTEROID_SPAWN_RATE;
   next_spawn    = ASTEROID_SPAWN_NEXT;
@@ -66,6 +66,7 @@ void AsteroidGenerator::generate()
 {
   auto tex = textures->at(V3_Math::random(1, textures->size()) - 1);
   Asteroid* asteroid = new Asteroid(tex, new Vector3(0, 0, 0));
+
   Vector3* position = asteroid_starting_position();
 
   asteroid->body->update_position(position);
@@ -97,8 +98,6 @@ void AsteroidGenerator::asteroid_rotate(Asteroid* asteroid)
 
 void AsteroidGenerator::asteroid_wall_bounce(Asteroid* asteroid) 
 {
-
-
   if ((asteroid->body->position->x - asteroid->size < -WALL_TOTAL_DIST && asteroid->velocity->x < 0) || (asteroid->body->position->x + asteroid->size > WALL_TOTAL_DIST && asteroid->velocity->x > 0))
   {
     asteroid->velocity->x *= -1;
@@ -119,17 +118,15 @@ Vector3* AsteroidGenerator::asteroid_starting_position()
 {
   Vector3* position = new Vector3();
 
-  int select = V3_Math::random(1, 4);
+  int select = V3_Math::random(1, 3);
 
-  int dx = V3_Math::random(1, 3) == 1 ? -1 : 1;
-  int dy = V3_Math::random(1, 3) == 1 ? -1 : 1;
-  int dz = V3_Math::random(1, 3) == 1 ? -1 : 1;
+  int dx = V3_Math::random(1, 2) == 1 ? -1 : 1;
+  int dy = V3_Math::random(1, 2) == 1 ? -1 : 1;
+  int dz = V3_Math::random(1, 2) == 1 ? -1 : 1;
 
-  int half_dist = WALL_TOTAL_DIST / 2;
-
-  position->x = (V3_Math::random(1, half_dist)) * dx * 2;
-  position->y = (V3_Math::random(1, half_dist)) * dy * 2;
-  position->z = (V3_Math::random(1, half_dist)) * dz * 2;
+  position->x = (V3_Math::random(1, WALL_TOTAL_DIST)) * dx * 2;
+  position->y = (V3_Math::random(1, WALL_TOTAL_DIST)) * dy * 2;
+  position->z = (V3_Math::random(1, WALL_TOTAL_DIST)) * dz * 2;
 
   position->x = select == 1 ? (WALL_TOTAL_DIST * 4) * dx : position->x;
   position->y = select == 2 ? (WALL_TOTAL_DIST * 4) * dy : position->y;
