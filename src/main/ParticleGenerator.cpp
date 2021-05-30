@@ -143,3 +143,13 @@ void ParticleGenerator::update_ship_tail_spawn()
     tail_next_spawn = tail_spawn_rate;
   }  
 }
+
+void ParticleGenerator::reset()
+{
+  for (Particle* p : *particles)
+  {
+    delete p;
+  }
+
+  particles->clear();
+}

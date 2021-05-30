@@ -39,6 +39,7 @@ class AsteroidGenerator
     void asteroid_wall_bounce(Asteroid* asteroid);
     
     void asteroid_bullet_collision(Asteroid* asteroid);
+    void asteroid_ship_collision(Asteroid* asteroid);
     void asteroid_asteroid_collision();
     
     bool has_collided(Asteroid* a, Asteroid* b);
@@ -53,4 +54,6 @@ class AsteroidGenerator
     void load_asteroid_textures();
 
     void debug_asteroid();
+
+    void reset();
 };

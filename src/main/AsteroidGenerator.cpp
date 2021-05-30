@@ -48,11 +48,10 @@ void AsteroidGenerator::tick()
     asteroid->draw();
 
     asteroid_bullet_collision(asteroid);
+    asteroid_ship_collision(asteroid);
 
     if (asteroid->destroyed)
     {
-      world->particle_generator->generate_explosion(asteroid->body->position, asteroid->size / 30);
-
       delete asteroid;
       asteroids->erase(asteroids->begin() + i);
     }
@@ -67,7 +66,7 @@ void AsteroidGenerator::tick()
 void AsteroidGenerator::generate()
 {
   auto tex = textures->at(V3_Math::random(1, textures->size()) - 1);
-  Asteroid* asteroid = new Asteroid(tex, new Vector3(0, 0, 0));
+  Asteroid* asteroid = new Asteroid(world, tex, new Vector3(0, 0, 0));
 
   Vector3* position = asteroid_starting_position();
 
@@ -137,6 +136,18 @@ Vector3* AsteroidGenerator::asteroid_starting_position()
   return position;
 }
 
+void AsteroidGenerator::asteroid_ship_collision(Asteroid* asteroid)
+{
+  if (world->ship->active && asteroid->has_collided(world->ship->body))
+  {
+    world->game_state = GAME_OVER;
+    world->player_death_time = world->time->now;
+    asteroid->destroyed = true;
+    world->ship->active = false;
+    world->particle_generator->generate_explosion(V3_Math::add(world->ship->body->position, V3_Math::multiply(world->ship->body->forward, 10)), 5);
+  }
+}
+
 void AsteroidGenerator::asteroid_bullet_collision(Asteroid* asteroid) 
 {
   std::vector<Bullet*>* bullets = world->ship->cannon->bullets;
@@ -147,6 +158,14 @@ void AsteroidGenerator::asteroid_bullet_collision(Asteroid* asteroid)
 
     if (asteroid->has_collided(bullet->body))
     {
+      asteroid->hit(BULLET_DAMAGE);
+
+      if (asteroid->destroyed)
+      {
+        world->player_points += asteroid->points;
+        world->particle_generator->generate_explosion(asteroid->body->position, asteroid->size / 30);
+      }
+
       delete bullet;
       bullets->erase(bullets->begin() + i);
     }
@@ -215,7 +234,7 @@ void AsteroidGenerator::load_asteroid_textures()
 
 void AsteroidGenerator::spawn() 
 {
-  if (spawn_active && next_spawn <= 0)
+  if (world->game_state == GAME_PLAYING && spawn_active && next_spawn <= 0)
   {
     for (int i = 0; i < spawn_amount; ++i)
     {
@@ -243,4 +262,20 @@ void AsteroidGenerator::debug_asteroid()
     asteroids->at(0)->body->update_position(new Vector3(0, 0, -5000));
     asteroids->at(0)->velocity = new Vector3(0, 0, 0);
   }
+}
+
+void AsteroidGenerator::reset()
+{
+  spawn_rate    = ASTEROID_SPAWN_RATE;
+  next_spawn    = ASTEROID_SPAWN_NEXT;
+  spawn_amount  = ASTEROID_SPAWN_AMOUNT;
+  max_asteroids = ASTEROID_SPAWN_MAX;
+  spawn_active  = ASTEROID_ACTIVE;
+
+  for (Asteroid* asteroids : *asteroids)
+  {
+    delete asteroids;
+  }
+
+  asteroids->clear();
 }

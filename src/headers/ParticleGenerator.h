@@ -39,4 +39,6 @@ class ParticleGenerator
     void update_ship_tail_spawn();
 
     void load_textures();
+
+    void reset();
 };

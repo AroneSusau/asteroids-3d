@@ -75,6 +75,7 @@ void on_idle()
   game_time->tick();
   
   wall->wall_distance_warning(ship->body->position);
+  wall->wall_ship_collision();
   wall->update_wall_color();
   
   game_time->update();
@@ -112,7 +113,14 @@ void on_reshape(int w, int h)
 
 void on_key_press(unsigned char key, int x, int y)
 {
-  ship->on_key_press(key, x, y);
+  if (ship->active && world->game_state == GAME_PLAYING)
+  {
+    ship->on_key_press(key, x, y);
+  }
+  else
+  {
+     world->reset_game();
+  }
 
   if (key == KEY_ESC)
   {

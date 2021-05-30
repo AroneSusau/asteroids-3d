@@ -77,6 +77,8 @@ void Particle::tick()
 void Particle::draw() 
 {
   glPushMatrix();
+  glPushAttrib(GL_CURRENT_BIT);
+
     glDisable(GL_LIGHTING);
   
     glEnable(GL_TEXTURE_2D);
@@ -122,6 +124,7 @@ void Particle::draw()
     glEnable(GL_LIGHTING);
     glDisable(GL_TEXTURE_2D);
     
+  glPopAttrib();
   glPopMatrix();
 }
 

@@ -22,6 +22,7 @@ class Ship;
 class Skybox;
 class Mouse;
 class Lighting;
+class Wall;
 
 typedef enum { GAME_START, GAME_PLAYING, GAME_OVER } gamestate_t;
 
@@ -51,4 +52,7 @@ class World
 
     World();
     ~World();
+
+    void reset_game();
+    void start_screen();
 };

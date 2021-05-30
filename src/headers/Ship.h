@@ -45,6 +45,7 @@ class Ship
     float roll_ratio = 0;
     float animation = 0;
     bool firing = false;
+    bool active = false;
 
     std::string model_filename;
     std::string material_path;
@@ -71,10 +72,11 @@ class Ship
 
     void draw();
     void draw_ship();
-    void draw_wings();
 
     void load_ship_graphics();
 
     void on_key_press(unsigned char key, int x, int y);
     void on_key_release(unsigned char key, int x, int y);
+
+    void reset();
 };

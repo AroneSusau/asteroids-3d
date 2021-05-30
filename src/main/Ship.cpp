@@ -18,6 +18,8 @@ Ship::Ship(World* world)
 
   cannon = new Cannon(this, body->position, new Vector3(0, 0, 0), world);
 
+  active = true;
+
   model_filename = SHIP_MODEL_PATH;
   material_path  = SHIP_MATERIAL_PATH;
   texture_path   = SHIP_TEXTURE_PATH; 
@@ -38,22 +40,30 @@ Ship::~Ship()
 
 void Ship::draw()
 {
-  glPushMatrix();
-  glEnable(GL_TEXTURE_2D);
-  glEnable(GL_LIGHTING);
+  if (active)
+  {
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
 
-  glBindTexture(GL_TEXTURE_2D, ship_id);
+    glPushMatrix();
+    glEnable(GL_TEXTURE_2D);
+    glEnable(GL_LIGHTING);
 
-  ship_forward_rotation();
-  mouse_ship_rotation();
-  
-  draw_ship();
-  
-  glDisable(GL_TEXTURE_2D);
-  Materials::ship();
+    glBindTexture(GL_TEXTURE_2D, ship_id);
 
-  draw_wings();
-  glPopMatrix();
+    ship_forward_rotation();
+    
+    if (world->game_state == GAME_PLAYING)
+    {
+      mouse_ship_rotation();
+    }
+    
+    draw_ship();
+    
+    glDisable(GL_TEXTURE_2D);
+    glPopMatrix();
+    glDisable(GL_CULL_FACE);
+  }
 }
 
 void Ship::draw_ship()
@@ -90,10 +100,6 @@ void Ship::ship_forward_rotation()
   glMultMatrixf(matrix);
 }
 
-void Ship::draw_wings()
-{
-}
-
 void Ship::load_ship_graphics()
 {
   ship_id = Util::load_texture(texture_path.c_str(), true);
@@ -127,14 +133,17 @@ void Ship::update_velocity()
 
 void Ship::update_position()
 {
-  EulerRotation::advance(body, velocity->x * world->time->delta);
-  EulerRotation::strafe(body, velocity->y * world->time->delta);
+  if (active && world->game_state == GAME_PLAYING)
+  {
+    EulerRotation::advance(body, velocity->x * world->time->delta);
+    EulerRotation::strafe(body, velocity->y * world->time->delta);
 
-  EulerRotation::roll(body, rotation->x * world->time->delta);
-  EulerRotation::pitch(body, rotation->y * world->time->delta);
-  EulerRotation::yaw(body, rotation->z * world->time->delta);
+    EulerRotation::roll(body, rotation->x * world->time->delta);
+    EulerRotation::pitch(body, rotation->y * world->time->delta);
+    EulerRotation::yaw(body, rotation->z * world->time->delta);
 
-  body->update_look(V3_Math::add(body->position, body->forward));
+    body->update_look(V3_Math::add(body->position, body->forward));
+  }
 }
 
 void Ship::update_animation()
@@ -212,15 +221,18 @@ void Ship::decelerate()
 
 void Ship::tick()
 {
-  update_velocity();
-  update_position();
-  update_animation();
-  update_look();
-  decelerate();
+  if (active)
+  {
+    update_velocity();
+    update_position();
+    update_animation();
+    update_look();
+    decelerate();
 
-  cannon->tick();
+    cannon->tick();
 
-  shoot();
+    shoot();
+  }
 }
 
 void Ship::on_key_press(unsigned char key, int x, int y)
@@ -299,4 +311,23 @@ void Ship::on_key_release(unsigned char key, int x, int y)
       firing = false;
       break;
   }
+}
+
+void Ship::reset()
+{ 
+  body->update_position(new Vector3( 0, 0, 0));
+  body->update_forward(new Vector3( 0, 0, -1));
+  body->update_up(new Vector3( 0, 1,  0));
+  body->update_right(new Vector3(1, 0,  0));
+  body->update_look(new Vector3( 0, 0, -100));
+
+  velocity     = new Vector3(0, 0, 0);
+  rotation     = new Vector3(0, 0, 0);
+  look         = new Vector3(0, 0, 0);
+  acceleration = new Vector3(ADVANCE_ACCEL, STRAFE_ACCEL, 0);
+
+  active = true;
+  
+  EulerRotation::yaw(body, 1);
+  EulerRotation::yaw(body, -1);
 }

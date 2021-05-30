@@ -59,7 +59,7 @@
 
 // ASTEROID GENERATION
 #define ASTEROID_ACTIVE       true
-#define ASTEROID_SPAWN_RATE   5
+#define ASTEROID_SPAWN_RATE   10
 #define ASTEROID_SPAWN_NEXT   0
 #define ASTEROID_SPAWN_AMOUNT 1 
 #define ASTEROID_SPAWN_MAX    20
@@ -115,5 +115,5 @@
 // MISC
 #define GAME_TITLE   "Asteroids Assignment 2"
 #define FULL_SCREEN  true
-#define VIEWPORT_DIM 800
+#define VIEWPORT_DIM 880
 #define KEY_ESC      27

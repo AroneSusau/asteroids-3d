@@ -1,13 +1,16 @@
 #include "../headers/Wall.h"
 
-Wall::Wall(float line_count, float line_space, float warning_ratio) {
-  this->line_count = line_count;
-  this->line_space = line_space;
+Wall::Wall(World* world, float line_count, float line_space, float warning_ratio) {
+  
+  this->world         = world;
+     
+  this->line_count    = line_count;
+  this->line_space    = line_space;
 
   this->warning_range = line_count * line_space * warning_ratio;
 
-  this->min_range  = -line_count * line_space + this->warning_range; 
-  this->max_range  = line_count * line_space - this->warning_range; 
+  this->min_range     = -line_count * line_space + this->warning_range; 
+  this->max_range     = line_count * line_space - this->warning_range; 
 }
 
 Wall::~Wall() {}
@@ -101,4 +104,26 @@ void Wall::draw()
   glEnd();
   glEnable(GL_LIGHTING);
   glPopAttrib();
+}
+
+void Wall::wall_ship_collision() 
+{
+  if (world->game_state == GAME_PLAYING && world->ship->active)
+  {
+    float dist = WALL_TOTAL_DIST;
+  
+    bool wall_collision = (
+      world->ship->body->position->x > dist || world->ship->body->position->x < -dist ||
+      world->ship->body->position->y > dist || world->ship->body->position->y < -dist ||
+      world->ship->body->position->z > dist || world->ship->body->position->z < -dist
+    );
+
+    if (wall_collision)
+    {
+      world->game_state = GAME_OVER;
+      world->player_death_time = world->time->now;
+      world->ship->active = false;
+      world->particle_generator->generate_explosion(V3_Math::add(world->ship->body->position, V3_Math::multiply(world->ship->body->forward, 10)), 5);
+    }
+  }
 }

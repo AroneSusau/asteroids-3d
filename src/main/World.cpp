@@ -9,7 +9,7 @@ World::World()
   mouse              = new Mouse(this);
   particle_generator = new ParticleGenerator(this);
   time               = new Time();
-  wall               = new Wall(WALL_LINES, WALL_DIST, WALL_WARN_DIST);
+  wall               = new Wall(this, WALL_LINES, WALL_DIST, WALL_WARN_DIST);
   
   camera = new Camera();
   ship   = new Ship(this);
@@ -24,7 +24,7 @@ World::World()
   player_points = 0;
   player_death_time = 0;
 
-  game_state = GAME_PLAYING;
+  game_state = GAME_START;
 }
 
 World::~World() {
@@ -38,4 +38,32 @@ World::~World() {
   delete skybox;
   delete time;
   delete wall;
+}
+
+void World::start_screen()
+{
+  camera->body->position->x = -4489;
+  camera->body->position->y = -4761;
+  camera->body->position->z = -751;
+
+  gluLookAt(
+    -4489, -4761, -751,
+    0.0f, 0.0f, 0.0f,
+    0.0f, 0.0f, 1.0f);
+}
+
+void World::reset_game()
+{
+  player_points = 0;
+  player_death_time = 0;
+  
+  time->delta = 0;
+  time->time = 0;
+  time->now = 0;
+
+  game_state = GAME_PLAYING;
+
+  ship->reset();
+  asteroid_generator->reset();
+  particle_generator->reset();
 }

@@ -1,7 +1,10 @@
 #include "../headers/Asteroid.h"
 
-Asteroid::Asteroid(GLuint texture, Vector3* v)
+Asteroid::Asteroid(World* world, GLuint texture, Vector3* v)
 {
+  
+  this->world   = world;
+  
   body          = new RigidBody();
   velocity      = v;
   rotation      = new Vector3();
@@ -128,12 +131,18 @@ void Asteroid::draw()
 {
   glEnable(GL_TEXTURE_2D);
   glEnable(GL_LIGHTING);
+
+  glEnable(GL_CULL_FACE);
+  glCullFace(GL_BACK);
+
   glPushMatrix();
   glTranslatef(body->position->x, body->position->y, body->position->z - 100);
 
   if (ASTEROID_HEALTH_BAR_ON)
   {
+    glDisable(GL_CULL_FACE);
     draw_health_bar();
+    glEnable(GL_CULL_FACE);
   }
   
   glRotatef(body->orientation->x, 1, 0, 0);
@@ -173,6 +182,7 @@ void Asteroid::draw()
   }
 
   glPopMatrix();
+  glDisable(GL_CULL_FACE);
   glDisable(GL_TEXTURE_2D);
 }
 
@@ -187,16 +197,7 @@ void Asteroid::has_entered_arena()
 
 bool Asteroid::has_collided(RigidBody* o_body) 
 {
-  float dist = V3_Math::magnitude(V3_Math::subtract(body->position, o_body->position));
-  bool result = false;
-  
-  if (dist < size)
-  {
-    hit(BULLET_DAMAGE);
-    result = true;
-  }
-
-  return result;
+  return V3_Math::magnitude(V3_Math::subtract(body->position, o_body->position)) < size;
 }
 
 void Asteroid::hit(float amount) 
@@ -234,7 +235,7 @@ void Asteroid::draw_health_bar()
 
     glMultMatrixf(matrix);
 
-    glPushAttrib(GL_LIGHTING_BIT);
+    glPushAttrib(GL_CURRENT_BIT);
       glDisable(GL_FOG);
       glDisable(GL_LIGHTING);
       glColor3f(1.0f, 1.0f, 1.0f);

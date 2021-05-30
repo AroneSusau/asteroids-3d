@@ -14,13 +14,18 @@
 #endif
 
 #include "Vector3.h"
+#include "World.h"
 #include "Materials.h"
 
 #include <iostream>
 
+class World;
+
 class Wall
 {
   public:
+
+    World* world;
 
     float line_count = 0;
     float line_space = 0;
@@ -45,10 +50,11 @@ class Wall
       { 1.0, 1.0, 1.0 }
     };
 
-    Wall(float line_count, float line_space, float warning_ratio);
+    Wall(World* world, float line_count, float line_space, float warning_ratio);
     ~Wall();
 
     void wall_distance_warning(Vector3* position);
+    void wall_ship_collision();
     void update_wall_color();
     void draw();
 };

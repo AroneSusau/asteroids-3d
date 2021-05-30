@@ -30,6 +30,8 @@ class Asteroid
 {
   public:
 
+    World* world;
+    
     RigidBody* body;
     Vector3* velocity;
     Vector3* rotation;
@@ -49,7 +51,7 @@ class Asteroid
     bool entered_arena;
     bool destroyed;
 
-    Asteroid(GLuint texture, Vector3* v);
+    Asteroid(World* world, GLuint texture, Vector3* v);
     ~Asteroid();
 
     void init();
