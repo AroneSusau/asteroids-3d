@@ -3,22 +3,23 @@
 ParticleGenerator::ParticleGenerator(World* world)
 {
   this->world     = world;
-  this->particles = new std::vector<Particle*>();
   this->textures  = new std::map<std::string, int>();
 
-  tail_spawn_rate = 0.05;
-  tail_next_spawn = tail_spawn_rate;
-  tail_spawn_amount = 100;
+  this->asteroid_particles = new std::vector<Particle*>();
+
+  tail_spawn_rate   = 0.05;
+  tail_next_spawn   = tail_spawn_rate;
+  tail_spawn_amount = 10;
 }
 
 ParticleGenerator::~ParticleGenerator()
 {
-  for (Particle* p : *particles)
+  for (Particle* p : *asteroid_particles)
   {
     delete p;
   }
 
-  delete particles;
+  delete asteroid_particles;
   delete textures;
 }
 
@@ -34,23 +35,26 @@ void ParticleGenerator::generate_explosion(Vector3* position, float size)
 
   generate_explosion_flare(position, size);
 
-  particles->push_back(p1);
-  particles->push_back(p2);
-  particles->push_back(p3);
+  asteroid_particles->push_back(p1);
+  asteroid_particles->push_back(p2);
+  asteroid_particles->push_back(p3);
 }
 
 void ParticleGenerator::tick() 
 {
-  // update_ship_tail_spawn();
+  tick_asteroid_particles();
+}
 
-  for (size_t i = 0; i < particles->size(); i++)
+void ParticleGenerator::tick_asteroid_particles() 
+{
+  for (size_t i = 0; i < asteroid_particles->size(); i++)
   {
-    Particle* particle = particles->at(i);
+    Particle* particle = asteroid_particles->at(i);
 
     if (particle->finished)
     {
       delete particle;
-      particles->erase(particles->begin() + i);
+      asteroid_particles->erase(asteroid_particles->begin() + i);
     }
     else
     {
@@ -85,41 +89,7 @@ void ParticleGenerator::generate_explosion_flare(Vector3* position, float size)
     p->velocity->y = dy * V3_Math::random(PARTICLE_FLARE_MIN_VELOCITY, PARTICLE_FLARE_MAX_VELOCITY);
     p->velocity->z = dz * V3_Math::random(PARTICLE_FLARE_MIN_VELOCITY, PARTICLE_FLARE_MAX_VELOCITY);
 
-    particles->push_back(p);
-  }
-}
-
-void ParticleGenerator::generate_ship_tail()
-{
-  for (int i = 0; i < tail_spawn_amount; ++i)
-  {
-    Particle* p = new Particle(
-      world, 
-      PARTICLE_SHIP_TAIL_SHEET, 
-      textures->at(PARTICLE_SHIP_TAIL), 
-      0.8, 
-      PARTICLE_TIME, 
-      0.5,
-      true);
-  
-    float sidex = V3_Math::random(1, 2) == 1 ? 1.10 : -1.10;
-    float amountx = V3_Math::random(50, 70) / 100.0f;
-
-    float sidey = V3_Math::random(1, 2) == 1 ? 1 : -1;
-    float amounty = V3_Math::random(10, 25) / 100.0f;
-
-    float vel_ratio = V3_Math::random(100, 300) / 100.0f;
-
-    p->body->update_position(V3_Math::subtract(
-      world->ship->body->position, 
-      V3_Math::add(V3_Math::multiply(world->ship->body->forward, 1.5), 
-      V3_Math::add(V3_Math::multiply(world->ship->body->right, sidex * amountx), 
-      V3_Math::multiply(world->ship->body->up, sidey * amounty)))
-    ));
-    
-    p->velocity = V3_Math::add(world->ship->velocity, V3_Math::multiply(world->ship->body->forward, -vel_ratio));
-
-    particles->push_back(p);
+    asteroid_particles->push_back(p);
   }
 }
 
@@ -133,23 +103,12 @@ void ParticleGenerator::load_textures()
   textures->insert(std::pair<std::string, int>(PARTICLE_SHIP_TAIL, Util::load_anim_texture(PARTICLE_SHIP_TAIL, true)));
 }
 
-void ParticleGenerator::update_ship_tail_spawn() 
-{
-  tail_next_spawn -= world->time->delta;
-
-  if (tail_next_spawn <= 0)
-  {
-    generate_ship_tail();
-    tail_next_spawn = tail_spawn_rate;
-  }  
-}
-
 void ParticleGenerator::reset()
 {
-  for (Particle* p : *particles)
+  for (Particle* p : *asteroid_particles)
   {
     delete p;
   }
 
-  particles->clear();
+  asteroid_particles->clear();
 }

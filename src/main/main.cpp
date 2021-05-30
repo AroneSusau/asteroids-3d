@@ -105,6 +105,12 @@ void on_reshape(int w, int h)
   world->viewport_width = w;
   world->viewport_height = h;
 
+  glutSetCursor(GLUT_CURSOR_CROSSHAIR);
+  glutWarpPointer(world->viewport_width / 2, world->viewport_width / 2);
+
+  mouse->ratio->x = 0;
+  mouse->ratio->y = 0;
+
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   
@@ -160,7 +166,7 @@ void init_app(int *argcp, char **argv)
   }
 
   lighting->init();
-  
+
   camera->place_camera();
   
   skybox->load_skybox_textures();
