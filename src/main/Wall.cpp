@@ -45,6 +45,7 @@ void Wall::update_wall_color()
 
 void Wall::draw() 
 {
+  glPushAttrib(GL_CURRENT_BIT);
   glDisable(GL_LIGHTING);
   glBegin(GL_LINES);
   for (int i = -line_count; i <= line_count; ++i)
@@ -99,4 +100,5 @@ void Wall::draw()
   }
   glEnd();
   glEnable(GL_LIGHTING);
+  glPopAttrib();
 }

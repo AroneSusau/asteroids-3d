@@ -1,6 +1,8 @@
 #pragma once
 
 #include <vector>
+#include <map>
+#include <string>
 
 #include "World.h"
 #include "Particle.h"
@@ -18,14 +20,23 @@ class ParticleGenerator
     World* world;
 
     std::vector<Particle*>* particles;
-    std::vector<int>* textures;
+    std::map<std::string, int>* textures;
+
+    float tail_next_spawn;
+    float tail_spawn_rate;
+    float tail_spawn_amount;
 
     ParticleGenerator(World* world);
     ~ParticleGenerator();
 
     void generate_explosion(Vector3* position, float size);
+    void generate_explosion_flare(Vector3* position, float size);
+
+    void generate_ship_tail();
 
     void tick();
+
+    void update_ship_tail_spawn();
 
     void load_textures();
 };

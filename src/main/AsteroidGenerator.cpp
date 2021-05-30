@@ -51,6 +51,8 @@ void AsteroidGenerator::tick()
 
     if (asteroid->destroyed)
     {
+      world->particle_generator->generate_explosion(asteroid->body->position, asteroid->size / 30);
+
       delete asteroid;
       asteroids->erase(asteroids->begin() + i);
     }

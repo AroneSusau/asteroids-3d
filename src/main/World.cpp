@@ -4,6 +4,7 @@ World::World()
 {
   asteroid_generator = new AsteroidGenerator(this);
   axis               = new Axis(AXIS_DISTANCE, AXIS_ACTIVE);
+  hud                = new HUD(this);
   lighting           = new Lighting();
   mouse              = new Mouse(this);
   particle_generator = new ParticleGenerator(this);
@@ -19,12 +20,18 @@ World::World()
 
   viewport_width = VIEWPORT_DIM;
   viewport_height = VIEWPORT_DIM;
+
+  player_points = 0;
+  player_death_time = 0;
+
+  game_state = GAME_PLAYING;
 }
 
 World::~World() {
   delete asteroid_generator;
   delete axis;
   delete camera;
+  delete hud;
   delete lighting;
   delete mouse;
   delete ship;

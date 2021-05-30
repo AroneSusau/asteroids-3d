@@ -130,34 +130,11 @@ void Asteroid::draw()
   glEnable(GL_LIGHTING);
   glPushMatrix();
   glTranslatef(body->position->x, body->position->y, body->position->z - 100);
-  
-  glPushMatrix();
 
-  float mat_ambient[] = { 1.0, 1.0, 1.0, 1.0 };
-  float mat_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
-  float mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-  float mat_shininess[] = { 100.0 };
-
-  glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
-  glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-  glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-  glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
-
-  float matrix [] = {
-    body->right->x,    body->right->y,    body->right->z,    0.0f,              
-    body->up->x,       body->up->y,       body->up->z,      0.0f,
-    body->forward->x,  body->forward->y,  body->forward->z, 0.0f,
-    0, 0, 0, 1.0f
-  };
-
-  glMultMatrixf(matrix);
-  
   if (ASTEROID_HEALTH_BAR_ON)
   {
     draw_health_bar();
   }
-
-  glPopMatrix();
   
   glRotatef(body->orientation->x, 1, 0, 0);
   glRotatef(body->orientation->y, 0, 1, 0);
@@ -174,7 +151,7 @@ void Asteroid::draw()
     glBegin(GL_TRIANGLE_STRIP);
     
     for (int j = 0; j <= ASTEROID_DIVISIONS; j++)
-    {
+    {      
       v1 = vertices->at(i)->at(j);
       t1 = textcoords->at(i)->at(j);
       n1 = normals->at(i)->at(j);
@@ -194,6 +171,7 @@ void Asteroid::draw()
 
     glEnd();
   }
+
   glPopMatrix();
   glDisable(GL_TEXTURE_2D);
 }
@@ -233,29 +211,53 @@ void Asteroid::hit(float amount)
 
 void Asteroid::draw_health_bar()
 {
-  float h = health / max_health;
+  glPushMatrix();
+  glPushAttrib(GL_CURRENT_BIT);
   
-  glPushAttrib(GL_LIGHTING_BIT);
-    glDisable(GL_FOG);
-    glDisable(GL_LIGHTING);
-    glColor3f(1.0f, 1.0f, 1.0f);
-    glBegin(GL_QUADS);
-      glVertex3d(-size, 200 + size, 0);
-      glVertex3d(size,  200 + size, 0);
-      glVertex3d(size,  200 + size + 200, 0);
-      glVertex3d(-size, 200 + size + 200, 0);
-    glEnd();
+    float h = health / max_health;
+    float mat_ambient[] = { 1.0, 1.0, 1.0, 1.0 };
+    float mat_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
+    float mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    float mat_shininess[] = { 100.0 };
 
-    Materials::emerald();
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
 
-    glColor3f(0.0f, 1.0f, 0.0f);
-    glBegin(GL_QUADS);
-      glVertex3d((-size + 100) * (-1 + 2 * h), 250 + size, -10);
-      glVertex3d((size - 100),  250 + size, -10);
-      glVertex3d((size - 100),  250 + size + 100, -10);
-      glVertex3d((-size + 100) * (-1 + 2 * h), 250 + size + 100, -10);
-    glEnd();
-    glEnable(GL_LIGHTING);
-    glEnable(GL_FOG);
+    float matrix [] = {
+      body->right->x,    body->right->y,    body->right->z,    0.0f,              
+      body->up->x,       body->up->y,       body->up->z,      0.0f,
+      body->forward->x,  body->forward->y,  body->forward->z, 0.0f,
+      0, 0, 0, 1.0f
+    };
+
+    glMultMatrixf(matrix);
+
+    glPushAttrib(GL_LIGHTING_BIT);
+      glDisable(GL_FOG);
+      glDisable(GL_LIGHTING);
+      glColor3f(1.0f, 1.0f, 1.0f);
+      glBegin(GL_QUADS);
+        glVertex3d(-size, 200 + size, 0);
+        glVertex3d(size,  200 + size, 0);
+        glVertex3d(size,  200 + size + 200, 0);
+        glVertex3d(-size, 200 + size + 200, 0);
+      glEnd();
+
+      Materials::emerald();
+
+      glColor3f(0.0f, 1.0f, 0.0f);
+      glBegin(GL_QUADS);
+        glVertex3d((-size + 100) * (-1 + 2 * h), 250 + size, -10);
+        glVertex3d((size - 100),  250 + size, -10);
+        glVertex3d((size - 100),  250 + size + 100, -10);
+        glVertex3d((-size + 100) * (-1 + 2 * h), 250 + size + 100, -10);
+      glEnd();
+      glEnable(GL_LIGHTING);
+      glEnable(GL_FOG);
+    glPopAttrib();
+
   glPopAttrib();
+  glPopMatrix();
 }

@@ -33,6 +33,7 @@ World*    world                       = new World();
 
 AsteroidGenerator* asteroid_generator = world->asteroid_generator;
 Axis*     axis                        = world->axis;
+HUD*      hud                         = world->hud;
 Lighting* lighting                    = world->lighting;
 Mouse*    mouse                       = world->mouse;
 ParticleGenerator* particle_generator = world->particle_generator;
@@ -64,6 +65,7 @@ void render()
 
   ship->cannon->tick();
 
+  hud->tick();
   game_time->update();
   glutSwapBuffers();
 }
@@ -155,6 +157,7 @@ void init_app(int *argcp, char **argv)
   
   skybox->load_skybox_textures();
   asteroid_generator->load_asteroid_textures();
+  particle_generator->load_textures();
   ship->load_ship_graphics();
 
   asteroid_generator->debug_asteroid();  

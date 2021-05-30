@@ -74,7 +74,8 @@ void Ship::draw_ship()
 void Ship::mouse_ship_rotation()
 {
   glRotatef(look->y, 1, 0, 0);
-  glRotatef(-look->x, 0, 1, 0);
+  glRotatef(-look->z, 0, 1, 0);
+  glRotatef(look->x, 0, 0, 1);
 }
 
 void Ship::ship_forward_rotation()
@@ -143,8 +144,33 @@ void Ship::update_animation()
 
 void Ship::update_look()
 {
-  look->x = SHIP_LOOK_X * world->mouse->ratio->x;
-  look->y = SHIP_LOOK_Y * world->mouse->ratio->y;
+  look->x += SHIP_LOOK_ACCEL * (world->mouse->ratio->x < 0 ? -1 : 1);
+  look->y += SHIP_LOOK_ACCEL * (world->mouse->ratio->y < 0 ? -1 : 1);
+  look->z += SHIP_LOOK_ACCEL * (world->mouse->ratio->x < 0 ? -1 : 1);
+
+  float x_max = SHIP_LOOK_X * world->mouse->ratio->x;
+  float y_max = SHIP_LOOK_Y * world->mouse->ratio->y;
+  float z_max = SHIP_LOOK_Z * world->mouse->ratio->x;
+
+  if (world->mouse->ratio->x > 0)
+  {
+    look->z = look->z > z_max ? z_max : look->z;
+    look->x = look->x > x_max ? x_max : look->x;
+  }
+  else
+  {
+    look->z = look->z < z_max ? z_max : look->z;
+    look->x = look->x < x_max ? x_max : look->x;
+  }
+
+  if (world->mouse->ratio->y > 0)
+  {
+    look->y = look->y > y_max ? y_max : look->y;
+  }
+  else
+  {
+    look->y = look->y < y_max ? y_max : look->y;
+  }
 }
 
 bool Ship::can_accelerate(move_state_t state, move_state_t expected, float velocity, float clamp)

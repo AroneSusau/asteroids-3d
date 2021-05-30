@@ -72,7 +72,7 @@ class Materials
     static void asteroid()
     {
       float mat_ambient [] = { 0.135f, 0.2225f, 0.1575f, 0.95f };
-      float mat_diffuse [] = {1.0f, 1.0f, 1.0f, 1.0f };
+      float mat_diffuse [] = { 0.135f, 0.2225f, 0.1575f, 0.95f };
       float mat_specular [] = {0.916228f, 0.616228f, 0.616228f, 0.95f };
       float shine1 = 100.0f;
 
@@ -83,6 +83,19 @@ class Materials
     }
 
     static void wall()
+    {
+      float mat_ambient [] = { 1.0f, 1.0f, 1.0f, 1.0f };
+      float mat_diffuse [] = { 1.0f, 1.0f, 1.0f, 1.0f };
+      float mat_specular [] = { 1.0f, 1.0f, 1.0f, 1.0f };
+      float shine1 = 100.0f;
+
+      glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+      glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+      glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+      glMaterialf(GL_FRONT, GL_SHININESS, shine1);
+    }
+
+    static void explosion()
     {
       float mat_ambient [] = { 1.0f, 1.0f, 1.0f, 1.0f };
       float mat_diffuse [] = { 1.0f, 1.0f, 1.0f, 1.0f };

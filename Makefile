@@ -14,7 +14,7 @@ CC = g++
 CFLAGS = -Wall -std=$(VER) -Wno-deprecated -g
 FRAMEWORK = -Wno-deprecated-declarations -framework GLUT -framework OpenGL -framework Carbon
 
-BASE_OBJECTS = Animator.o Asteroid.o AsteroidGenerator.o Axis.o Bullet.o Cannon.o Camera.o EulerRotation.o Lighting.o main.o Mouse.o Particle.o ParticleGenerator.o RigidBody.o Ship.o Skybox.o SpriteSheet.o Time.o Util.o Wall.o World.o
+BASE_OBJECTS = Animator.o Asteroid.o AsteroidGenerator.o Axis.o Bullet.o Cannon.o Camera.o EulerRotation.o HUD.o Lighting.o main.o Mouse.o Particle.o ParticleGenerator.o RigidBody.o Ship.o Skybox.o SpriteSheet.o Time.o Util.o Wall.o World.o
 OBJECTS = $(addprefix out/, $(BASE_OBJECTS))
 
 .default: all

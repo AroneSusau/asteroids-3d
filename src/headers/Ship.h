@@ -42,6 +42,7 @@ class Ship
 
     Cannon* cannon;
 
+    float roll_ratio = 0;
     float animation = 0;
     bool firing = false;
 
