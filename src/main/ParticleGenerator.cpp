@@ -40,6 +40,17 @@ void ParticleGenerator::generate_explosion(Vector3* position, float size)
   asteroid_particles->push_back(p3);
 }
 
+void ParticleGenerator::generate_ship_explosion(Vector3* position, float size) 
+{
+  Particle* p1 = new Particle(world, PARTICLE_SHIP_EXPLOSION_SHEET, textures->at(PARTICLE_SHIP_EXPLOSION), size, PARTICLE_FRAME);
+
+  p1->body->update_position(position);
+
+  generate_explosion_flare(position, size);
+
+  asteroid_particles->push_back(p1);
+}
+
 void ParticleGenerator::tick() 
 {
   tick_asteroid_particles();
@@ -100,7 +111,7 @@ void ParticleGenerator::load_textures()
   textures->insert(std::pair<std::string, int>(PARTICLE_EXPLOSION_3, Util::load_anim_texture(PARTICLE_EXPLOSION_3, true)));
   textures->insert(std::pair<std::string, int>(PARTICLE_EXPLOSION_4, Util::load_anim_texture(PARTICLE_EXPLOSION_4, true)));
 
-  textures->insert(std::pair<std::string, int>(PARTICLE_SHIP_TAIL, Util::load_anim_texture(PARTICLE_SHIP_TAIL, true)));
+  textures->insert(std::pair<std::string, int>(PARTICLE_SHIP_EXPLOSION, Util::load_anim_texture(PARTICLE_SHIP_EXPLOSION, true)));
 }
 
 void ParticleGenerator::reset()

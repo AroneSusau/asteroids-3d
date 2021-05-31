@@ -144,7 +144,7 @@ void AsteroidGenerator::asteroid_ship_collision(Asteroid* asteroid)
     world->player_death_time = world->time->now;
     asteroid->destroyed = true;
     world->ship->active = false;
-    world->particle_generator->generate_explosion(V3_Math::add(world->ship->body->position, V3_Math::multiply(world->ship->body->forward, 10)), 5);
+    world->particle_generator->generate_ship_explosion(V3_Math::add(world->ship->body->position, V3_Math::multiply(world->ship->body->forward, 10)), 5);
   }
 }
 

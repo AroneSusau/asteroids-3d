@@ -30,6 +30,7 @@ class ParticleGenerator
     ~ParticleGenerator();
 
     void generate_explosion(Vector3* position, float size);
+    void generate_ship_explosion(Vector3* position, float size);
     void generate_explosion_flare(Vector3* position, float size);
 
     void generate_ship_tail();

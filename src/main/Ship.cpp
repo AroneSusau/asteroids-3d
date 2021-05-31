@@ -80,6 +80,7 @@ void Ship::draw_ship()
 
   glEnd();
 
+  glPushAttrib(GL_CURRENT_BIT);
   Materials::wings();
 
   glPushMatrix();
@@ -116,6 +117,7 @@ void Ship::draw_ship()
     glColor3f(1.0f, 1.0f, 0.0f);
     glutSolidCube(1);
   glPopMatrix();
+  glPopAttrib();
 }
 
 void Ship::mouse_ship_rotation()

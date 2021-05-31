@@ -58,7 +58,7 @@
 #define ASTEROID_TEXT_4 "assets/asteroids/asteroid4.jpg"
 
 // ASTEROID GENERATION
-#define ASTEROID_ACTIVE       false
+#define ASTEROID_ACTIVE       true
 #define ASTEROID_SPAWN_RATE   10
 #define ASTEROID_SPAWN_NEXT   0
 #define ASTEROID_SPAWN_AMOUNT 1 
@@ -104,8 +104,8 @@
 #define PARTICLE_EXPLOSION_4 "assets/particles/explosion4.png"
 #define PARTICLE_EXPLOSION_4_SHEET new SpriteSheet(7.0f, 5.0f, 0.0f, 31.0f)
 
-#define PARTICLE_SHIP_TAIL "assets/particles/ship_tail.png"
-#define PARTICLE_SHIP_TAIL_SHEET new SpriteSheet(3.0f, 3.0f, 0.0f, 8.0f)
+#define PARTICLE_SHIP_EXPLOSION "assets/particles/ship_explosion.png"
+#define PARTICLE_SHIP_EXPLOSION_SHEET new SpriteSheet(8.0f, 8.0f, 0.0f, 63.0f)
 
 #define PARTICLE_FLARE_COUNT        500
 #define PARTICLE_FLARE_SIZE_FACTOR  12
@@ -114,6 +114,6 @@
 
 // MISC
 #define GAME_TITLE   "Asteroids Assignment 2"
-#define FULL_SCREEN  false
+#define FULL_SCREEN  true
 #define VIEWPORT_DIM 880
 #define KEY_ESC      27

@@ -123,7 +123,7 @@ void Wall::wall_ship_collision()
       world->game_state = GAME_OVER;
       world->player_death_time = world->time->now;
       world->ship->active = false;
-      world->particle_generator->generate_explosion(V3_Math::add(world->ship->body->position, V3_Math::multiply(world->ship->body->forward, 10)), 5);
+      world->particle_generator->generate_ship_explosion(V3_Math::add(world->ship->body->position, V3_Math::multiply(world->ship->body->forward, 10)), 5);
     }
   }
 }
