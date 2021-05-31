@@ -20,7 +20,7 @@
 
 #define SHIP_LOOK_X 20
 #define SHIP_LOOK_Y 20
-#define SHIP_LOOK_Z 70
+#define SHIP_LOOK_Z 50
 #define SHIP_LOOK_ACCEL 1
 
 #define SHIP_MATERIAL_PATH  "assets/ship/"
@@ -58,7 +58,7 @@
 #define ASTEROID_TEXT_4 "assets/asteroids/asteroid4.jpg"
 
 // ASTEROID GENERATION
-#define ASTEROID_ACTIVE       true
+#define ASTEROID_ACTIVE       false
 #define ASTEROID_SPAWN_RATE   10
 #define ASTEROID_SPAWN_NEXT   0
 #define ASTEROID_SPAWN_AMOUNT 1 
@@ -114,6 +114,6 @@
 
 // MISC
 #define GAME_TITLE   "Asteroids Assignment 2"
-#define FULL_SCREEN  true
+#define FULL_SCREEN  false
 #define VIEWPORT_DIM 880
 #define KEY_ESC      27

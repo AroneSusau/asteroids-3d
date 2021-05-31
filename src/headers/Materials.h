@@ -108,4 +108,17 @@ class Materials
       glMaterialf(GL_FRONT, GL_SHININESS, shine1);
     }
 
+    static void wings()
+    {
+      float mat_ambient [] = { 0.74f, 0.22f, 0.23f, 1.0f };
+      float mat_diffuse [] = { 1.0f, 0.62f, 0.0f, 1.0f };
+      float mat_specular [] = { 0.74f, 0.22f, 0.73f, 1.0f };
+      float shine1 = 100.0f;
+
+      glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+      glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+      glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+      glMaterialf(GL_FRONT, GL_SHININESS, shine1);
+    }
+
 };

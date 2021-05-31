@@ -79,6 +79,43 @@ void Ship::draw_ship()
   }
 
   glEnd();
+
+  Materials::wings();
+
+  glPushMatrix();
+    glTranslatef(0, 0, 0.2 * world->mouse->ratio->y);
+    glTranslatef(1.84f, 1.4f, 0.4f);
+    glRotatef(-6, 0, 1, 0);
+    glRotatef(50 * world->mouse->ratio->y, 1, 0, 0);
+    glScalef(1.1f, 0.6f, 0.1f);
+    glColor3f(0.74f, 0.22f, 0.43f);
+    glutSolidCube(1);
+  glPopMatrix();
+
+  glPushMatrix();
+    glTranslatef(0, 0, 0.2 * world->mouse->ratio->y);
+    glTranslatef(-1.84f, 1.4f, 0.4f);
+    glRotatef(6, 0, 1, 0);
+    glRotatef(50 * world->mouse->ratio->y, 1, 0, 0);
+    glScalef(1.1f, 0.6f, 0.1f);
+    glColor3f(0.74f, 0.22f, 0.43f);
+    glutSolidCube(1);
+  glPopMatrix();
+
+  glPushMatrix();
+    glTranslatef(0, 1, 0);
+    glScalef(0.2f, 2.5f, 0.3f);
+    glColor3f(1.0f, 1.0f, 0.0f);
+    glutSolidCube(1);
+  glPopMatrix();
+
+  glPushMatrix();
+    glTranslatef(-0.24 * world->mouse->ratio->x, 2.3f, 0);
+    glRotatef(70 * world->mouse->ratio->x, 0, 0, 1);
+    glScalef(0.1, 0.5, 0.9);
+    glColor3f(1.0f, 1.0f, 0.0f);
+    glutSolidCube(1);
+  glPopMatrix();
 }
 
 void Ship::mouse_ship_rotation()
