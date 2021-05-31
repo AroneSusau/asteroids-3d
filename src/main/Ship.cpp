@@ -18,7 +18,7 @@ Ship::Ship(World* world)
 
   cannon = new Cannon(this, body->position, new Vector3(0, 0, 0), world);
 
-  active = true;
+  active = false;
 
   model_filename = SHIP_MODEL_PATH;
   material_path  = SHIP_MATERIAL_PATH;

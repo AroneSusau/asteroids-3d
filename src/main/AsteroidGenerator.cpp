@@ -234,7 +234,7 @@ void AsteroidGenerator::load_asteroid_textures()
 
 void AsteroidGenerator::spawn() 
 {
-  if (world->game_state == GAME_PLAYING && spawn_active && next_spawn <= 0)
+  if (spawn_active && next_spawn <= 0)
   {
     for (int i = 0; i < spawn_amount; ++i)
     {
