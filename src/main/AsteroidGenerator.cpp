@@ -48,6 +48,7 @@ void AsteroidGenerator::tick()
     asteroid->draw();
 
     asteroid_bullet_collision(asteroid);
+    asteroid_asteroid_collision(asteroid, i);
     asteroid_ship_collision(asteroid);
 
     if (asteroid->destroyed)
@@ -56,11 +57,6 @@ void AsteroidGenerator::tick()
       asteroids->erase(asteroids->begin() + i);
     }
   }  
-
-  asteroid_asteroid_collision();
-
-  spawn();
-  update_spawn();
 }
 
 void AsteroidGenerator::generate()
@@ -172,36 +168,32 @@ void AsteroidGenerator::asteroid_bullet_collision(Asteroid* asteroid)
   }
 }
 
-void AsteroidGenerator::asteroid_asteroid_collision()
+void AsteroidGenerator::asteroid_asteroid_collision(Asteroid* a, int index)
 {
-  for (size_t i = 0; i < asteroids->size(); ++i) {
-    Asteroid* a = asteroids->at(i);
-    
-    if (a->entered_arena)
-    {
-      for (size_t j = i + 1; j < asteroids->size(); ++j) {
-        Asteroid* b = asteroids->at(j);
+  if (a->entered_arena)
+  {
+    for (size_t j = index + 1; j < asteroids->size(); ++j) {
+      Asteroid* b = asteroids->at(j);
 
-        if (b->entered_arena && has_collided(a, b))
-        {
-          float a_x = a->velocity->x;
-          float a_y = a->velocity->y; 
-          float a_z = a->velocity->z;
-          float b_x = b->velocity->x;
-          float b_y = b->velocity->y;
-          float b_z = b->velocity->z;
+      if (b->entered_arena && has_collided(a, b))
+      {
+        float a_x = a->velocity->x;
+        float a_y = a->velocity->y; 
+        float a_z = a->velocity->z;
+        float b_x = b->velocity->x;
+        float b_y = b->velocity->y;
+        float b_z = b->velocity->z;
 
-          a->velocity->x = b_x;
-          a->velocity->y = b_y;
-          a->velocity->z = b_z;
+        a->velocity->x = b_x;
+        a->velocity->y = b_y;
+        a->velocity->z = b_z;
 
-          b->velocity->x = a_x;
-          b->velocity->y = a_y;
-          b->velocity->z = a_z;
+        b->velocity->x = a_x;
+        b->velocity->y = a_y;
+        b->velocity->z = a_z;
 
-          a->body->update_position(V3_Math::add(a->body->position, V3_Math::multiply(V3_Math::multiply(a->velocity, world->time->delta), 2)));
-          b->body->update_position(V3_Math::add(b->body->position, V3_Math::multiply(V3_Math::multiply(b->velocity, world->time->delta), 2)));
-        }
+        a->body->update_position(V3_Math::add(a->body->position, V3_Math::multiply(V3_Math::multiply(a->velocity, world->time->delta), 2)));
+        b->body->update_position(V3_Math::add(b->body->position, V3_Math::multiply(V3_Math::multiply(b->velocity, world->time->delta), 2)));
       }
     }
   }

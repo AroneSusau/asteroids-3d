@@ -40,7 +40,6 @@ Cannon::~Cannon()
 void Cannon::tick() 
 {
   update_position();
-  update_fire_rate();
 
   for (size_t i = 0; i < bullets->size(); ++i)
   {

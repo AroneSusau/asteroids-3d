@@ -35,7 +35,7 @@
 #define RATE_OF_FIRE    0.08
 #define BULLET_DAMAGE   50
 
-#define FRAMES_PER_SECOND   60.0f
+#define FRAMES_PER_SECOND  60.0f
 #define BULLET_TEXTURE_ROWS 6.0f
 #define BULLET_TEXTURE_COLS 6.0f
 #define BULLET_START_FRAME  0.0f
@@ -107,7 +107,7 @@
 #define PARTICLE_SHIP_EXPLOSION "assets/particles/ship_explosion.png"
 #define PARTICLE_SHIP_EXPLOSION_SHEET new SpriteSheet(8.0f, 8.0f, 0.0f, 63.0f)
 
-#define PARTICLE_FLARE_COUNT        500
+#define PARTICLE_FLARE_COUNT        250
 #define PARTICLE_FLARE_SIZE_FACTOR  12
 #define PARTICLE_FLARE_MIN_VELOCITY 0
 #define PARTICLE_FLARE_MAX_VELOCITY 4000

@@ -77,6 +77,11 @@ void on_idle()
   wall->wall_distance_warning(ship->body->position);
   wall->wall_ship_collision();
   wall->update_wall_color();
+
+  asteroid_generator->spawn();
+  asteroid_generator->update_spawn();
+
+  ship->cannon->update_fire_rate();
   
   game_time->update();
   glutPostRedisplay();
