@@ -66,4 +66,6 @@ void World::reset_game()
   ship->reset();
   asteroid_generator->reset();
   particle_generator->reset();
+
+  asteroid_generator->debug_asteroid();
 }

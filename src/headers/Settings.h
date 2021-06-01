@@ -49,7 +49,7 @@
 #define ASTEROID_MIN_RADIUS   500
 #define ASTEROID_MAX_RADIUS   2000
 
-#define ASTEROID_DEBUG         false
+#define ASTEROID_DEBUG         true
 #define ASTEROID_HEALTH_BAR_ON true
 
 #define ASTEROID_TEXT_1 "assets/asteroids/asteroid1.jpg"
@@ -58,7 +58,7 @@
 #define ASTEROID_TEXT_4 "assets/asteroids/asteroid4.jpg"
 
 // ASTEROID GENERATION
-#define ASTEROID_ACTIVE       true
+#define ASTEROID_ACTIVE       false
 #define ASTEROID_SPAWN_RATE   10
 #define ASTEROID_SPAWN_NEXT   0
 #define ASTEROID_SPAWN_AMOUNT 1 
@@ -106,6 +106,9 @@
 
 #define PARTICLE_SHIP_EXPLOSION "assets/particles/ship_explosion.png"
 #define PARTICLE_SHIP_EXPLOSION_SHEET new SpriteSheet(8.0f, 8.0f, 0.0f, 63.0f)
+
+#define PARTICLE_SHIP_TAIL "assets/particles/ship_tail.png"
+#define PARTICLE_SHIP_TAIL_SHEET new SpriteSheet(8.0f, 7.0f, 1.0f, 49.0f)
 
 #define PARTICLE_FLARE_COUNT        250
 #define PARTICLE_FLARE_SIZE_FACTOR  12

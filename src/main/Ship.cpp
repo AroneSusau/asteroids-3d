@@ -80,6 +80,11 @@ void Ship::draw_ship()
 
   glEnd();
 
+  for (Particle* p : *world->particle_generator->ship_tail_particles)
+  {
+    p->draw();
+  }
+
   glPushAttrib(GL_CURRENT_BIT);
   Materials::wings();
 

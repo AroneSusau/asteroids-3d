@@ -20,6 +20,7 @@ class ParticleGenerator
     World* world;
 
     std::vector<Particle*>* asteroid_particles;
+    std::vector<Particle*>* ship_tail_particles;
     std::map<std::string, int>* textures;
 
     float tail_next_spawn;
@@ -38,6 +39,8 @@ class ParticleGenerator
     void tick();
 
     void tick_asteroid_particles();
+    void tick_ship_particles();
+
     void load_textures();
 
     void reset();

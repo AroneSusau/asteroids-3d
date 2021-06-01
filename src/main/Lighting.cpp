@@ -30,7 +30,7 @@ void Lighting::world_lighting()
     debug_lighting();
   }
   else {
-    GLfloat light_ambient[] = { 0.3, 0.3, 0.3, 1.0 };
+    GLfloat light_ambient[] = { 0.4, 0.4, 0.4, 1.0 };
     GLfloat light_diffuse[] = { 1.0, 0.6, 0.6, 1.0 };
     GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
     GLfloat light_position[] = { -500.0, -500.0, -500.0, 0.0 };
@@ -63,7 +63,7 @@ void Lighting::fog()
   glEnable(GL_FOG);
   glFogi (GL_FOG_MODE, GL_LINEAR);
   glFogf (GL_FOG_START, 1200.0);
-  glFogf (GL_FOG_END, 8000.0);
+  glFogf (GL_FOG_END, 12000.0);
   glHint (GL_FOG_HINT, GL_NICEST);
 }
 

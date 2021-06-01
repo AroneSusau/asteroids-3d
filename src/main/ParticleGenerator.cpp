@@ -6,6 +6,7 @@ ParticleGenerator::ParticleGenerator(World* world)
   this->textures  = new std::map<std::string, int>();
 
   this->asteroid_particles = new std::vector<Particle*>();
+  this->ship_tail_particles = new std::vector<Particle*>();
 
   tail_spawn_rate   = 0.05;
   tail_next_spawn   = tail_spawn_rate;
@@ -19,7 +20,13 @@ ParticleGenerator::~ParticleGenerator()
     delete p;
   }
 
+  for (Particle* p : *ship_tail_particles)
+  {
+    delete p;
+  }
+
   delete asteroid_particles;
+  delete ship_tail_particles;
   delete textures;
 }
 
@@ -75,6 +82,17 @@ void ParticleGenerator::tick_asteroid_particles()
   }
 }
 
+void ParticleGenerator::tick_ship_particles() 
+{
+  for (size_t i = 0; i < ship_tail_particles->size(); i++)
+  {
+    Particle* particle = ship_tail_particles->at(i);
+
+    particle->body->update_position(world->ship->body->position);
+    particle->tick();
+  }
+}
+
 void ParticleGenerator::generate_explosion_flare(Vector3* position, float size)
 {
   for (int i = 0; i < PARTICLE_FLARE_COUNT; ++i)
@@ -104,6 +122,18 @@ void ParticleGenerator::generate_explosion_flare(Vector3* position, float size)
   }
 }
 
+void ParticleGenerator::generate_ship_tail()
+{
+  Particle* p = new Particle(
+      world, 
+      PARTICLE_SHIP_TAIL_SHEET, 
+      textures->at(PARTICLE_SHIP_TAIL), 
+      3, 
+      PARTICLE_FRAME);
+
+  ship_tail_particles->push_back(p);
+}
+
 void ParticleGenerator::load_textures() 
 {
   textures->insert(std::pair<std::string, int>(PARTICLE_EXPLOSION_1, Util::load_anim_texture(PARTICLE_EXPLOSION_1, true)));
@@ -112,6 +142,7 @@ void ParticleGenerator::load_textures()
   textures->insert(std::pair<std::string, int>(PARTICLE_EXPLOSION_4, Util::load_anim_texture(PARTICLE_EXPLOSION_4, true)));
 
   textures->insert(std::pair<std::string, int>(PARTICLE_SHIP_EXPLOSION, Util::load_anim_texture(PARTICLE_SHIP_EXPLOSION, true)));
+  textures->insert(std::pair<std::string, int>(PARTICLE_SHIP_TAIL, Util::load_anim_texture(PARTICLE_SHIP_TAIL, true)));
 }
 
 void ParticleGenerator::reset()
@@ -121,5 +152,11 @@ void ParticleGenerator::reset()
     delete p;
   }
 
+  for (Particle* p : *ship_tail_particles)
+  {
+    delete p;
+  }
+
   asteroid_particles->clear();
+  ship_tail_particles->clear();
 }

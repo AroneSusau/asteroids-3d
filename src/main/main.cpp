@@ -67,6 +67,7 @@ void render()
 
   hud->tick();
   game_time->update();
+
   glutSwapBuffers();
 }
 
@@ -84,6 +85,7 @@ void on_idle()
   ship->cannon->update_fire_rate();
   
   game_time->update();
+
   glutPostRedisplay();
 }
 
@@ -177,9 +179,7 @@ void init_app(int *argcp, char **argv)
   skybox->load_skybox_textures();
   asteroid_generator->load_asteroid_textures();
   particle_generator->load_textures();
-  ship->load_ship_graphics();
-
-  asteroid_generator->debug_asteroid();  
+  ship->load_ship_graphics();  
 }
 
 int main(int argc, char **argv)
