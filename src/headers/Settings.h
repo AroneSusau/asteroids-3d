@@ -88,7 +88,9 @@
 
 // ENVIRONMENT
 #define ENABLE_SKYBOX  true
-#define LIGHTING_DEBUG false
+
+#define LIGHTING_DEBUG    false
+#define LIGHTING_POSITION { -500.0f, -500.0f, -500.0f, 0.0 }
 
 #define ENABLE_FOG true
 #define FOG_START  1200.0f
