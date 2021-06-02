@@ -12,14 +12,15 @@ The project hasn't been tested on a windows or linux machine, so please if possi
 Thank you in advance.
 
 # Table Of Contents
-- [How to Build & Run](#How-to-Build-&-Run)
+- [How to Build & Run](#How-to-Build)
 - [Controls](#Controls)
 - [Feature Summary](#Feature-Summary)
 - [Asset Citation](#Asset-Citation)
 
-# How to Build & Run
+# How to Build
 
 Please enter the following command into your terminal or shell application to build the program.
+
 ```
 $ make
 ```
