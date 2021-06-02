@@ -63,6 +63,9 @@ void render()
   asteroid_generator->tick();
   particle_generator->tick();
 
+  asteroid_generator->spawn();
+  asteroid_generator->update_spawn();
+
   ship->cannon->tick();
 
   hud->tick();
@@ -78,9 +81,6 @@ void on_idle()
   wall->wall_distance_warning(ship->body->position);
   wall->wall_ship_collision();
   wall->update_wall_color();
-
-  asteroid_generator->spawn();
-  asteroid_generator->update_spawn();
 
   ship->cannon->update_fire_rate();
   
@@ -172,14 +172,7 @@ void init_app(int *argcp, char **argv)
     glutFullScreen();
   }
 
-  lighting->init();
-
-  camera->place_camera();
-  
-  skybox->load_skybox_textures();
-  asteroid_generator->load_asteroid_textures();
-  particle_generator->load_textures();
-  ship->load_ship_graphics();  
+  world->init();
 }
 
 int main(int argc, char **argv)

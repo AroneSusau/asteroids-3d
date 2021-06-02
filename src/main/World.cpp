@@ -71,5 +71,16 @@ void World::reset_game()
 
   glutSetCursor(GLUT_CURSOR_CROSSHAIR);
   glutWarpPointer(viewport_width / 2.0f, viewport_width / 2.0f);
-  // particle_generator->generate_ship_tail();
+}
+
+void World::init()
+{
+  lighting->init();
+
+  camera->place_camera();
+  
+  skybox->load_skybox_textures();
+  asteroid_generator->load_asteroid_textures();
+  particle_generator->load_textures();
+  ship->load_ship_graphics();  
 }

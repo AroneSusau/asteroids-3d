@@ -55,4 +55,5 @@ class World
 
     void reset_game();
     void start_screen();
+    void init();
 };
