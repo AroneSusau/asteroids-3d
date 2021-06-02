@@ -23,9 +23,9 @@
 #define SHIP_LOOK_Z 50
 #define SHIP_LOOK_ACCEL 1
 
-#define SHIP_MATERIAL_PATH  "assets/ship/"
-#define SHIP_MODEL_PATH     "assets/ship/ship.obj"
-#define SHIP_TEXTURE_PATH   "assets/ship/ship.png"
+#define SHIP_MATERIAL_PATH "assets/ship/"
+#define SHIP_MODEL_PATH    "assets/ship/ship.obj"
+#define SHIP_TEXTURE_PATH  "assets/ship/ship.png"
 
 // CANNON & BULLETS
 #define BULLET_VELOCITY 4500
@@ -35,7 +35,7 @@
 #define RATE_OF_FIRE    0.05
 #define BULLET_DAMAGE   50
 
-#define FRAMES_PER_SECOND  60.0f
+#define FRAMES_PER_SECOND   60.0f
 #define BULLET_TEXTURE_ROWS 6.0f
 #define BULLET_TEXTURE_COLS 6.0f
 #define BULLET_START_FRAME  0.0f
@@ -88,8 +88,11 @@
 
 // ENVIRONMENT
 #define ENABLE_SKYBOX  true
-#define ENABLE_FOG     true
 #define LIGHTING_DEBUG false
+
+#define ENABLE_FOG true
+#define FOG_START  1200.0f
+#define FOG_END    7000.0f    
 
 // PARTICLES
 #define PARTICLE_EXPLOSION_1 "assets/particles/explosion1.png"

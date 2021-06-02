@@ -42,12 +42,14 @@ World::~World() {
 
 void World::start_screen()
 {
-  camera->body->position->x = -4489;
-  camera->body->position->y = -4761;
-  camera->body->position->z = -751;
+  Vector3 pos = Vector3(4489, 6061, 1751);
+
+  camera->body->position->x = pos.x;
+  camera->body->position->y = pos.y;
+  camera->body->position->z = pos.z;
 
   gluLookAt(
-    -4489, -4761, -751,
+    pos.x, pos.y, pos.z,
     0.0f, 0.0f, 0.0f,
     0.0f, 0.0f, 1.0f);
 }
