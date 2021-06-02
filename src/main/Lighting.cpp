@@ -30,7 +30,7 @@ void Lighting::world_lighting()
     debug_lighting();
   }
   else {
-    GLfloat light_ambient[] = { 0.4, 0.4, 0.4, 1.0 };
+    GLfloat light_ambient[] = { 0.25, 0.25, 0.25, 1.0 };
     GLfloat light_diffuse[] = { 1.0, 0.6, 0.6, 1.0 };
     GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
     GLfloat light_position[] = LIGHTING_POSITION;

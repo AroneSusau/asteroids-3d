@@ -94,7 +94,7 @@
 
 #define ENABLE_FOG true
 #define FOG_START  1200.0f
-#define FOG_END    7000.0f    
+#define FOG_END    12000.0f    
 
 // PARTICLES
 #define PARTICLE_EXPLOSION_1 "assets/particles/explosion1.png"
