@@ -68,4 +68,8 @@ void World::reset_game()
   particle_generator->reset();
 
   asteroid_generator->debug_asteroid();
+
+  glutSetCursor(GLUT_CURSOR_CROSSHAIR);
+  glutWarpPointer(viewport_width / 2.0f, viewport_width / 2.0f);
+  // particle_generator->generate_ship_tail();
 }

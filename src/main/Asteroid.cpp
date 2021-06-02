@@ -236,8 +236,10 @@ void Asteroid::draw_health_bar()
     glMultMatrixf(matrix);
 
     glPushAttrib(GL_CURRENT_BIT);
+      
       glDisable(GL_FOG);
       glDisable(GL_LIGHTING);
+
       glColor3f(1.0f, 1.0f, 1.0f);
       glBegin(GL_QUADS);
         glVertex3d(-size, 200 + size, 0);
@@ -255,8 +257,10 @@ void Asteroid::draw_health_bar()
         glVertex3d((size - 100),  250 + size + 100, -10);
         glVertex3d((-size + 100) * (-1 + 2 * h), 250 + size + 100, -10);
       glEnd();
+      
       glEnable(GL_LIGHTING);
       glEnable(GL_FOG);
+      
     glPopAttrib();
 
   glPopAttrib();

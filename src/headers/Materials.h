@@ -110,9 +110,9 @@ class Materials
 
     static void wings()
     {
-      float mat_ambient [] = { 0.8, 0.8, 0.8, 1.0 };
+      float mat_ambient [] = { 0.74f, 0.22f, 0.23f, 1.0f };
       float mat_diffuse [] = { 1.0f, 0.62f, 0.0f, 1.0f };
-      float mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+      float mat_specular [] = { 0.74f, 0.22f, 0.73f, 1.0f };
       float shine1 = 100.0f;
 
       glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);

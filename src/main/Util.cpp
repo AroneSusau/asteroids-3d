@@ -27,7 +27,6 @@ void Util::load_model(const char* filename, const char* materialpath, model_vert
 
   auto& attrib = reader.GetAttrib();
   auto& shapes = reader.GetShapes();
-  // auto& materials = reader.GetMaterials();
 
   for (size_t s = 0; s < shapes.size(); s++) {  
     
