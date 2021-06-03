@@ -43,71 +43,29 @@ Please review the `Settings.h` file [here](src/headers/Settings.h) which contain
 
 The following section will provide a brief explaination of each of the implemented features and instructions of how to demo or test the individual features.
 
-## Arena
-It is recommended that you set `ASTEROID_ACTIVE` to `false` in the settings file while testing the arena.
-### Easy
-Fly directly into the wall and observe your death.
-### Medium
-Fly close to the wall and observe the colour change, move away and see the color change back... magic.
-### Hard
-Look around the world and observe the beauty.
+## Arena: HARD
+The arena grid mesh is draw in position at each point along the 6 axis, in its full size. The player warning distance is calculated by the `WALL_WARN_DIST` setting and is `0.4` or `40%` of the wall distance by default. Ship to wall or ship to warning collision distance is calculated by checking if the ship has fallen below the negative or above the positive distance value.
 
-## Spaceship Model
-### Easy
-The ship and its 'Wings' have different material properties.
-### Medium
-The ship is fully textured map upon observation.
-### Hard
-Move the mouse both horizontally and vertically to observe the wing flaps change directions depending on mouse orientation.
+## Spaceship Model: HARD
+The ship texturing and material usage was taken from the tutorials and labs. The implementation of the wing flap orientation to demonstrate hierarchical relationships was done by scaling a `gluSolidCube` into a flat plank and nesting the object in a `glPushMatrix` to isolate its rotation and translation amounts.
 
-## Asteroid Model
-Please set `ASTEROID_ACTIVE` to `false` and `ASTEROID_DEBUG` to `true` in the settings file while testing the asteroid model.
-### Easy
-Rotate around the asteroid and view the different lighting angles.
-### Medium
-Please view the `Asteroid` class [here](src/main/Asteroid.cpp) and review the custom sphere generation. Code relating to the generation of a sphere was repurposed from the following [article](http://www.songho.ca/opengl/gl_sphere.html#:~:text=In%20order%20to%20draw%20the,triangle%20strip%20cannot%20be%20used).
+## Asteroid Model: HARD
+The code relating to the generation of a sphere was repurposed from the following [article](http://www.songho.ca/opengl/gl_sphere.html#:~:text=In%20order%20to%20draw%20the,triangle%20strip%20cannot%20be%20used). During the asteroid genreation, each `z` and `y` axis were multiplied by a random amount between `0.55` to `1.0`, to simulate irregularity.
 
-### Hard
-Rerun the application while viewing the debug asteroid to see it change perturbation and irregularity.
+## Asteroid Movement: HARD
+Asteroids spawn positions are selected by randomly setting its `x`, `y` and `z` position values to a random amount within the arena and then randomly selecting only one of those axis and pushing that one axis outside of the arena. Asteroid to wall collision is calculated as the asteroid position plus its size to the distance of the wall, if it is overlapping then flip the axis velocity. Asteroid to asteroid collision is similar to the wall collision except between two asteroids, swapping their velocities and applying the new velocity once to avoid any stuck collisions.
 
-## Asteroid Movement
-Please set `ASTEROID_ACTIVE` to `false` and `ASTEROID_DEBUG` to `true` in the settings file while testing the asteroid medium and hard movement features.
-### Easy
-Let the game run with its default settings and move to different positions in the arena. The asteroids will spawn randomly and set its initial velocity values to fly directly to the ship position. Keep in mind that an asteroid might fly up behind you and boop you if you're stationary for too long.
-### Medium
-For asteroid spin, turn off asteroid generation and enable the debug asteroid and observe. For asteroid wall collision allow the game to run as per usual with default settings and observe the asteroids.
-### Hard
-For asteroid to asteroid collision allow the game to run as per usual with default settings and observe the asteroids.
+## Lighting: HARD
+The code relating to the generation of lighting was taken from both the tutorial code and the [Red Book](https://www.glprogramming.com/red/chapter05.html). The animated point light souce was converted into a spot light attached to the front of the ship to simulated head lights. Please note that the world lighting has a slight red aura and the ship headlight is a solid white colour.
 
-## Lighting
-### Easy
-Set `LIGHTING_DEBUG` to `true` then `false` to observe the general lighting differences.
-### Medium
-The world positional lighting is a faint red-ish aura to resemble the skybox theme. It is positioned such that it appears to be coming from the sun in the skybox panel.
-### Hard
-The animated light souce is the ships headlight, which is white in colour. Turn on the debug asteroid and move around it to see it in action better.
+## Bullets & Shooting: HARD
+The bullets are generated at a position of some small multiple of the ships forward vector. The bullets velocity is calculated as the ships current velocity plus some other amount in the ships forward vector. The bullet billboarding is done by taking the camera position minus the bullet position normalized to get a forward vector. The forward vector is then applied to a `glMultMatrix`, along with the ships up vector and the cross product of both to generate the right vector to manually rotate the bullet texture towards the ship. The bullet animation effect is done by calculating the sprite uv coordinates and storing them in the `Animator` class. The animator class only needs a `SpriteSheet` object which defines the number of rows, columns and the start and end frame for the animation. Animations are then rendered at 60 frames per second.
 
-## Bullets & Shooting
-### Easy
-Fly around the scene and press spacebar to see the bullets following along. Enable the debug asteroid and fire at it until it is destroyed.
-### Medium
-Set `BULLET_VELOCITY` to zero and tap spacebar once to view a single bullet animation play out. Revert the bullet velocity setting and shoot the bullet asteroid to observe the health bar decline until destruction.
-### Hard
-Set `BULLET_VELOCITY` to zero and tap spacebar once to view a single bullet animation play out.
+## Explosions: HARD
+The explosion particle effects are essentially the same as the animated textured bullet except the velocities of the particles are generated outwards from their point of origin, rather than away from the ships position. The particles also define whether they are deleted after reaching their end of frames or after a certain period of time.
 
-## Explosions
-### Medium
-Enable the debug asteroid and shoot until destruction to observe the destruction animation.
-### Hard
-Enable the debug asteroid and shoot until destruction to observe the destruction animation. Also fly the ship into any wall to observe the death explosion animation.
-
-## Camera & Ship Movement
-### Easy
-As you fly move the mouse about the screen to observe the changes in orientation without.
-### Medium
-As the ship increases in velocity, the camera will slide backwards and return forwards as the ship slows down.
-### Hard
-As you fly, move the mouse about the screen to observe the ship models rotation in space. As the ships velocity is increased, the camera will shift its `look_at` values backwards to simulated a delay.
+## Camera & Ship Movement: HARD
+In my implementation the camera follows the ship position, adjusting its look at value behind the ship to simulate a visual delay as well as its position to slide back and forth during acceleration/deceleration. For the animated ship roll/pitch/yaw, a new `glPushMatrix` is applied after the ship is rotation in the direction of its forward vector. This is done so that individual `glRotatef` calls can be made on each the `x`, `y` and `z` axis to simulate rotation animation.
 
 # Asset Citation
 
