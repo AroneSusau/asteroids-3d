@@ -5,7 +5,7 @@
 | Arone Susau         | s3728977 |
 
 # IMPORTANT
-This project was built, run and testing on ```macOS Big Sur 11.2.3```.
+This project was built, run and tested on ```macOS Big Sur 11.2.3```.
 
 The project hasn't been tested on a windows or linux machine, so please if possible, run the project on your Macbook Pro.
 
